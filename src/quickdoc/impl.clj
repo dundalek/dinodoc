@@ -156,6 +156,20 @@
     (println (format "<p><sub><a href=\"%s\">Source</a></sub></p>" (var-source var opts)))
     (when collapse-vars (println "</details>\n\n"))))
 
+(defn print-ns-frontmatter [ns-name]
+  (println "---")
+  ;; https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs#markdown-front-matter
+  ;; only show last segment in sidebar because it is shown in hierarchy
+  (println "sidebar_label:" (last (str/split (str ns-name) #"\.")))
+  (println "title:" ns-name)
+  ; also could hide title completely for greater control
+  ; (println "hide_title: true")
+  ;; increase max heading level because we are using h4 for protocol members
+  (println "toc_min_heading_level: 2")
+  (println "toc_max_heading_level: 4")
+  (println "---")
+  (println))
+
 (defn print-namespace [ns-defs ns->vars ns-name vars opts overrides]
   (let [ns (get-in ns-defs [ns-name 0])
         filename (:filename ns)
@@ -166,8 +180,7 @@
         mns (merge mns overriden-ns)]
     (when (and (not (:no-doc mns))
                (not (:skip-wiki mns)))
-      (println)
-      (println "-----")
+      (print-ns-frontmatter ns-name)
       (let [var-map (zipmap (map :name vars) vars)
             var-map (merge-with merge var-map overriden-ns)]
         (when-let [vars (seq (filter var-filter (vals var-map)))]
