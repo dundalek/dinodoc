@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [clojure.test :as t :refer [deftest is]]
-   [quickdoc.impl :refer [var-summary var-source]]))
+   [quickdoc.impl :as impl :refer [var-summary var-source]]))
 
 (deftest var-summary-test
   (is (= nil (var-summary {})))
@@ -62,3 +62,9 @@
           {:source-uri "{repo}{branch}/{filename};{row},{col}-{end-row},{end-col}"
            :github/repo "http://example.com/"
            :git/branch "main"}))))
+
+(deftest var-pattern-test
+  (is (= [["`backtick-link`" "backtick-link"]
+          ["[[wikilink]]" "wikilink"]]
+         (impl/extract-var-links impl/backticks-and-wikilinks-pattern
+                                 "aaa `backtick-link` bbb [[wikilink]] ccc"))))

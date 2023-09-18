@@ -5,6 +5,9 @@
    [clojure.pprint :as pprint]
    [clojure.string :as str]))
 
+(def backticks-and-wikilinks-pattern
+  #"`(.*?)`|\[\[(.*?)\]\]")
+
 (defn debug [& xs]
   (binding [*out* *err*]
     (apply println xs)))
@@ -72,6 +75,11 @@
      (str/replace "{end-row}" (str (:end-row var)))
      (str/replace "{end-col}" (str (:end-col var))))))
 
+(defn extract-var-links [var-regex docstring]
+  (->> (re-seq var-regex docstring)
+       (map (fn [[raw & inners]]
+              [raw (some identity inners)]))))
+
 (defn print-docstring [ns->vars current-ns docstring opts]
   (println
    (if-some [var-regex (:var-regex opts)]
@@ -95,7 +103,7 @@
                  :else
                  docstring))
              docstring
-             (re-seq var-regex docstring))
+             (extract-var-links var-regex docstring))
      docstring)))
 
 (defn print-var [ns->vars ns-name var _source {:keys [collapse-vars] :as opts}]

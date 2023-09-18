@@ -49,11 +49,12 @@
                                       :source-paths ["src"]
                                       :toc          true
                                       :var-links    true
-                                      :var-pattern  :backticks}
+                                      :var-pattern  :backticks-and-wikilinks}
                                      opts)
         opts (assoc opts :var-regex (case (:var-pattern opts)
                                       :backticks #"`(.*?)`"
-                                      :wikilinks #"\[\[(.*?)\]\]"))
+                                      :wikilinks #"\[\[(.*?)\]\]"
+                                      :backticks-and-wikilinks impl/backticks-and-wikilinks-pattern))
         ana (-> (clj-kondo/run! {:lint source-paths
                                  :config {:skip-comments true
                                           :output {:analysis
