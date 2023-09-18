@@ -106,6 +106,34 @@
              (extract-var-links var-regex docstring))
      docstring)))
 
+(defn print-metadata-line [m]
+  (let [macro? (and (:arglist-strs m)
+                    (:macro m))
+        protocol? (= (:defined-by m) 'clojure.core/defprotocol)
+        {:keys [deprecated added]} m
+        deprecated-str (cond
+                         (true? deprecated) "deprecated"
+                         deprecated (str "deprecated in " deprecated))
+        added-str (cond
+                    (true? added) "added"
+                    added (str "added in " added))
+        metadata (cond-> []
+                   macro? (conj "macro")
+                   protocol? (conj "protocol")
+                   (:dynamic (meta (:name m))) (conj "dynamic")
+                   deprecated-str (conj deprecated-str)
+                   added-str (conj added-str))]
+    (when (seq metadata)
+      (println)
+      (println (str "*" (str/join " | " metadata) "*"))
+      (println))))
+
+(defn print-var-metadata-line [var]
+  (print-metadata-line var))
+
+(defn print-ns-metadata-line [ns]
+  (print-metadata-line (select-keys ns [:deprecated :added])))
+
 (defn print-var [ns->vars ns-name var _source {:keys [collapse-vars] :as opts}]
   (println)
   (when (var-filter var)
@@ -144,14 +172,11 @@
                         (with-out-str (pprint/pprint arglist)))]
           (print arglist)))
       (println "```"))
-    (if (:arglist-strs var)
-      (when (:macro var)
-        #_(println "Macro.")
-        (println "Function."))
-      (println "\n\n"))
+    (println)
     (when-let [doc (:doc var)]
       (println)
       (print-docstring ns->vars ns-name doc opts))
+    (print-var-metadata-line var)
     ;; This needs to be in its own paragraph since the docstring may end with an indented list
     (println (format "<p><sub><a href=\"%s\">Source</a></sub></p>" (var-source var opts)))
     (when collapse-vars (println "</details>\n\n"))))
@@ -191,6 +216,7 @@
             (println (format "# <a name=\"%s\">%s</a>\n\n" ns-name ns-name))
             (when-let [doc (:doc ns)]
               (print-docstring ns->vars ns-name doc opts))
+            (print-ns-metadata-line ns)
             (println "\n\n")
             (run! (fn [[_ vars]]
                     (let [var (last vars)]
