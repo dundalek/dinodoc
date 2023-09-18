@@ -22,11 +22,11 @@
   "Change special characters into HTML character entities."
   [text]
   (.. ^String text
-    (replace "&"  "&amp;")
-    (replace "<"  "&lt;")
-    (replace ">"  "&gt;")
-    (replace "\"" "&quot;")
-    (replace "'"  "&apos;")))
+      (replace "&"  "&amp;")
+      (replace "<"  "&lt;")
+      (replace ">"  "&gt;")
+      (replace "\"" "&quot;")
+      (replace "'"  "&apos;")))
 
 (defn mini-markdown [s]
   (str/replace s #"`(.*?)`"
