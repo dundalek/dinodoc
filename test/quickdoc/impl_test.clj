@@ -68,3 +68,13 @@
           ["[[wikilink]]" "wikilink"]]
          (impl/extract-var-links impl/backticks-and-wikilinks-pattern
                                  "aaa `backtick-link` bbb [[wikilink]] ccc"))))
+
+(deftest escape-markdown-test
+  (is (= "\\*abc\\*" (impl/escape-markdown "*abc*")))
+  (is (= "\\\\\\`\\*\\_\\{\\}\\[\\]&lt;&gt;\\(\\)\\#\\+\\-\\.\\!\\|" (impl/escape-markdown "\\`*_{}[]<>()#+-.!|"))))
+
+(deftest namespace-link-test
+  ;; These could be normalized to include less `../`, but browser will handle these fine
+  (is (= "../../../promesa/core/" (impl/namespace-link 'promesa.exec.csp 'promesa.core)))
+  (is (= "../../promesa/core/" (impl/namespace-link 'promesa.core 'promesa.core)))
+  (is (= "../../promesa/exec/csp/" (impl/namespace-link 'promesa.exec 'promesa.exec.csp))))

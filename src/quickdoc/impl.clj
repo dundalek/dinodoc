@@ -36,6 +36,18 @@
                (fn [[_ s]]
                  (format "<code>%s</code>" (escape-html s)))))
 
+(defn heading-id [target]
+  ;; using encoding scheme like munge gives us way to determine unique id without keeping any state
+  (-> (str target)
+      (munge)
+      ;; docusaurus does not treat it like id with underscores, replace them with dashes
+      (str/replace #"_" "-")))
+
+(defn heading-reference [target]
+  ;; Syntax to provide custom heading id:
+  ;; https://docusaurus.io/docs/markdown-features/toc#heading-ids
+  (str "{#" (heading-id target) "}"))
+
 (defn var-summary
   "Returns the first sentence of the var's DOC'umentation, if any
 
@@ -49,6 +61,14 @@
                            (some identity))
                   (str norm "."))]
       (mini-markdown sen))))
+
+;; List of escaped characters from: https://github.com/mattcone/markdown-guide/blob/master/_basic-syntax/escaping-characters.md
+(defn escape-markdown [s]
+  (-> s
+      (str/replace #"(\\|`|\*|_|\{|\}|\[|\]|\(|\)|#|\+|-|\.|!|\|)"
+                   (fn [[_ s]] (str "\\" s)))
+      (str/replace #"<" "&lt;")
+      (str/replace #">" "&gt;")))
 
 (defn var-source [var {:keys [github/repo git/branch
                               filename-remove-prefix
@@ -80,6 +100,13 @@
        (map (fn [[raw & inners]]
               [raw (some identity inners)]))))
 
+(defn namespace-link [current-ns target-ns]
+  (str (->> (repeat (count (str/split (str current-ns) #"\.")) "..")
+            (str/join "/"))
+       "/"
+       (str/replace (str target-ns) #"\." "/")
+       "/"))
+
 (defn print-docstring [ns->vars current-ns docstring opts]
   (println
    (if-some [var-regex (:var-regex opts)]
@@ -91,14 +118,17 @@
                    (if (and (= (count split) 2)
                             (get-in ns->vars [(symbol (first split))
                                               (symbol (second split))]))
-                     (str/replace docstring raw (format "[`%s`](#%s)" inner inner))
+                     (str/replace docstring raw (format "[`%s`](%s#%s)" inner
+                                                        (namespace-link current-ns (symbol (first split)))
+                                                        (heading-id (second split))))
+
                      docstring))
                   ;; Not qualified, maybe a namespace
                  (contains? ns->vars (symbol inner))
-                 (str/replace docstring raw (format "[`%s`](#%s)" inner inner))
+                 (str/replace docstring raw (format "[`%s`](%s)" inner (namespace-link current-ns inner)))
                   ;; Not qualified, maybe a var in the current namespace
                  (get-in ns->vars [current-ns (symbol inner)])
-                 (str/replace docstring raw (format "[`%s`](#%s/%s)" inner current-ns inner))
+                 (str/replace docstring raw (format "[`%s`](#%s)" inner (heading-id inner)))
                   ;; Just regular markdown backticks
                  :else
                  docstring))
@@ -134,17 +164,13 @@
 (defn print-ns-metadata-line [ns]
   (print-metadata-line (select-keys ns [:deprecated :added])))
 
-(defn print-var-header [ns-name var]
-  (print "##" (format "<a name=\"%s/%s\">`%s`</a>"
-                      ns-name
-                      (:name var)
-                      (:name var))))
+(defn print-var-header [_ns-name var]
+  (println "###" (escape-markdown (:name var))
+           (heading-reference (:name var))))
 
-(defn print-protocol-member-header [ns-name var]
-  (print "###" (format "<a name=\"%s/%s\">`%s`</a>"
-                       ns-name
-                       (:name var)
-                       (:name var))))
+(defn print-protocol-member-header [_ns-name var]
+  (println "####" (escape-markdown (:name var))
+           (heading-reference (:name var))))
 
 (defn print-var-impl [print-header ns->vars ns-name var _source {:keys [collapse-vars] :as opts}]
   (println)
@@ -160,9 +186,6 @@
     ;; printing the source link in a <sub> below again
     #_(println (format " [📃](%s)"
                        (var-source var opts)))
-    (println (format "<a name=\"%s/%s\"></a>"
-                     ns-name
-                     (:name var)))
     (when-let [arg-lists (or (when-let [quoted-arglists (-> var :meta :arglists)]
                                (if (and (seq? quoted-arglists)
                                         (= 'quote (first quoted-arglists)))
