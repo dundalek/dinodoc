@@ -123,7 +123,7 @@ A protocol function belonging to the protocol Foom.
 (markbar x)
 ```
 
-See [[foo]], and also [[example2/bar]].
+See [`foo`](#codox.example/foo), and also [[example2/bar]].
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L68-L71">Source</a></sub></p>
 
 ## <a name="codox.example/markfoo">`markfoo`</a><a name="codox.example/markfoo"></a>

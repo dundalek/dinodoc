@@ -144,7 +144,7 @@ Same link referenced multiple times will get messed up: [[`foo`](#samples.source
 (links-wikilinks)
 ```
 
-Link to a var in the current namespace: [[foo]]
+Link to a var in the current namespace: [`foo`](#samples.source/foo)
 
   Link to a qualified var: [`samples.crossplatform/some-clj-fn`](#samples.crossplatform/some-clj-fn)
 
