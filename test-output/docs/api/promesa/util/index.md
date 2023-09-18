@@ -14,7 +14,6 @@ toc_max_heading_level: 4
 
 ### \-&gt;Consumer2 {#--GT-Consumer2}
 ``` clojure
-
 (->Consumer2 f)
 ```
 
@@ -22,7 +21,6 @@ toc_max_heading_level: 4
 
 ### \-&gt;Function {#--GT-Function}
 ``` clojure
-
 (->Function f)
 ```
 
@@ -30,7 +28,6 @@ toc_max_heading_level: 4
 
 ### \-&gt;Function2 {#--GT-Function2}
 ``` clojure
-
 (->Function2 f)
 ```
 
@@ -38,7 +35,6 @@ toc_max_heading_level: 4
 
 ### \-&gt;Supplier {#--GT-Supplier}
 ``` clojure
-
 (->Supplier f)
 ```
 
@@ -66,7 +62,6 @@ toc_max_heading_level: 4
 
 ### handler {#handler}
 ``` clojure
-
 (handler fv fc)
 ```
 
@@ -77,7 +72,6 @@ Create a handler, mainly for combine two separate functions
 
 ### ignoring {#ignoring}
 ``` clojure
-
 (ignoring & exprs)
 ```
 
@@ -88,7 +82,6 @@ Create a handler, mainly for combine two separate functions
 
 ### try\! {#try-BANG-}
 ``` clojure
-
 (try! & exprs)
 ```
 

@@ -35,7 +35,6 @@ An example protocol.
 
 #### barp {#barp}
 ``` clojure
-
 (barp x y)
 ```
 
@@ -48,7 +47,6 @@ Another protocol function.
 
 #### foop {#foop}
 ``` clojure
-
 (foop x)
 ```
 
@@ -64,7 +62,6 @@ This is an example var.
 
 ### foo {#foo}
 ``` clojure
-
 (foo x)
 (foo x y & z)
 ```
@@ -75,7 +72,6 @@ This is an example function.
 
 ### foobar {#foobar}
 ``` clojure
-
 (foobar x)
 ```
 
@@ -88,7 +84,6 @@ An obsolete function.
 
 ### foobaz {#foobaz}
 ``` clojure
-
 (foobaz x)
 ```
 
@@ -101,7 +96,6 @@ An obsolete function with a specific version.
 
 ### foom {#foom}
 ``` clojure
-
 (foom x)
 ```
 
@@ -117,7 +111,6 @@ A derefable thing created using reify.
 
 ### markfoo {#markfoo}
 ``` clojure
-
 (markfoo x)
 ```
 
@@ -127,7 +120,6 @@ A docstring that selectively uses **markdown**.
 
 ### quz {#quz}
 ``` clojure
-
 (quz x)
 ```
 
@@ -140,7 +132,6 @@ Another example function.
 
 ### quzbar {#quzbar}
 ``` clojure
-
 (quzbar x)
 ```
 
@@ -153,7 +144,6 @@ A function with a lifespan.
 
 ### zoo? {#zoo-QMARK-}
 ``` clojure
-
 (zoo? x)
 ```
 

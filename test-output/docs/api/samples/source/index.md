@@ -27,7 +27,6 @@ We need to escape var names otherwise earmuffs are not shown but interpreted as 
 
 ### &lt;&lt; {#-LT--LT-}
 ``` clojure
-
 (<<)
 ```
 
@@ -37,7 +36,6 @@ Angle brackets in var name
 
 ### \_underscore\-surrounded\_ {#-underscore-surrounded-}
 ``` clojure
-
 (_underscore-surrounded_)
 ```
 
@@ -45,7 +43,6 @@ Angle brackets in var name
 
 ### a\-macro {#a-macro}
 ``` clojure
-
 (a-macro)
 ```
 
@@ -58,7 +55,6 @@ hello
 
 ### added\-and\-deprecated {#added-and-deprecated}
 ``` clojure
-
 (added-and-deprecated)
 ```
 
@@ -69,7 +65,6 @@ hello
 
 ### added\-tag {#added-tag}
 ``` clojure
-
 (added-tag)
 ```
 
@@ -80,7 +75,6 @@ hello
 
 ### added\-version {#added-version}
 ``` clojure
-
 (added-version)
 ```
 
@@ -91,7 +85,6 @@ hello
 
 ### deprecated\-tag {#deprecated-tag}
 ``` clojure
-
 (deprecated-tag)
 ```
 
@@ -104,7 +97,6 @@ Doc string
 
 ### deprecated\-version {#deprecated-version}
 ``` clojure
-
 (deprecated-version)
 ```
 
@@ -117,7 +109,6 @@ Doc string
 
 ### foo {#foo}
 ``` clojure
-
 (foo)
 ```
 
@@ -127,7 +118,6 @@ Hello
 
 ### has\-&gt;arrow {#has--GT-arrow}
 ``` clojure
-
 (has->arrow)
 ```
 
@@ -135,7 +125,6 @@ Hello
 
 ### links\-backticks {#links-backticks}
 ``` clojure
-
 (links-backticks)
 ```
 
@@ -152,7 +141,6 @@ Link to a var in the current namespace: [`foo`](#foo)
 
 ### links\-backticks\-in\-codeblock {#links-backticks-in-codeblock}
 ``` clojure
-
 (links-backticks-in-codeblock)
 ```
 
@@ -169,7 +157,6 @@ Link to a var in the current namespace: [`foo`](#foo)
 
 ### links\-backticks\-multiple\-occurences {#links-backticks-multiple-occurences}
 ``` clojure
-
 (links-backticks-multiple-occurences)
 ```
 
@@ -179,7 +166,6 @@ Same link referenced multiple times will get messed up: [[`foo`](#foo)](#foo) an
 
 ### links\-wikilinks {#links-wikilinks}
 ``` clojure
-
 (links-wikilinks)
 ```
 

@@ -42,7 +42,6 @@ A defalt executor for channel callback dispatching
 
 ### &lt;\! {#-LT--BANG-}
 ``` clojure
-
 (<! port)
 (<! port timeout-duration)
 (<! port timeout-duration timeout-value)
@@ -54,7 +53,6 @@ A convenience alias for [`take!`](#take-BANG-).
 
 ### &gt;\! {#-GT--BANG-}
 ``` clojure
-
 (>! port val)
 (>! port val timeout-duration)
 (>! port val timeout-duration timeout-value)
@@ -66,7 +64,6 @@ A convenience alias for [`put!`](#put-BANG-).
 
 ### alts {#alts}
 ``` clojure
-
 (alts ports & {:as opts})
 ```
 
@@ -87,7 +84,6 @@ Completes at most one of several operations on channel. Receives a
 
 ### alts\! {#alts-BANG-}
 ``` clojure
-
 (alts! ports & {:as opts})
 ```
 
@@ -97,7 +93,6 @@ A blocking variant of [`alts`](#alts).
 
 ### chan {#chan}
 ``` clojure
-
 (chan & {:keys [buf xf exh exc], :or {exh channel/close-with-exception}})
 ```
 
@@ -109,7 +104,6 @@ Creates a new channel instance, it optionally accepts buffer,
 
 ### chan? {#chan-QMARK-}
 ``` clojure
-
 (chan? o)
 ```
 
@@ -119,7 +113,6 @@ Returns true if `o` is instance of Channel or satisfies IChannel protocol.
 
 ### close\! {#close-BANG-}
 ``` clojure
-
 (close! port)
 (close! port cause)
 ```
@@ -130,7 +123,6 @@ Close the channel.
 
 ### close\-with\-exception {#close-with-exception}
 ``` clojure
-
 (close-with-exception ch cause)
 ```
 
@@ -141,7 +133,6 @@ A channel exception handler that closes the channel with the cause
 
 ### closed? {#closed-QMARK-}
 ``` clojure
-
 (closed? port)
 ```
 
@@ -151,7 +142,6 @@ Returns true if channel is closed.
 
 ### dropping\-buffer {#dropping-buffer}
 ``` clojure
-
 (dropping-buffer n)
 ```
 
@@ -161,7 +151,6 @@ Create a dropping buffer instance.
 
 ### expanding\-buffer {#expanding-buffer}
 ``` clojure
-
 (expanding-buffer n)
 ```
 
@@ -174,7 +163,6 @@ Create a fixed size (but expanding) buffer instance.
 
 ### fixed\-buffer {#fixed-buffer}
 ``` clojure
-
 (fixed-buffer n)
 ```
 
@@ -184,7 +172,6 @@ Create a fixed size buffer instance.
 
 ### go {#go}
 ``` clojure
-
 (go & body)
 ```
 
@@ -203,7 +190,6 @@ Schedules the body to be executed asychronously, potentially using
 
 ### go\-chan {#go-chan}
 ``` clojure
-
 (go-chan & body)
 ```
 
@@ -217,7 +203,6 @@ A convencience go macro version that returns a channel instead of a
 
 ### go\-loop {#go-loop}
 ``` clojure
-
 (go-loop bindings & body)
 ```
 
@@ -230,7 +215,6 @@ A convencience helper macro that combines go + loop.
 
 ### mult {#mult}
 ``` clojure
-
 (mult & {:as opts})
 ```
 
@@ -254,7 +238,6 @@ Creates an instance of multiplexer.
 
 ### mult\* {#mult-STAR-}
 ``` clojure
-
 (mult* ch)
 (mult* ch close?)
 ```
@@ -270,7 +253,6 @@ Create a multiplexer with an externally provided channel. From now,
 
 ### offer\! {#offer-BANG-}
 ``` clojure
-
 (offer! port val)
 ```
 
@@ -282,7 +264,6 @@ Puts a val into channel if it's possible to do so immediately.
 
 ### once\-buffer {#once-buffer}
 ``` clojure
-
 (once-buffer)
 ```
 
@@ -292,7 +273,6 @@ Create a once buffer instance.
 
 ### onto\-chan\! {#onto-chan-BANG-}
 ``` clojure
-
 (onto-chan! ch coll)
 (onto-chan! ch coll close?)
 ```
@@ -307,7 +287,6 @@ Puts the contents of coll into the supplied channel.
 
 ### pipe {#pipe}
 ``` clojure
-
 (pipe from to)
 (pipe from to close?)
 ```
@@ -321,7 +300,6 @@ Takes elements from the from channel and supplies them to the to
 
 ### pipeline {#pipeline}
 ``` clojure
-
 (pipeline & {:keys [typ in out f close? n exh], :or {typ :thread, close? true}})
 ```
 
@@ -369,7 +347,6 @@ Create a processing pipeline with the ability to specify the process
 
 ### poll\! {#poll-BANG-}
 ``` clojure
-
 (poll! port)
 ```
 
@@ -381,7 +358,6 @@ Takes a val from port if it's possible to do so
 
 ### put {#put}
 ``` clojure
-
 (put port val)
 (put port val timeout-duration)
 (put port val timeout-duration timeout-value)
@@ -400,7 +376,6 @@ Schedules a put operation on the channel. Returns a promise
 
 ### put\! {#put-BANG-}
 ``` clojure
-
 (put! port val)
 (put! port val timeout-duration)
 (put! port val timeout-duration timeout-value)
@@ -412,7 +387,6 @@ A blocking version of [`put`](#put).
 
 ### sliding\-buffer {#sliding-buffer}
 ``` clojure
-
 (sliding-buffer n)
 ```
 
@@ -422,7 +396,6 @@ Create a sliding buffer instance.
 
 ### take {#take}
 ``` clojure
-
 (take port)
 (take port timeout-duration)
 (take port timeout-duration timeout-value)
@@ -441,7 +414,6 @@ Schedules a take operation on the channel. Returns a promise instance
 
 ### take\! {#take-BANG-}
 ``` clojure
-
 (take! port)
 (take! port timeout-duration)
 (take! port timeout-duration timeout-value)
@@ -453,7 +425,6 @@ Blocking version of [`take`](#take).
 
 ### tap\! {#tap-BANG-}
 ``` clojure
-
 (tap! mult ch)
 (tap! mult ch close?)
 ```
@@ -464,7 +435,6 @@ Copies the multiplexer source onto the provided channel.
 
 ### thread\-chan {#thread-chan}
 ``` clojure
-
 (thread-chan & body)
 ```
 
@@ -478,7 +448,6 @@ A convencience thread macro version that returns a channel instead of
 
 ### throw\-uncaught {#throw-uncaught}
 ``` clojure
-
 (throw-uncaught ch cause)
 ```
 
@@ -489,7 +458,6 @@ A channel exception handler that throws the exception to the default
 
 ### timeout {#timeout}
 ``` clojure
-
 (timeout ms)
 ```
 
@@ -500,7 +468,6 @@ Returns a promise that will be resolved in the specified timeout. The
 
 ### timeout\-chan {#timeout-chan}
 ``` clojure
-
 (timeout-chan ms)
 (timeout-chan scheduler ms)
 ```
@@ -513,7 +480,6 @@ Returns a channel that will be closed in the specified timeout. The
 
 ### untap\! {#untap-BANG-}
 ``` clojure
-
 (untap! mult ch)
 ```
 

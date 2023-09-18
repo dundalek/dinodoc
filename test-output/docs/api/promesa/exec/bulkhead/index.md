@@ -15,7 +15,6 @@ Bulkhead pattern: limiter of concurrent executions.
 
 ### \-&gt;ExecutorBulkheadTask {#--GT-ExecutorBulkheadTask}
 ``` clojure
-
 (->ExecutorBulkheadTask bulkhead f inst)
 ```
 
@@ -36,7 +35,6 @@ Bulkhead main API
 
 #### \-get\-stats {#-get-stats}
 ``` clojure
-
 (-get-stats _)
 ```
 
@@ -49,7 +47,6 @@ Get internal statistics of the bulkhead instance
 
 #### \-invoke\! {#-invoke-BANG-}
 ``` clojure
-
 (-invoke! _ f)
 ```
 
@@ -69,7 +66,6 @@ Call synchronously a function under bulkhead context
 
 #### \-offer\! {#-offer-BANG-}
 ``` clojure
-
 (-offer! _ _)
 ```
 
@@ -80,7 +76,6 @@ Call synchronously a function under bulkhead context
 
 #### \-poll\! {#-poll-BANG-}
 ``` clojure
-
 (-poll! _)
 ```
 
@@ -91,7 +86,6 @@ Call synchronously a function under bulkhead context
 
 ### bulkhead? {#bulkhead-QMARK-}
 ``` clojure
-
 (bulkhead? o)
 ```
 
@@ -101,7 +95,6 @@ Check if the provided object is instance of Bulkhead type.
 
 ### create {#create}
 ``` clojure
-
 (create & {:keys [type], :as params})
 ```
 
@@ -109,7 +102,6 @@ Check if the provided object is instance of Bulkhead type.
 
 ### get\-stats {#get-stats}
 ``` clojure
-
 (get-stats instance)
 ```
 
@@ -117,7 +109,6 @@ Check if the provided object is instance of Bulkhead type.
 
 ### invoke\! {#invoke-BANG-}
 ``` clojure
-
 (invoke! instance f)
 ```
 
@@ -125,7 +116,6 @@ Check if the provided object is instance of Bulkhead type.
 
 ### log\! {#log-BANG-}
 ``` clojure
-
 (log! & params)
 ```
 

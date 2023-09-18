@@ -23,7 +23,6 @@ Bulkhead main API
 
 #### \-get\-stats {#-get-stats}
 ``` clojure
-
 (-get-stats _)
 ```
 
@@ -36,7 +35,6 @@ Get internal statistics of the bulkhead instance
 
 #### \-invoke\! {#-invoke-BANG-}
 ``` clojure
-
 (-invoke! _ f)
 ```
 
@@ -56,7 +54,6 @@ Call synchronously a function under bulkhead context
 
 #### \-offer\! {#-offer-BANG-}
 ``` clojure
-
 (-offer! _ _)
 ```
 
@@ -67,7 +64,6 @@ Call synchronously a function under bulkhead context
 
 #### \-poll\! {#-poll-BANG-}
 ``` clojure
-
 (-poll! _)
 ```
 

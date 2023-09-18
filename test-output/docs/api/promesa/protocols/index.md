@@ -22,7 +22,6 @@ A generic promise abstraction and related protocols.
 
 #### \-await\! {#-await-BANG-}
 ``` clojure
-
 (-await! it)
 (-await! it duration)
 ```
@@ -43,7 +42,6 @@ block current thread await termination
 
 #### \-full? {#-full-QMARK-}
 ``` clojure
-
 (-full? it)
 ```
 
@@ -54,7 +52,6 @@ block current thread await termination
 
 #### \-offer\! {#-offer-BANG-}
 ``` clojure
-
 (-offer! it val)
 ```
 
@@ -65,7 +62,6 @@ block current thread await termination
 
 #### \-poll\! {#-poll-BANG-}
 ``` clojure
-
 (-poll! it)
 ```
 
@@ -76,7 +72,6 @@ block current thread await termination
 
 #### \-size {#-size}
 ``` clojure
-
 (-size it)
 ```
 
@@ -96,7 +91,6 @@ A cancellation abstraction.
 
 #### \-cancel\! {#-cancel-BANG-}
 ``` clojure
-
 (-cancel! it)
 ```
 
@@ -107,7 +101,6 @@ A cancellation abstraction.
 
 #### \-cancelled? {#-cancelled-QMARK-}
 ``` clojure
-
 (-cancelled? it)
 ```
 
@@ -139,7 +132,6 @@ A cancellation abstraction.
 
 #### \-close\! {#-close-BANG-}
 ``` clojure
-
 (-close! it)
 (-close! it reason)
 ```
@@ -151,7 +143,6 @@ A cancellation abstraction.
 
 #### \-closed? {#-closed-QMARK-}
 ``` clojure
-
 (-closed? it)
 ```
 
@@ -169,7 +160,6 @@ A cancellation abstraction.
 
 #### \-reject\! {#-reject-BANG-}
 ``` clojure
-
 (-reject! it e)
 ```
 
@@ -182,7 +172,6 @@ Deliver an error to empty promise.
 
 #### \-resolve\! {#-resolve-BANG-}
 ``` clojure
-
 (-resolve! it v)
 ```
 
@@ -202,7 +191,6 @@ Deliver a value to empty promise.
 
 #### \-exec\! {#-exec-BANG-}
 ``` clojure
-
 (-exec! it task)
 ```
 
@@ -215,7 +203,6 @@ Submit a task and return nil
 
 #### \-run\! {#-run-BANG-}
 ``` clojure
-
 (-run! it task)
 ```
 
@@ -228,7 +215,6 @@ Submit a task and return a promise.
 
 #### \-submit\! {#-submit-BANG-}
 ``` clojure
-
 (-submit! it task)
 ```
 
@@ -248,7 +234,6 @@ Submit a task and return a promise.
 
 #### \-active? {#-active-QMARK-}
 ``` clojure
-
 (-active? it)
 ```
 
@@ -259,7 +244,6 @@ Submit a task and return a promise.
 
 #### \-blockable? {#-blockable-QMARK-}
 ``` clojure
-
 (-blockable? it)
 ```
 
@@ -270,7 +254,6 @@ Submit a task and return a promise.
 
 #### \-commit\! {#-commit-BANG-}
 ``` clojure
-
 (-commit! it)
 ```
 
@@ -290,7 +273,6 @@ An experimental lock protocol, used internally; no public api
 
 #### \-lock\! {#-lock-BANG-}
 ``` clojure
-
 (-lock! it)
 ```
 
@@ -301,7 +283,6 @@ An experimental lock protocol, used internally; no public api
 
 #### \-unlock\! {#-unlock-BANG-}
 ``` clojure
-
 (-unlock! it)
 ```
 
@@ -319,7 +300,6 @@ An experimental lock protocol, used internally; no public api
 
 #### \-fmap {#-fmap}
 ``` clojure
-
 (-fmap it f)
 (-fmap it f executor)
 ```
@@ -333,7 +313,6 @@ Apply function to a computation
 
 #### \-fnly {#-fnly}
 ``` clojure
-
 (-fnly it f)
 (-fnly it f executor)
 ```
@@ -348,7 +327,6 @@ Apply function to a computation independently if is failed or
 
 #### \-hmap {#-hmap}
 ``` clojure
-
 (-hmap it f)
 (-hmap it f executor)
 ```
@@ -363,7 +341,6 @@ Apply function to a computation independently if is failed or
 
 #### \-mcat {#-mcat}
 ``` clojure
-
 (-mcat it f)
 (-mcat it f executor)
 ```
@@ -377,7 +354,6 @@ Apply function to a computation and flatten 1 level
 
 #### \-merr {#-merr}
 ``` clojure
-
 (-merr it f)
 (-merr it f executor)
 ```
@@ -391,7 +367,6 @@ Apply function to a failed computation and flatten 1 level
 
 #### \-then {#-then}
 ``` clojure
-
 (-then it f)
 (-then it f executor)
 ```
@@ -414,7 +389,6 @@ A promise constructor abstraction.
 
 #### \-promise {#-promise}
 ``` clojure
-
 (-promise it)
 ```
 
@@ -434,7 +408,6 @@ Create a promise instance from other types
 
 #### \-take\! {#-take-BANG-}
 ``` clojure
-
 (-take! it handler)
 ```
 
@@ -454,7 +427,6 @@ A generic abstraction for scheduler facilities.
 
 #### \-schedule\! {#-schedule-BANG-}
 ``` clojure
-
 (-schedule! it ms func)
 ```
 
@@ -476,7 +448,6 @@ An experimental semaphore protocol, used internally; no public api
 
 #### \-acquire\! {#-acquire-BANG-}
 ``` clojure
-
 (-acquire! it)
 (-acquire! it n)
 ```
@@ -490,7 +461,6 @@ Acquire 1 or N permits
 
 #### \-release\! {#-release-BANG-}
 ``` clojure
-
 (-release! it)
 (-release! it n)
 ```
@@ -504,7 +474,6 @@ Release 1 or N permits
 
 #### \-try\-acquire\! {#-try-acquire-BANG-}
 ``` clojure
-
 (-try-acquire! it)
 (-try-acquire! it n)
 (-try-acquire! it n t)
@@ -528,7 +497,6 @@ Additional state/introspection abstraction.
 
 #### \-extract {#-extract}
 ``` clojure
-
 (-extract it)
 (-extract it default)
 ```
@@ -542,7 +510,6 @@ Extract the current value.
 
 #### \-pending? {#-pending-QMARK-}
 ``` clojure
-
 (-pending? it)
 ```
 
@@ -555,7 +522,6 @@ Retutns true if a promise is pending.
 
 #### \-rejected? {#-rejected-QMARK-}
 ``` clojure
-
 (-rejected? it)
 ```
 
@@ -568,7 +534,6 @@ Returns true if a promise is rejected.
 
 #### \-resolved? {#-resolved-QMARK-}
 ``` clojure
-
 (-resolved? it)
 ```
 
@@ -588,7 +553,6 @@ Returns true if a promise is resolved.
 
 #### \-put\! {#-put-BANG-}
 ``` clojure
-
 (-put! it val handler)
 ```
 

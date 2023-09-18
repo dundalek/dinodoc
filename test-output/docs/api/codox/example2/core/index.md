@@ -15,7 +15,6 @@ Namespace with three parts
 
 ### inner {#inner}
 ``` clojure
-
 (inner x)
 ```
 

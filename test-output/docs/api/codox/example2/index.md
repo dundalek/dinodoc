@@ -17,7 +17,6 @@ toc_max_heading_level: 4
 
 ### bar {#bar}
 ``` clojure
-
 (bar x & body)
 ```
 
@@ -32,7 +31,6 @@ toc_max_heading_level: 4
 
 ### foo {#foo}
 ``` clojure
-
 (foo x y & z)
 ```
 
@@ -40,7 +38,6 @@ toc_max_heading_level: 4
 
 ### marklinks {#marklinks}
 ``` clojure
-
 (marklinks x)
 ```
 

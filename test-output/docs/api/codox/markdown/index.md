@@ -81,7 +81,6 @@ This is an example of a namespace written in markdown, rather than the usual
 
 ### some\-function {#some-function}
 ``` clojure
-
 (some-function x)
 ```
 

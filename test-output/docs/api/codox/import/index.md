@@ -14,7 +14,6 @@ toc_max_heading_level: 4
 
 ### foop {#foop}
 ``` clojure
-
 (foop & args)
 ```
 

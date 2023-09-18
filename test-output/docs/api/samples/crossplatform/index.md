@@ -15,7 +15,6 @@ And this docstring comes from CLJS.
 
 ### shared\-name {#shared-name}
 ``` clojure
-
 (shared-name)
 ```
 
@@ -25,7 +24,6 @@ CLJ docstring
 
 ### some\-clj\-fn {#some-clj-fn}
 ``` clojure
-
 (some-clj-fn)
 ```
 
@@ -33,7 +31,6 @@ CLJ docstring
 
 ### some\-cljs\-fn {#some-cljs-fn}
 ``` clojure
-
 (some-cljs-fn)
 ```
 

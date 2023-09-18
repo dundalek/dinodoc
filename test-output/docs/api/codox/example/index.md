@@ -27,7 +27,6 @@ A dynamic var.
 
 ### \-&gt;CljsRecord {#--GT-CljsRecord}
 ``` clojure
-
 (->CljsRecord aah choo)
 ```
 
@@ -48,7 +47,6 @@ An example protocol.
 
 #### barp {#barp}
 ``` clojure
-
 (barp x y)
 ```
 
@@ -61,7 +59,6 @@ Another protocol function.
 
 #### foop {#foop}
 ``` clojure
-
 (foop x)
 ```
 
@@ -74,7 +71,6 @@ A protocol function belonging to the protocol Foom.
 
 ### bar {#bar}
 ``` clojure
-
 (bar x & body)
 ```
 
@@ -93,7 +89,6 @@ This is an example var.
 
 ### foo {#foo}
 ``` clojure
-
 (foo x)
 (foo x y & z)
 ```
@@ -104,7 +99,6 @@ This is an example function.
 
 ### foobar {#foobar}
 ``` clojure
-
 (foobar x)
 ```
 
@@ -117,7 +111,6 @@ An obsolete function.
 
 ### foobaz {#foobaz}
 ``` clojure
-
 (foobaz x)
 ```
 
@@ -130,7 +123,6 @@ An obsolete function with a specific version.
 
 ### foom {#foom}
 ``` clojure
-
 (foom x)
 ```
 
@@ -140,7 +132,6 @@ An example multimethod.
 
 ### map\-&gt;CljsRecord {#map--GT-CljsRecord}
 ``` clojure
-
 (map->CljsRecord m)
 ```
 
@@ -148,7 +139,6 @@ An example multimethod.
 
 ### markbar {#markbar}
 ``` clojure
-
 (markbar x)
 ```
 
@@ -158,7 +148,6 @@ See [`foo`](#foo), and also [[example2/bar]].
 
 ### markfoo {#markfoo}
 ``` clojure
-
 (markfoo x)
 ```
 
@@ -168,7 +157,6 @@ A docstring that selectively uses **markdown**.
 
 ### quz {#quz}
 ``` clojure
-
 (quz x)
 ```
 
@@ -181,7 +169,6 @@ Another example function.
 
 ### quzbar {#quzbar}
 ``` clojure
-
 (quzbar x)
 ```
 
@@ -194,7 +181,6 @@ A function with a lifespan.
 
 ### quzquz {#quzquz}
 ``` clojure
-
 (quzquz x)
 ```
 
@@ -204,7 +190,6 @@ This is a ClojureScript-only function.
 
 ### zoo? {#zoo-QMARK-}
 ``` clojure
-
 (zoo? x)
 ```
 

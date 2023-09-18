@@ -14,7 +14,6 @@ toc_max_heading_level: 4
 
 ### \-&gt; {#--GT-}
 ``` clojure
-
 (-> x & forms)
 ```
 
@@ -37,7 +36,6 @@ Like the clojure.core/->, but it will handle promises in values
 
 ### \-&gt;&gt; {#--GT--GT-}
 ``` clojure
-
 (->> x & forms)
 ```
 
@@ -62,7 +60,6 @@ Like the clojure.core/->>, but it will handle promises in values
 
 ### all {#all}
 ``` clojure
-
 (all promises)
 ```
 
@@ -87,7 +84,6 @@ Given an array of promises, return a promise that is fulfilled when
 
 ### any {#any}
 ``` clojure
-
 (any promises)
 (any promises default)
 ```
@@ -99,7 +95,6 @@ Given an array of promises, return a promise that is fulfilled when
 
 ### as\-&gt; {#as--GT-}
 ``` clojure
-
 (as-> expr name & forms)
 ```
 
@@ -114,7 +109,6 @@ Like clojure.core/as->, but it will handle promises in values
 
 ### await {#await}
 ``` clojure
-
 (await resource)
 (await resource duration)
 ```
@@ -128,7 +122,6 @@ A exception safer variant of [`await!`](#await-BANG-). Returns `nil` on timeout
 
 ### await\! {#await-BANG-}
 ``` clojure
-
 (await! resource)
 (await! resource duration)
 ```
@@ -146,7 +139,6 @@ Generic await operation. Block current thread until some operation
 
 ### bind {#bind}
 ``` clojure
-
 (bind p f)
 (bind p f executor)
 ```
@@ -163,7 +155,6 @@ Chains a function `f` to be executed with when the promise `p` is
 
 ### cancel\! {#cancel-BANG-}
 ``` clojure
-
 (cancel! p)
 ```
 
@@ -173,7 +164,6 @@ Cancel the promise.
 
 ### cancelled? {#cancelled-QMARK-}
 ``` clojure
-
 (cancelled? v)
 ```
 
@@ -183,7 +173,6 @@ Return true if `v` is a cancelled promise.
 
 ### catch {#catch}
 ``` clojure
-
 (catch p f)
 (catch p pred-or-type f)
 ```
@@ -202,7 +191,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 ### chain {#chain}
 ``` clojure
-
 (chain p f)
 (chain p f & fs)
 ```
@@ -214,7 +202,6 @@ Chain variable number of functions to be executed serially using
 
 ### chain' {#chain-SINGLEQUOTE-}
 ``` clojure
-
 (chain' p f)
 (chain' p f & fs)
 ```
@@ -226,7 +213,6 @@ Chain variable number of functions to be executed serially using
 
 ### create {#create}
 ``` clojure
-
 (create f)
 (create f executor)
 ```
@@ -240,7 +226,6 @@ Create a promise instance from a factory function. If an executor is
 
 ### deferred {#deferred}
 ``` clojure
-
 (deferred)
 ```
 
@@ -250,7 +235,6 @@ Creates an empty promise instance.
 
 ### deferred? {#deferred-QMARK-}
 ``` clojure
-
 (deferred? v)
 ```
 
@@ -260,7 +244,6 @@ Return true if `v` is a deferred instance.
 
 ### delay {#delay}
 ``` clojure
-
 (delay t)
 (delay t v)
 (delay t v scheduler)
@@ -274,7 +257,6 @@ Given a timeout in miliseconds and optional value, returns a promise
 
 ### do {#do}
 ``` clojure
-
 (do & exprs)
 ```
 
@@ -289,7 +271,6 @@ Execute potentially side effectful code and return a promise resolved
 
 ### do\! {#do-BANG-}
 ``` clojure
-
 (do! & exprs)
 ```
 
@@ -302,7 +283,6 @@ A convenience alias for [`do`](#do) macro.
 
 ### do\* {#do-STAR-}
 ``` clojure
-
 (do* & exprs)
 ```
 
@@ -316,7 +296,6 @@ An exception unsafe do-like macro. Supposes that we are already
 
 ### done? {#done-QMARK-}
 ``` clojure
-
 (done? p)
 ```
 
@@ -326,7 +305,6 @@ Returns true if promise `p` is already done.
 
 ### doseq {#doseq}
 ``` clojure
-
 (doseq [binding xs] & body)
 ```
 
@@ -340,7 +318,6 @@ Simplified version of [`doseq`](#doseq) which takes one binding and a seq, and
 
 ### error {#error}
 ``` clojure
-
 (error f p)
 (error f type p)
 ```
@@ -353,7 +330,6 @@ Same as [`catch`](#catch) but with parameters inverted.
 
 ### extract {#extract}
 ``` clojure
-
 (extract p)
 (extract p default)
 ```
@@ -364,7 +340,6 @@ Returns the current promise value.
 
 ### finally {#finally}
 ``` clojure
-
 (finally p f)
 (finally p f executor)
 ```
@@ -376,7 +351,6 @@ Like [`handle`](#handle) but ignores the return value. Returns a promise that
 
 ### fmap {#fmap}
 ``` clojure
-
 (fmap f p)
 (fmap executor f p)
 ```
@@ -387,7 +361,6 @@ A convenience alias for [`map`](#map).
 
 ### fnly {#fnly}
 ``` clojure
-
 (fnly f p)
 (fnly executor f p)
 ```
@@ -399,7 +372,6 @@ Inverted arguments version of [`finally`](#finally); intended to be used with
 
 ### future {#future}
 ``` clojure
-
 (future & body)
 ```
 
@@ -414,7 +386,6 @@ Analogous macro to `clojure.core/future` that returns promise
 
 ### handle {#handle}
 ``` clojure
-
 (handle p f)
 (handle p f executor)
 ```
@@ -434,7 +405,6 @@ Chains a function `f` to be executed when the promise `p` is completed
 
 ### hcat {#hcat}
 ``` clojure
-
 (hcat f p)
 (hcat executor f p)
 ```
@@ -453,7 +423,6 @@ Chains a function `f` to be executed when the promise `p` is completed
 
 ### hmap {#hmap}
 ``` clojure
-
 (hmap f p)
 (hmap executor f p)
 ```
@@ -472,7 +441,6 @@ Chains a function `f` to be executed when the promise `p` is completed
 
 ### let {#let}
 ``` clojure
-
 (let bindings & body)
 ```
 
@@ -486,7 +454,6 @@ A [`let`](#let) alternative that always returns promise and waits for all the
 
 ### let\* {#let-STAR-}
 ``` clojure
-
 (let* bindings & body)
 ```
 
@@ -500,7 +467,6 @@ An exception unsafe let-like macro. Supposes that we are already
 
 ### loop {#loop}
 ``` clojure
-
 (loop bindings & body)
 ```
 
@@ -511,7 +477,6 @@ An exception unsafe let-like macro. Supposes that we are already
 
 ### map {#map}
 ``` clojure
-
 (map f p)
 (map executor f p)
 ```
@@ -529,7 +494,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 ### mapcat {#mapcat}
 ``` clojure
-
 (mapcat f p)
 (mapcat executor f p)
 ```
@@ -548,7 +512,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 ### mcat {#mcat}
 ``` clojure
-
 (mcat f p)
 (mcat executor f p)
 ```
@@ -559,7 +522,6 @@ A convenience alias for [`mapcat`](#mapcat).
 
 ### merr {#merr}
 ``` clojure
-
 (merr f p)
 (merr executor f p)
 ```
@@ -578,7 +540,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 ### pending? {#pending-QMARK-}
 ``` clojure
-
 (pending? p)
 ```
 
@@ -588,7 +549,6 @@ Returns true if promise `p` is stil pending.
 
 ### plet {#plet}
 ``` clojure
-
 (plet bindings & body)
 ```
 
@@ -602,7 +562,6 @@ A parallel let; executes all the bindings in parallel and when all
 
 ### promise {#promise}
 ``` clojure
-
 (promise v)
 (promise v executor)
 ```
@@ -617,7 +576,6 @@ The coerce based promise constructor. Creates an appropriate promise
 
 ### promise? {#promise-QMARK-}
 ``` clojure
-
 (promise? v)
 ```
 
@@ -627,7 +585,6 @@ Return true if `v` is a promise instance.
 
 ### promisify {#promisify}
 ``` clojure
-
 (promisify callable)
 ```
 
@@ -639,7 +596,6 @@ Given a function that accepts a callback as the last argument, return a
 
 ### race {#race}
 ``` clojure
-
 (race promises)
 ```
 
@@ -647,7 +603,6 @@ Given a function that accepts a callback as the last argument, return a
 
 ### recur {#recur}
 ``` clojure
-
 (recur & args)
 ```
 
@@ -658,7 +613,6 @@ Given a function that accepts a callback as the last argument, return a
 
 ### recur? {#recur-QMARK-}
 ``` clojure
-
 (recur? o)
 ```
 
@@ -666,7 +620,6 @@ Given a function that accepts a callback as the last argument, return a
 
 ### reject\! {#reject-BANG-}
 ``` clojure
-
 (reject! p e)
 ```
 
@@ -676,7 +629,6 @@ Reject a completable promise with an error.
 
 ### rejected {#rejected}
 ``` clojure
-
 (rejected v)
 ```
 
@@ -686,7 +638,6 @@ Return a rejected promise with provided reason.
 
 ### rejected? {#rejected-QMARK-}
 ``` clojure
-
 (rejected? p)
 ```
 
@@ -696,7 +647,6 @@ Returns true if promise `p` is already rejected.
 
 ### resolve\! {#resolve-BANG-}
 ``` clojure
-
 (resolve! o)
 (resolve! o v)
 ```
@@ -707,7 +657,6 @@ Resolve a completable promise with a value.
 
 ### resolved {#resolved}
 ``` clojure
-
 (resolved v)
 ```
 
@@ -717,7 +666,6 @@ Return a resolved promise with provided value.
 
 ### resolved? {#resolved-QMARK-}
 ``` clojure
-
 (resolved? p)
 ```
 
@@ -727,7 +675,6 @@ Returns true if promise `p` is already fulfilled.
 
 ### run\! {#run-BANG-}
 ``` clojure
-
 (run! f coll)
 (run! f coll executor)
 ```
@@ -738,7 +685,6 @@ A promise aware run! function. Executed in terms of [`then`](#then) rules.
 
 ### then {#then}
 ``` clojure
-
 (then p f)
 (then p f executor)
 ```
@@ -756,7 +702,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 ### then' {#then-SINGLEQUOTE-}
 ``` clojure
-
 (then' p f)
 (then' p f executor)
 ```
@@ -774,7 +719,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 ### thread {#thread}
 ``` clojure
-
 (thread & body)
 ```
 
@@ -788,7 +732,6 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 
 ### thread\-call {#thread-call}
 ``` clojure
-
 (thread-call f)
 (thread-call executor f)
 ```
@@ -801,7 +744,6 @@ Analogous to `clojure.core.async/thread` that returns a promise
 
 ### timeout {#timeout}
 ``` clojure
-
 (timeout p t)
 (timeout p t v)
 (timeout p t v scheduler)
@@ -816,7 +758,6 @@ Returns a cancellable promise that will be fulfilled with this
 
 ### vthread {#vthread}
 ``` clojure
-
 (vthread & body)
 ```
 
@@ -831,7 +772,6 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 
 ### vthread\-call {#vthread-call}
 ``` clojure
-
 (vthread-call f)
 ```
 
@@ -841,7 +781,6 @@ A shortcut for `(p/thread-call :vthread f)`.
 
 ### wait\-all {#wait-all}
 ``` clojure
-
 (wait-all & promises)
 ```
 
@@ -854,7 +793,6 @@ Given a variable number of promises, returns a promise which resolves
 
 ### wait\-all\! {#wait-all-BANG-}
 ``` clojure
-
 (wait-all! promises)
 ```
 
@@ -864,7 +802,6 @@ A blocking version of [`wait-all`](#wait-all).
 
 ### wait\-all\* {#wait-all-STAR-}
 ``` clojure
-
 (wait-all* promises)
 ```
 
@@ -887,7 +824,6 @@ Given an array of promises, return a promise that is fulfilled when
 
 ### with\-redefs {#with-redefs}
 ``` clojure
-
 (with-redefs bindings & body)
 ```
 
@@ -902,7 +838,6 @@ Like clojure.core/with-redefs, but it will handle promises in
 
 ### wrap {#wrap}
 ``` clojure
-
 (wrap v)
 ```
 
