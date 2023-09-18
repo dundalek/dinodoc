@@ -21,16 +21,20 @@
    {:git/branch "master"
     :github/repo "https://github.com/funcool/promesa"
     :source-paths ["test-projects/promesa/src"]
-    ; :outfile (str out-path "/" "promesa" ".md")
     :outdir out-path
     :filename-remove-prefix "test-projects/promesa/"})
   (quickdoc.api/quickdoc
    {:git/branch "master"
     :github/repo "https://github.com/weavejester/codox"
     :source-paths ["test-projects/codox/example/src"]
-    ; :outfile (str out-path "/" "promesa" ".md")
     :outdir out-path
-    :filename-remove-prefix "test-projects/codox/"}))
+    :filename-remove-prefix "test-projects/codox/"})
+  (quickdoc.api/quickdoc
+   {:git/branch "master"
+    :github/repo "https://github.com/borkdude/quickdoc"
+    :source-paths ["test-projects/samples/src"]
+    :outdir out-path
+    :filename-remove-prefix "test-projects/samples"}))
 
 (shutdown-agents)
 
