@@ -19,6 +19,7 @@ And this docstring comes from CLJS.
 (shared-name)
 ```
 
+
 CLJ docstring
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/crossplatform.clj#L6-L8">Source</a></sub></p>
 
@@ -27,6 +28,7 @@ CLJ docstring
 
 (some-clj-fn)
 ```
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/crossplatform.clj#L4-L4">Source</a></sub></p>
 
 ## <a name="samples.crossplatform/some-cljs-fn">`some-cljs-fn`</a><a name="samples.crossplatform/some-cljs-fn"></a>
@@ -34,4 +36,5 @@ CLJ docstring
 
 (some-cljs-fn)
 ```
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/crossplatform.cljs#L4-L4">Source</a></sub></p>

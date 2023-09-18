@@ -21,14 +21,13 @@ This is an example namespace for testing ClojureScript support.
 ## <a name="codox.example3/*conn*">`*conn*`</a><a name="codox.example3/*conn*"></a>
 
 
-
-
 A dynamic var.
+
+*dynamic*
+
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L60-L62">Source</a></sub></p>
 
 ## <a name="codox.example3/Foop">`Foop`</a><a name="codox.example3/Foop"></a>
-
-
 
 
 An example protocol.
@@ -40,12 +39,14 @@ An example protocol.
 (barp x y)
 ```
 
+
 Another protocol function.
+
+*deprecated*
+
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L46-L46">Source</a></sub></p>
 
 ## <a name="codox.example3/baz">`baz`</a><a name="codox.example3/baz"></a>
-
-
 
 
 This is an example var.
@@ -58,6 +59,7 @@ This is an example var.
 (foo x y & z)
 ```
 
+
 This is an example function.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L10-L13">Source</a></sub></p>
 
@@ -67,7 +69,11 @@ This is an example function.
 (foobar x)
 ```
 
+
 An obsolete function.
+
+*deprecated*
+
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L28-L31">Source</a></sub></p>
 
 ## <a name="codox.example3/foobaz">`foobaz`</a><a name="codox.example3/foobaz"></a>
@@ -76,7 +82,11 @@ An obsolete function.
 (foobaz x)
 ```
 
+
 An obsolete function with a specific version.
+
+*deprecated in 1.1*
+
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L33-L36">Source</a></sub></p>
 
 ## <a name="codox.example3/foom">`foom`</a><a name="codox.example3/foom"></a>
@@ -84,6 +94,7 @@ An obsolete function with a specific version.
 
 (foom x)
 ```
+
 
 An example multimethod.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L48-L51">Source</a></sub></p>
@@ -94,12 +105,11 @@ An example multimethod.
 (foop x)
 ```
 
+
 A protocol function belonging to the protocol Foom.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L45-L45">Source</a></sub></p>
 
 ## <a name="codox.example3/froo">`froo`</a><a name="codox.example3/froo"></a>
-
-
 
 
 A derefable thing created using reify.
@@ -111,6 +121,7 @@ A derefable thing created using reify.
 (markfoo x)
 ```
 
+
 A docstring that selectively uses **markdown**.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L55-L58">Source</a></sub></p>
 
@@ -120,7 +131,11 @@ A docstring that selectively uses **markdown**.
 (quz x)
 ```
 
+
 Another example function.
+
+*added in 1.1*
+
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L23-L26">Source</a></sub></p>
 
 ## <a name="codox.example3/quzbar">`quzbar`</a><a name="codox.example3/quzbar"></a>
@@ -129,7 +144,11 @@ Another example function.
 (quzbar x)
 ```
 
+
 A function with a lifespan.
+
+*deprecated in 1.1 | added in 1.0*
+
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L38-L41">Source</a></sub></p>
 
 ## <a name="codox.example3/zoo?">`zoo?`</a><a name="codox.example3/zoo?"></a>
@@ -137,6 +156,7 @@ A function with a lifespan.
 
 (zoo? x)
 ```
+
 
 An example predicate.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L19-L21">Source</a></sub></p>

@@ -17,7 +17,7 @@ toc_max_heading_level: 4
 
 (-> x & forms)
 ```
-Function.
+
 
 Like the clojure.core/->, but it will handle promises in values
   and make sure the next form gets the value realized instead of
@@ -30,6 +30,9 @@ Like the clojure.core/->, but it will handle promises in values
 
   The result of a thread is a promise that will resolve to the
   end of the thread chain.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L686-L704">Source</a></sub></p>
 
 ## <a name="promesa.core/->>">`->>`</a><a name="promesa.core/->>"></a>
@@ -37,7 +40,7 @@ Like the clojure.core/->, but it will handle promises in values
 
 (->> x & forms)
 ```
-Function.
+
 
 Like the clojure.core/->>, but it will handle promises in values
   and make sure the next form gets the value realized instead of
@@ -52,6 +55,9 @@ Like the clojure.core/->>, but it will handle promises in values
 
   The result of a thread is a promise that will resolve to the
   end of the thread chain.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L706-L726">Source</a></sub></p>
 
 ## <a name="promesa.core/all">`all`</a><a name="promesa.core/all"></a>
@@ -59,6 +65,7 @@ Like the clojure.core/->>, but it will handle promises in values
 
 (all promises)
 ```
+
 
 Given an array of promises, return a promise that is fulfilled when
   all the items in the array are fulfilled.
@@ -85,6 +92,7 @@ Given an array of promises, return a promise that is fulfilled when
 (any promises default)
 ```
 
+
 Given an array of promises, return a promise that is fulfilled when
   first one item in the array is fulfilled.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L382-L421">Source</a></sub></p>
@@ -94,11 +102,14 @@ Given an array of promises, return a promise that is fulfilled when
 
 (as-> expr name & forms)
 ```
-Function.
+
 
 Like clojure.core/as->, but it will handle promises in values
    and make sure the next form gets the value realized instead of
    the promise.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L728-L737">Source</a></sub></p>
 
 ## <a name="promesa.core/await">`await`</a><a name="promesa.core/await"></a>
@@ -107,6 +118,7 @@ Like clojure.core/as->, but it will handle promises in values
 (await resource)
 (await resource duration)
 ```
+
 
 A exception safer variant of [`await!`](#promesa.core/await!). Returns `nil` on timeout
   exception, forwards interrupted exception and all other exceptions
@@ -120,6 +132,7 @@ A exception safer variant of [`await!`](#promesa.core/await!). Returns `nil` on 
 (await! resource)
 (await! resource duration)
 ```
+
 
 Generic await operation. Block current thread until some operation
   terminates. Returns `nil` on timeout; does not catch any other
@@ -138,6 +151,7 @@ Generic await operation. Block current thread until some operation
 (bind p f executor)
 ```
 
+
 Chains a function `f` to be executed with when the promise `p` is
   successfully resolved. Returns a promise that will mirror the
   promise instance returned by calling `f` with the value as single
@@ -153,6 +167,7 @@ Chains a function `f` to be executed with when the promise `p` is
 (cancel! p)
 ```
 
+
 Cancel the promise.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L476-L480">Source</a></sub></p>
 
@@ -161,6 +176,7 @@ Cancel the promise.
 
 (cancelled? v)
 ```
+
 
 Return true if `v` is a cancelled promise.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L482-L485">Source</a></sub></p>
@@ -171,6 +187,7 @@ Return true if `v` is a cancelled promise.
 (catch p f)
 (catch p pred-or-type f)
 ```
+
 
 Chains a function `f` to be executed when the promise `p` is
   rejected. Returns a promise that will be resolved with the return
@@ -190,6 +207,7 @@ Chains a function `f` to be executed when the promise `p` is
 (chain p f & fs)
 ```
 
+
 Chain variable number of functions to be executed serially using
   [`then`](#promesa.core/then).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L218-L222">Source</a></sub></p>
@@ -201,6 +219,7 @@ Chain variable number of functions to be executed serially using
 (chain' p f & fs)
 ```
 
+
 Chain variable number of functions to be executed serially using
   [`map`](#promesa.core/map).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L224-L228">Source</a></sub></p>
@@ -211,6 +230,7 @@ Chain variable number of functions to be executed serially using
 (create f)
 (create f executor)
 ```
+
 
 Create a promise instance from a factory function. If an executor is
   provided, the factory will be executed in the provided executor.
@@ -224,6 +244,7 @@ Create a promise instance from a factory function. If an executor is
 (deferred)
 ```
 
+
 Creates an empty promise instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L42-L45">Source</a></sub></p>
 
@@ -232,6 +253,7 @@ Creates an empty promise instance.
 
 (deferred? v)
 ```
+
 
 Return true if `v` is a deferred instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L92-L95">Source</a></sub></p>
@@ -244,6 +266,7 @@ Return true if `v` is a deferred instance.
 (delay t v scheduler)
 ```
 
+
 Given a timeout in miliseconds and optional value, returns a promise
   that will be fulfilled with provided value (or nil) after the time is
   reached.
@@ -254,11 +277,14 @@ Given a timeout in miliseconds and optional value, returns a promise
 
 (do & exprs)
 ```
-Function.
+
 
 Execute potentially side effectful code and return a promise resolved
   to the last expression after awaiting the result of each
   expression.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L561-L569">Source</a></sub></p>
 
 ## <a name="promesa.core/do!">`do!`</a><a name="promesa.core/do!"></a>
@@ -266,9 +292,12 @@ Execute potentially side effectful code and return a promise resolved
 
 (do! & exprs)
 ```
-Function.
+
 
 A convenience alias for [`do`](#promesa.core/do) macro.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L571-L574">Source</a></sub></p>
 
 ## <a name="promesa.core/do*">`do*`</a><a name="promesa.core/do*"></a>
@@ -276,10 +305,13 @@ A convenience alias for [`do`](#promesa.core/do) macro.
 
 (do* & exprs)
 ```
-Function.
+
 
 An exception unsafe do-like macro. Supposes that we are already
   wrapped in promise context so avoids defensive wrapping.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L549-L559">Source</a></sub></p>
 
 ## <a name="promesa.core/done?">`done?`</a><a name="promesa.core/done?"></a>
@@ -287,6 +319,7 @@ An exception unsafe do-like macro. Supposes that we are already
 
 (done? p)
 ```
+
 
 Returns true if promise `p` is already done.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L127-L130">Source</a></sub></p>
@@ -296,10 +329,13 @@ Returns true if promise `p` is already done.
 
 (doseq [binding xs] & body)
 ```
-Function.
+
 
 Simplified version of [`doseq`](#promesa.core/doseq) which takes one binding and a seq, and
   runs over it using [`promesa.core/run!`](#promesa.core/run!)
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L761-L767">Source</a></sub></p>
 
 ## <a name="promesa.core/error">`error`</a><a name="promesa.core/error"></a>
@@ -308,6 +344,7 @@ Simplified version of [`doseq`](#promesa.core/doseq) which takes one binding and
 (error f p)
 (error f type p)
 ```
+
 
 Same as [`catch`](#promesa.core/catch) but with parameters inverted.
 
@@ -321,6 +358,7 @@ Same as [`catch`](#promesa.core/catch) but with parameters inverted.
 (extract p default)
 ```
 
+
 Returns the current promise value.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L120-L125">Source</a></sub></p>
 
@@ -330,6 +368,7 @@ Returns the current promise value.
 (finally p f)
 (finally p f executor)
 ```
+
 
 Like [`handle`](#promesa.core/handle) but ignores the return value. Returns a promise that
   will mirror the original one.
@@ -342,6 +381,7 @@ Like [`handle`](#promesa.core/handle) but ignores the return value. Returns a pr
 (fmap executor f p)
 ```
 
+
 A convenience alias for [`map`](#promesa.core/map).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L189-L194">Source</a></sub></p>
 
@@ -352,6 +392,7 @@ A convenience alias for [`map`](#promesa.core/map).
 (fnly executor f p)
 ```
 
+
 Inverted arguments version of [`finally`](#promesa.core/finally); intended to be used with
   [`->>`](#promesa.core/->>).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L306-L312">Source</a></sub></p>
@@ -361,11 +402,14 @@ Inverted arguments version of [`finally`](#promesa.core/finally); intended to be
 
 (future & body)
 ```
-Function.
+
 
 Analogous macro to `clojure.core/future` that returns promise
   instance instead of the `Future`. Exposed just for convenience and
   works as an alias to [`thread`](#promesa.core/thread).
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L634-L639">Source</a></sub></p>
 
 ## <a name="promesa.core/handle">`handle`</a><a name="promesa.core/handle"></a>
@@ -374,6 +418,7 @@ Analogous macro to `clojure.core/future` that returns promise
 (handle p f)
 (handle p f executor)
 ```
+
 
 Chains a function `f` to be executed when the promise `p` is completed
   (resolved or rejected) and returns a promise completed (resolving or
@@ -394,6 +439,7 @@ Chains a function `f` to be executed when the promise `p` is completed
 (hcat executor f p)
 ```
 
+
 Chains a function `f` to be executed when the promise `p` is completed
   (resolved or rejected) and returns a promise that will mirror the
   promise instance returned by calling `f` with both: value and the
@@ -412,6 +458,7 @@ Chains a function `f` to be executed when the promise `p` is completed
 (hmap executor f p)
 ```
 
+
 Chains a function `f` to be executed when the promise `p` is completed
   (resolved or rejected) and returns a promise completed (resolving or
   rejecting) with the return value of calling `f` with both: value and
@@ -428,10 +475,13 @@ Chains a function `f` to be executed when the promise `p` is completed
 
 (let bindings & body)
 ```
-Function.
+
 
 A [`let`](#promesa.core/let) alternative that always returns promise and waits for all the
   promises on the bindings.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L586-L594">Source</a></sub></p>
 
 ## <a name="promesa.core/let*">`let*`</a><a name="promesa.core/let*"></a>
@@ -439,10 +489,13 @@ A [`let`](#promesa.core/let) alternative that always returns promise and waits f
 
 (let* bindings & body)
 ```
-Function.
+
 
 An exception unsafe let-like macro. Supposes that we are already
   wrapped in promise context so avoids defensive wrapping.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L576-L584">Source</a></sub></p>
 
 ## <a name="promesa.core/loop">`loop`</a><a name="promesa.core/loop"></a>
@@ -450,7 +503,10 @@ An exception unsafe let-like macro. Supposes that we are already
 
 (loop bindings & body)
 ```
-Function.
+
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L646-L680">Source</a></sub></p>
 
 ## <a name="promesa.core/map">`map`</a><a name="promesa.core/map"></a>
@@ -459,6 +515,7 @@ Function.
 (map f p)
 (map executor f p)
 ```
+
 
 Chains a function `f` to be executed when the promise `p` is
   successfully resolved. Returns a promise that will be resolved with
@@ -476,6 +533,7 @@ Chains a function `f` to be executed when the promise `p` is
 (mapcat f p)
 (mapcat executor f p)
 ```
+
 
 Chains a function `f` to be executed when the promise `p` is
   successfully resolved. Returns a promise that will mirror the
@@ -495,6 +553,7 @@ Chains a function `f` to be executed when the promise `p` is
 (mcat executor f p)
 ```
 
+
 A convenience alias for [`mapcat`](#promesa.core/mapcat).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L211-L216">Source</a></sub></p>
 
@@ -504,6 +563,7 @@ A convenience alias for [`mapcat`](#promesa.core/mapcat).
 (merr f p)
 (merr executor f p)
 ```
+
 
 Chains a function `f` to be executed when the promise `p` is
   rejected. Returns a promise that will mirror the promise returned by
@@ -522,6 +582,7 @@ Chains a function `f` to be executed when the promise `p` is
 (pending? p)
 ```
 
+
 Returns true if promise `p` is stil pending.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L115-L118">Source</a></sub></p>
 
@@ -530,10 +591,13 @@ Returns true if promise `p` is stil pending.
 
 (plet bindings & body)
 ```
-Function.
+
 
 A parallel let; executes all the bindings in parallel and when all
   bindings are resolved, executes the body.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L596-L607">Source</a></sub></p>
 
 ## <a name="promesa.core/promise">`promise`</a><a name="promesa.core/promise"></a>
@@ -542,6 +606,7 @@ A parallel let; executes all the bindings in parallel and when all
 (promise v)
 (promise v executor)
 ```
+
 
 The coerce based promise constructor. Creates an appropriate promise
   instance depending on the provided value.
@@ -556,6 +621,7 @@ The coerce based promise constructor. Creates an appropriate promise
 (promise? v)
 ```
 
+
 Return true if `v` is a promise instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L87-L90">Source</a></sub></p>
 
@@ -564,6 +630,7 @@ Return true if `v` is a promise instance.
 
 (promisify callable)
 ```
+
 
 Given a function that accepts a callback as the last argument, return a
   function that returns a promise. Callback is expected to take one
@@ -575,6 +642,7 @@ Given a function that accepts a callback as the last argument, return a
 
 (race promises)
 ```
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L378-L380">Source</a></sub></p>
 
 ## <a name="promesa.core/recur">`recur`</a><a name="promesa.core/recur"></a>
@@ -582,7 +650,10 @@ Given a function that accepts a callback as the last argument, return a
 
 (recur & args)
 ```
-Function.
+
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L682-L684">Source</a></sub></p>
 
 ## <a name="promesa.core/recur?">`recur?`</a><a name="promesa.core/recur?"></a>
@@ -590,6 +661,7 @@ Function.
 
 (recur? o)
 ```
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L642-L644">Source</a></sub></p>
 
 ## <a name="promesa.core/reject!">`reject!`</a><a name="promesa.core/reject!"></a>
@@ -597,6 +669,7 @@ Function.
 
 (reject! p e)
 ```
+
 
 Reject a completable promise with an error.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L494-L497">Source</a></sub></p>
@@ -607,6 +680,7 @@ Reject a completable promise with an error.
 (rejected v)
 ```
 
+
 Return a rejected promise with provided reason.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L37-L40">Source</a></sub></p>
 
@@ -615,6 +689,7 @@ Return a rejected promise with provided reason.
 
 (rejected? p)
 ```
+
 
 Returns true if promise `p` is already rejected.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L110-L113">Source</a></sub></p>
@@ -626,6 +701,7 @@ Returns true if promise `p` is already rejected.
 (resolve! o v)
 ```
 
+
 Resolve a completable promise with a value.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L489-L492">Source</a></sub></p>
 
@@ -635,6 +711,7 @@ Resolve a completable promise with a value.
 (resolved v)
 ```
 
+
 Return a resolved promise with provided value.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L32-L35">Source</a></sub></p>
 
@@ -643,6 +720,7 @@ Return a resolved promise with provided value.
 
 (resolved? p)
 ```
+
 
 Returns true if promise `p` is already fulfilled.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L105-L108">Source</a></sub></p>
@@ -654,6 +732,7 @@ Returns true if promise `p` is already fulfilled.
 (run! f coll executor)
 ```
 
+
 A promise aware run! function. Executed in terms of [`then`](#promesa.core/then) rules.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L465-L472">Source</a></sub></p>
 
@@ -663,6 +742,7 @@ A promise aware run! function. Executed in terms of [`then`](#promesa.core/then)
 (then p f)
 (then p f executor)
 ```
+
 
 Chains a function `f` to be executed when the promise `p` is
   successfully resolved. Returns a promise that will be resolved with
@@ -681,6 +761,7 @@ Chains a function `f` to be executed when the promise `p` is
 (then' p f executor)
 ```
 
+
 Chains a function `f` to be executed when the promise `p` is
   successfully resolved. Returns a promise that will be resolved with
   the return value of calling `f` with value as single argument; `f`
@@ -696,10 +777,13 @@ Chains a function `f` to be executed when the promise `p` is
 
 (thread & body)
 ```
-Function.
+
 
 Analogous to `clojure.core.async/thread` that returns a promise instance
   instead of the `Future`.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L621-L625">Source</a></sub></p>
 
 ## <a name="promesa.core/thread-call">`thread-call`</a><a name="promesa.core/thread-call"></a>
@@ -708,6 +792,7 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 (thread-call f)
 (thread-call executor f)
 ```
+
 
 Analogous to `clojure.core.async/thread` that returns a promise
   instance instead of the `Future`. Useful for executing synchronous
@@ -722,6 +807,7 @@ Analogous to `clojure.core.async/thread` that returns a promise
 (timeout p t v scheduler)
 ```
 
+
 Returns a cancellable promise that will be fulfilled with this
   promise's fulfillment value or rejection reason.  However, if this
   promise is not fulfilled or rejected within `ms` milliseconds, the
@@ -733,11 +819,14 @@ Returns a cancellable promise that will be fulfilled with this
 
 (vthread & body)
 ```
-Function.
+
 
 Analogous to `clojure.core.async/thread` that returns a promise instance
   instead of the `Future`. Useful for executing synchronous code in a
   separate thread (also works in cljs).
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L627-L632">Source</a></sub></p>
 
 ## <a name="promesa.core/vthread-call">`vthread-call`</a><a name="promesa.core/vthread-call"></a>
@@ -745,6 +834,7 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 
 (vthread-call f)
 ```
+
 
 A shortcut for `(p/thread-call :vthread f)`.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L616-L619">Source</a></sub></p>
@@ -754,6 +844,7 @@ A shortcut for `(p/thread-call :vthread f)`.
 
 (wait-all & promises)
 ```
+
 
 Given a variable number of promises, returns a promise which resolves
   to `nil` when all provided promises complete (rejected or resolved).
@@ -767,6 +858,7 @@ Given a variable number of promises, returns a promise which resolves
 (wait-all! promises)
 ```
 
+
 A blocking version of [`wait-all`](#promesa.core/wait-all).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L460-L463">Source</a></sub></p>
 
@@ -775,6 +867,7 @@ A blocking version of [`wait-all`](#promesa.core/wait-all).
 
 (wait-all* promises)
 ```
+
 
 Given an array of promises, return a promise that is fulfilled when
   all the items in the array are resolved (independently if
@@ -797,11 +890,14 @@ Given an array of promises, return a promise that is fulfilled when
 
 (with-redefs bindings & body)
 ```
-Function.
+
 
 Like clojure.core/with-redefs, but it will handle promises in
    body and wait until they resolve or reject before restoring the
    bindings. Useful for mocking async APIs.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/core.cljc#L739-L759">Source</a></sub></p>
 
 ## <a name="promesa.core/wrap">`wrap`</a><a name="promesa.core/wrap"></a>
@@ -809,6 +905,7 @@ Like clojure.core/with-redefs, but it will handle promises in
 
 (wrap v)
 ```
+
 
 A convenience alias for [`promise`](#promesa.core/promise) coercion function that only accepts
   a single argument.

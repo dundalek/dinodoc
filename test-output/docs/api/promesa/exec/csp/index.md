@@ -34,9 +34,10 @@ A core.async analogous implementation of channels that uses promises
 ## <a name="promesa.exec.csp/*executor*">`*executor*`</a><a name="promesa.exec.csp/*executor*"></a>
 
 
-
-
 A defalt executor for channel callback dispatching
+
+*dynamic*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L38-L40">Source</a></sub></p>
 
 ## <a name="promesa.exec.csp/<!">`<!`</a><a name="promesa.exec.csp/<!"></a>
@@ -46,6 +47,7 @@ A defalt executor for channel callback dispatching
 (<! port timeout-duration)
 (<! port timeout-duration timeout-value)
 ```
+
 
 A convenience alias for [`take!`](#promesa.exec.csp/take!).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L182-L189">Source</a></sub></p>
@@ -58,6 +60,7 @@ A convenience alias for [`take!`](#promesa.exec.csp/take!).
 (>! port val timeout-duration timeout-value)
 ```
 
+
 A convenience alias for [`put!`](#promesa.exec.csp/put!).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L146-L153">Source</a></sub></p>
 
@@ -66,6 +69,7 @@ A convenience alias for [`put!`](#promesa.exec.csp/put!).
 
 (alts ports & {:as opts})
 ```
+
 
 Completes at most one of several operations on channel. Receives a
   vector of operations and optional keyword options.
@@ -87,6 +91,7 @@ Completes at most one of several operations on channel. Receives a
 (alts! ports & {:as opts})
 ```
 
+
 A blocking variant of [`alts`](#promesa.exec.csp/alts).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L240-L243">Source</a></sub></p>
 
@@ -95,6 +100,7 @@ A blocking variant of [`alts`](#promesa.exec.csp/alts).
 
 (chan & {:keys [buf xf exh exc], :or {exh channel/close-with-exception}})
 ```
+
 
 Creates a new channel instance, it optionally accepts buffer,
   transducer and error handler. If buffer is an integer, it will be
@@ -107,6 +113,7 @@ Creates a new channel instance, it optionally accepts buffer,
 (chan? o)
 ```
 
+
 Returns true if `o` is instance of Channel or satisfies IChannel protocol.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L259-L262">Source</a></sub></p>
 
@@ -117,6 +124,7 @@ Returns true if `o` is instance of Channel or satisfies IChannel protocol.
 (close! port cause)
 ```
 
+
 Close the channel.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L245-L252">Source</a></sub></p>
 
@@ -125,6 +133,7 @@ Close the channel.
 
 (close-with-exception ch cause)
 ```
+
 
 A channel exception handler that closes the channel with the cause
   if an exception is raised in the transducer.
@@ -136,6 +145,7 @@ A channel exception handler that closes the channel with the cause
 (closed? port)
 ```
 
+
 Returns true if channel is closed.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L254-L257">Source</a></sub></p>
 
@@ -145,6 +155,7 @@ Returns true if channel is closed.
 (dropping-buffer n)
 ```
 
+
 Create a dropping buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L288-L291">Source</a></sub></p>
 
@@ -153,6 +164,7 @@ Create a dropping buffer instance.
 
 (expanding-buffer n)
 ```
+
 
 Create a fixed size (but expanding) buffer instance.
 
@@ -166,6 +178,7 @@ Create a fixed size (but expanding) buffer instance.
 (fixed-buffer n)
 ```
 
+
 Create a fixed size buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L293-L296">Source</a></sub></p>
 
@@ -174,7 +187,7 @@ Create a fixed size buffer instance.
 
 (go & body)
 ```
-Function.
+
 
 Schedules the body to be executed asychronously, potentially using
   virtual thread if available (a normal thread will be used in other
@@ -183,6 +196,9 @@ Schedules the body to be executed asychronously, potentially using
   block finishes.
 
   Forwards dynamic bindings.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L42-L54">Source</a></sub></p>
 
 ## <a name="promesa.exec.csp/go-chan">`go-chan`</a><a name="promesa.exec.csp/go-chan"></a>
@@ -190,10 +206,13 @@ Schedules the body to be executed asychronously, potentially using
 
 (go-chan & body)
 ```
-Function.
+
 
 A convencience go macro version that returns a channel instead of a
   promise instance, has the same semantics as [`go`](#promesa.exec.csp/go) macro.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L65-L76">Source</a></sub></p>
 
 ## <a name="promesa.exec.csp/go-loop">`go-loop`</a><a name="promesa.exec.csp/go-loop"></a>
@@ -201,9 +220,12 @@ A convencience go macro version that returns a channel instead of a
 
 (go-loop bindings & body)
 ```
-Function.
+
 
 A convencience helper macro that combines go + loop.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L56-L59">Source</a></sub></p>
 
 ## <a name="promesa.exec.csp/mult">`mult`</a><a name="promesa.exec.csp/mult"></a>
@@ -211,6 +233,7 @@ A convencience helper macro that combines go + loop.
 
 (mult & {:as opts})
 ```
+
 
 Creates an instance of multiplexer.
 
@@ -236,6 +259,7 @@ Creates an instance of multiplexer.
 (mult* ch close?)
 ```
 
+
 Create a multiplexer with an externally provided channel. From now,
   you can use the external channel or the multiplexer instace to put
   values in because multiplexer implements the IWriteChannel protocol.
@@ -250,6 +274,7 @@ Create a multiplexer with an externally provided channel. From now,
 (offer! port val)
 ```
 
+
 Puts a val into channel if it's possible to do so immediately.
   Returns a resolved promise with `true` if the operation
   succeeded. Never blocks.
@@ -261,6 +286,7 @@ Puts a val into channel if it's possible to do so immediately.
 (once-buffer)
 ```
 
+
 Create a once buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L298-L301">Source</a></sub></p>
 
@@ -270,6 +296,7 @@ Create a once buffer instance.
 (onto-chan! ch coll)
 (onto-chan! ch coll close?)
 ```
+
 
 Puts the contents of coll into the supplied channel.
 
@@ -285,6 +312,7 @@ Puts the contents of coll into the supplied channel.
 (pipe from to close?)
 ```
 
+
 Takes elements from the from channel and supplies them to the to
   channel. By default, the to channel will be closed when the from
   channel closes, but can be determined by the close?  parameter. Will
@@ -296,6 +324,7 @@ Takes elements from the from channel and supplies them to the to
 
 (pipeline & {:keys [typ in out f close? n exh], :or {typ :thread, close? true}})
 ```
+
 
 Create a processing pipeline with the ability to specify the process
   function `proc-fn`, the type of concurrency primitive to
@@ -344,6 +373,7 @@ Create a processing pipeline with the ability to specify the process
 (poll! port)
 ```
 
+
 Takes a val from port if it's possible to do so
   immediatelly. Returns a resolved promise with the value if
   succeeded,  `nil` otherwise.
@@ -356,6 +386,7 @@ Takes a val from port if it's possible to do so
 (put port val timeout-duration)
 (put port val timeout-duration timeout-value)
 ```
+
 
 Schedules a put operation on the channel. Returns a promise
   instance that will resolve to: false if channel is closed, true if
@@ -375,6 +406,7 @@ Schedules a put operation on the channel. Returns a promise
 (put! port val timeout-duration timeout-value)
 ```
 
+
 A blocking version of [`put`](#promesa.exec.csp/put).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L136-L143">Source</a></sub></p>
 
@@ -383,6 +415,7 @@ A blocking version of [`put`](#promesa.exec.csp/put).
 
 (sliding-buffer n)
 ```
+
 
 Create a sliding buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L283-L286">Source</a></sub></p>
@@ -394,6 +427,7 @@ Create a sliding buffer instance.
 (take port timeout-duration)
 (take port timeout-duration timeout-value)
 ```
+
 
 Schedules a take operation on the channel. Returns a promise instance
   that will resolve to: nil if channel is closed, obj if value is
@@ -413,6 +447,7 @@ Schedules a take operation on the channel. Returns a promise instance
 (take! port timeout-duration timeout-value)
 ```
 
+
 Blocking version of [`take`](#promesa.exec.csp/take).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L172-L179">Source</a></sub></p>
 
@@ -423,6 +458,7 @@ Blocking version of [`take`](#promesa.exec.csp/take).
 (tap! mult ch close?)
 ```
 
+
 Copies the multiplexer source onto the provided channel.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L468-L475">Source</a></sub></p>
 
@@ -431,10 +467,13 @@ Copies the multiplexer source onto the provided channel.
 
 (thread-chan & body)
 ```
-Function.
+
 
 A convencience thread macro version that returns a channel instead of
   a promise instance.
+
+*macro*
+
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L78-L89">Source</a></sub></p>
 
 ## <a name="promesa.exec.csp/throw-uncaught">`throw-uncaught`</a><a name="promesa.exec.csp/throw-uncaught"></a>
@@ -442,6 +481,7 @@ A convencience thread macro version that returns a channel instead of
 
 (throw-uncaught ch cause)
 ```
+
 
 A channel exception handler that throws the exception to the default
   uncaught exception handler.
@@ -452,6 +492,7 @@ A channel exception handler that throws the exception to the default
 
 (timeout ms)
 ```
+
 
 Returns a promise that will be resolved in the specified timeout. The
   default scheduler will be used.
@@ -464,6 +505,7 @@ Returns a promise that will be resolved in the specified timeout. The
 (timeout-chan scheduler ms)
 ```
 
+
 Returns a channel that will be closed in the specified timeout. The
   default scheduler will be used. You can provide your own as optional
   first argument.
@@ -474,6 +516,7 @@ Returns a channel that will be closed in the specified timeout. The
 
 (untap! mult ch)
 ```
+
 
 Disconnects a channel from the multiplexer.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L477-L481">Source</a></sub></p>

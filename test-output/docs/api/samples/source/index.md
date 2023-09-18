@@ -10,15 +10,19 @@ toc_max_heading_level: 4
 
 docstring on namespace
 
+*deprecated*
+
+
 
 
 
 ## <a name="samples.source/*dynamic-var-example*">`*dynamic-var-example*`</a><a name="samples.source/*dynamic-var-example*"></a>
 
 
-
-
 We need to escape var names otherwise earmuffs are not shown but interpreted as italic.
+
+*dynamic*
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L9-L11">Source</a></sub></p>
 
 ## <a name="samples.source/<<">`<<`</a><a name="samples.source/<<"></a>
@@ -26,6 +30,7 @@ We need to escape var names otherwise earmuffs are not shown but interpreted as 
 
 (<<)
 ```
+
 
 Angle brackets in var name
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L17-L19">Source</a></sub></p>
@@ -35,6 +40,7 @@ Angle brackets in var name
 
 (_underscore-surrounded_)
 ```
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L13-L13">Source</a></sub></p>
 
 ## <a name="samples.source/a-macro">`a-macro`</a><a name="samples.source/a-macro"></a>
@@ -42,9 +48,12 @@ Angle brackets in var name
 
 (a-macro)
 ```
-Function.
+
 
 hello
+
+*macro*
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L44-L46">Source</a></sub></p>
 
 ## <a name="samples.source/added-and-deprecated">`added-and-deprecated`</a><a name="samples.source/added-and-deprecated"></a>
@@ -52,6 +61,10 @@ hello
 
 (added-and-deprecated)
 ```
+
+
+*deprecated | added in 8.0*
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L39-L42">Source</a></sub></p>
 
 ## <a name="samples.source/added-tag">`added-tag`</a><a name="samples.source/added-tag"></a>
@@ -59,6 +72,10 @@ hello
 
 (added-tag)
 ```
+
+
+*added*
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L31-L33">Source</a></sub></p>
 
 ## <a name="samples.source/added-version">`added-version`</a><a name="samples.source/added-version"></a>
@@ -66,6 +83,10 @@ hello
 
 (added-version)
 ```
+
+
+*added in 8.0*
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L35-L37">Source</a></sub></p>
 
 ## <a name="samples.source/deprecated-tag">`deprecated-tag`</a><a name="samples.source/deprecated-tag"></a>
@@ -74,7 +95,11 @@ hello
 (deprecated-tag)
 ```
 
+
 Doc string
+
+*deprecated*
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L21-L24">Source</a></sub></p>
 
 ## <a name="samples.source/deprecated-version">`deprecated-version`</a><a name="samples.source/deprecated-version"></a>
@@ -83,7 +108,11 @@ Doc string
 (deprecated-version)
 ```
 
+
 Doc string
+
+*deprecated in 9.0*
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L26-L29">Source</a></sub></p>
 
 ## <a name="samples.source/foo">`foo`</a><a name="samples.source/foo"></a>
@@ -91,6 +120,7 @@ Doc string
 
 (foo)
 ```
+
 
 Hello
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L5-L7">Source</a></sub></p>
@@ -100,6 +130,7 @@ Hello
 
 (has->arrow)
 ```
+
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L15-L15">Source</a></sub></p>
 
 ## <a name="samples.source/links-backticks">`links-backticks`</a><a name="samples.source/links-backticks"></a>
@@ -107,6 +138,7 @@ Hello
 
 (links-backticks)
 ```
+
 
 Link to a var in the current namespace: [`foo`](#samples.source/foo)
 
@@ -124,6 +156,7 @@ Link to a var in the current namespace: [`foo`](#samples.source/foo)
 (links-backticks-in-codeblock)
 ```
 
+
  In a code block should ideally not be replaced.
   ```clojure
   ;; Link to a var in the current namespace: [`foo`](#samples.source/foo)
@@ -140,6 +173,7 @@ Link to a var in the current namespace: [`foo`](#samples.source/foo)
 (links-backticks-multiple-occurences)
 ```
 
+
 Same link referenced multiple times will get messed up: [[`foo`](#samples.source/foo)](#samples.source/foo) and [[`foo`](#samples.source/foo)](#samples.source/foo)
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L70-L72">Source</a></sub></p>
 
@@ -148,6 +182,7 @@ Same link referenced multiple times will get messed up: [[`foo`](#samples.source
 
 (links-wikilinks)
 ```
+
 
 Link to a var in the current namespace: [`foo`](#samples.source/foo)
 

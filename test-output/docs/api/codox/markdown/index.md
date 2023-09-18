@@ -73,6 +73,9 @@ This is an example of a namespace written in markdown, rather than the usual
   *[HTML]: Hyper Text Markup Language
   *[HTTP]: Hyper Text Transfer Protocol
 
+*deprecated in 1.3*
+
+
 
 
 
@@ -81,6 +84,7 @@ This is an example of a namespace written in markdown, rather than the usual
 
 (some-function x)
 ```
+
 
 Some function defined in the namespace.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/markdown.clj#L70-L73">Source</a></sub></p>
