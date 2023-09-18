@@ -1,3 +1,6 @@
 .cache
 .cpcache
 test/out
+.clj-kondo/*
+!.clj-kondo/config.edn
+.nrepl-port
