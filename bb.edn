@@ -5,4 +5,6 @@
                                         :toc true})}
          test:bb {:extra-paths ["test"]
                   :task (exec 'runner/run-tests)}
-         test:jvm {:task (clojure "-Sdeps" '{:paths ["src" "test"]} "-X" 'runner/run-tests)}}}
+         test:jvm {:task (clojure "-Sdeps" '{:paths ["src" "test"]} "-X" 'runner/run-tests)}
+
+         test-projects {:task (clojure "-M" "script/test_projects.clj")}}}
