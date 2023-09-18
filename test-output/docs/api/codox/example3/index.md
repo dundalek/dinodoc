@@ -33,7 +33,7 @@ A dynamic var.
 An example protocol.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L43-L46">Source</a></sub></p>
 
-## <a name="codox.example3/barp">`barp`</a><a name="codox.example3/barp"></a>
+### <a name="codox.example3/barp">`barp`</a><a name="codox.example3/barp"></a>
 ``` clojure
 
 (barp x y)
@@ -45,6 +45,16 @@ Another protocol function.
 *deprecated*
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L46-L46">Source</a></sub></p>
+
+### <a name="codox.example3/foop">`foop`</a><a name="codox.example3/foop"></a>
+``` clojure
+
+(foop x)
+```
+
+
+A protocol function belonging to the protocol Foom.
+<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L45-L45">Source</a></sub></p>
 
 ## <a name="codox.example3/baz">`baz`</a><a name="codox.example3/baz"></a>
 
@@ -98,16 +108,6 @@ An obsolete function with a specific version.
 
 An example multimethod.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L48-L51">Source</a></sub></p>
-
-## <a name="codox.example3/foop">`foop`</a><a name="codox.example3/foop"></a>
-``` clojure
-
-(foop x)
-```
-
-
-A protocol function belonging to the protocol Foom.
-<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L45-L45">Source</a></sub></p>
 
 ## <a name="codox.example3/froo">`froo`</a><a name="codox.example3/froo"></a>
 

@@ -46,6 +46,32 @@ An example protocol.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L46-L49">Source</a></sub></p>
 
+### <a name="codox.example/barp">`barp`</a><a name="codox.example/barp"></a>
+``` clojure
+
+(barp x y)
+```
+
+
+Another protocol function.
+
+*protocol | deprecated*
+
+<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L49-L49">Source</a></sub></p>
+
+### <a name="codox.example/foop">`foop`</a><a name="codox.example/foop"></a>
+``` clojure
+
+(foop x)
+```
+
+
+A protocol function belonging to the protocol Foom.
+
+*protocol*
+
+<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L48-L48">Source</a></sub></p>
+
 ## <a name="codox.example/bar">`bar`</a><a name="codox.example/bar"></a>
 ``` clojure
 
@@ -58,19 +84,6 @@ This is an example macro.
 *macro*
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L14-L16">Source</a></sub></p>
-
-## <a name="codox.example/barp">`barp`</a><a name="codox.example/barp"></a>
-``` clojure
-
-(barp x y)
-```
-
-
-Another protocol function.
-
-*protocol | deprecated*
-
-<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L49-L49">Source</a></sub></p>
 
 ## <a name="codox.example/baz">`baz`</a><a name="codox.example/baz"></a>
 
@@ -124,19 +137,6 @@ An obsolete function with a specific version.
 
 An example multimethod.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L51-L54">Source</a></sub></p>
-
-## <a name="codox.example/foop">`foop`</a><a name="codox.example/foop"></a>
-``` clojure
-
-(foop x)
-```
-
-
-A protocol function belonging to the protocol Foom.
-
-*protocol*
-
-<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L48-L48">Source</a></sub></p>
 
 ## <a name="codox.example/map->CljsRecord">`map->CljsRecord`</a><a name="codox.example/map->CljsRecord"></a>
 ``` clojure
