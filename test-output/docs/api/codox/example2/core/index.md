@@ -13,7 +13,7 @@ Namespace with three parts
 
 
 
-## <a name="codox.example2.core/inner">`inner`</a><a name="codox.example2.core/inner"></a>
+### inner {#inner}
 ``` clojure
 
 (inner x)

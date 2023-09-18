@@ -14,7 +14,7 @@ A core.async analogous implementation of channels that uses promises
   threads.
 
   There are no macro transformations, go blocks are just alias for the
-  [`promesa.core/vthread`](#promesa.core/vthread) macro that launches an virtual thread.
+  [`promesa.core/vthread`](../../../promesa/core/#vthread) macro that launches an virtual thread.
 
   This code is based on the same ideas as core.async but the
   implementation is written from scratch, for make it more
@@ -31,7 +31,7 @@ A core.async analogous implementation of channels that uses promises
 
 
 
-## <a name="promesa.exec.csp/*executor*">`*executor*`</a><a name="promesa.exec.csp/*executor*"></a>
+### \*executor\* {#-STAR-executor-STAR-}
 
 
 A defalt executor for channel callback dispatching
@@ -40,7 +40,7 @@ A defalt executor for channel callback dispatching
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L38-L40">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/<!">`<!`</a><a name="promesa.exec.csp/<!"></a>
+### &lt;\! {#-LT--BANG-}
 ``` clojure
 
 (<! port)
@@ -49,10 +49,10 @@ A defalt executor for channel callback dispatching
 ```
 
 
-A convenience alias for [`take!`](#promesa.exec.csp/take!).
+A convenience alias for [`take!`](#take-BANG-).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L182-L189">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/>!">`>!`</a><a name="promesa.exec.csp/>!"></a>
+### &gt;\! {#-GT--BANG-}
 ``` clojure
 
 (>! port val)
@@ -61,10 +61,10 @@ A convenience alias for [`take!`](#promesa.exec.csp/take!).
 ```
 
 
-A convenience alias for [`put!`](#promesa.exec.csp/put!).
+A convenience alias for [`put!`](#put-BANG-).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L146-L153">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/alts">`alts`</a><a name="promesa.exec.csp/alts"></a>
+### alts {#alts}
 ``` clojure
 
 (alts ports & {:as opts})
@@ -85,17 +85,17 @@ Completes at most one of several operations on channel. Receives a
   the operation is succeeded.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L223-L237">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/alts!">`alts!`</a><a name="promesa.exec.csp/alts!"></a>
+### alts\! {#alts-BANG-}
 ``` clojure
 
 (alts! ports & {:as opts})
 ```
 
 
-A blocking variant of [`alts`](#promesa.exec.csp/alts).
+A blocking variant of [`alts`](#alts).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L240-L243">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/chan">`chan`</a><a name="promesa.exec.csp/chan"></a>
+### chan {#chan}
 ``` clojure
 
 (chan & {:keys [buf xf exh exc], :or {exh channel/close-with-exception}})
@@ -107,7 +107,7 @@ Creates a new channel instance, it optionally accepts buffer,
   used as initial capacity for the expanding buffer.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L91-L107">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/chan?">`chan?`</a><a name="promesa.exec.csp/chan?"></a>
+### chan? {#chan-QMARK-}
 ``` clojure
 
 (chan? o)
@@ -117,7 +117,7 @@ Creates a new channel instance, it optionally accepts buffer,
 Returns true if `o` is instance of Channel or satisfies IChannel protocol.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L259-L262">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/close!">`close!`</a><a name="promesa.exec.csp/close!"></a>
+### close\! {#close-BANG-}
 ``` clojure
 
 (close! port)
@@ -128,7 +128,7 @@ Returns true if `o` is instance of Channel or satisfies IChannel protocol.
 Close the channel.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L245-L252">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/close-with-exception">`close-with-exception`</a><a name="promesa.exec.csp/close-with-exception"></a>
+### close\-with\-exception {#close-with-exception}
 ``` clojure
 
 (close-with-exception ch cause)
@@ -139,7 +139,7 @@ A channel exception handler that closes the channel with the cause
   if an exception is raised in the transducer.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L109-L112">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/closed?">`closed?`</a><a name="promesa.exec.csp/closed?"></a>
+### closed? {#closed-QMARK-}
 ``` clojure
 
 (closed? port)
@@ -149,7 +149,7 @@ A channel exception handler that closes the channel with the cause
 Returns true if channel is closed.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L254-L257">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/dropping-buffer">`dropping-buffer`</a><a name="promesa.exec.csp/dropping-buffer"></a>
+### dropping\-buffer {#dropping-buffer}
 ``` clojure
 
 (dropping-buffer n)
@@ -159,7 +159,7 @@ Returns true if channel is closed.
 Create a dropping buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L288-L291">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/expanding-buffer">`expanding-buffer`</a><a name="promesa.exec.csp/expanding-buffer"></a>
+### expanding\-buffer {#expanding-buffer}
 ``` clojure
 
 (expanding-buffer n)
@@ -172,7 +172,7 @@ Create a fixed size (but expanding) buffer instance.
   channel constructor.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L303-L309">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/fixed-buffer">`fixed-buffer`</a><a name="promesa.exec.csp/fixed-buffer"></a>
+### fixed\-buffer {#fixed-buffer}
 ``` clojure
 
 (fixed-buffer n)
@@ -182,7 +182,7 @@ Create a fixed size (but expanding) buffer instance.
 Create a fixed size buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L293-L296">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/go">`go`</a><a name="promesa.exec.csp/go"></a>
+### go {#go}
 ``` clojure
 
 (go & body)
@@ -201,7 +201,7 @@ Schedules the body to be executed asychronously, potentially using
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L42-L54">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/go-chan">`go-chan`</a><a name="promesa.exec.csp/go-chan"></a>
+### go\-chan {#go-chan}
 ``` clojure
 
 (go-chan & body)
@@ -209,13 +209,13 @@ Schedules the body to be executed asychronously, potentially using
 
 
 A convencience go macro version that returns a channel instead of a
-  promise instance, has the same semantics as [`go`](#promesa.exec.csp/go) macro.
+  promise instance, has the same semantics as [`go`](#go) macro.
 
 *macro*
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L65-L76">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/go-loop">`go-loop`</a><a name="promesa.exec.csp/go-loop"></a>
+### go\-loop {#go-loop}
 ``` clojure
 
 (go-loop bindings & body)
@@ -228,7 +228,7 @@ A convencience helper macro that combines go + loop.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L56-L59">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/mult">`mult`</a><a name="promesa.exec.csp/mult"></a>
+### mult {#mult}
 ``` clojure
 
 (mult & {:as opts})
@@ -239,8 +239,8 @@ Creates an instance of multiplexer.
 
   A multiplexer instance acts like a write-only channel what enables a
   broadcast-like (instead of a queue-like) behavior. Channels
-  containing copies of this multiplexer can be attached using [`tap!`](#promesa.exec.csp/tap!)
-  and dettached with [`untap!`](#promesa.exec.csp/untap!).
+  containing copies of this multiplexer can be attached using [`tap!`](#tap-BANG-)
+  and dettached with [`untap!`](#untap-BANG-).
 
   Each item is forwarded to all attached channels in parallel and
   synchronously; use buffers to prevent slow taps from holding up the
@@ -252,7 +252,7 @@ Creates an instance of multiplexer.
   Do not creates vthreads (or threads).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L448-L466">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/mult*">`mult*`</a><a name="promesa.exec.csp/mult*"></a>
+### mult\* {#mult-STAR-}
 ``` clojure
 
 (mult* ch)
@@ -265,10 +265,10 @@ Create a multiplexer with an externally provided channel. From now,
   values in because multiplexer implements the IWriteChannel protocol.
 
   Optionally accepts `close?` argument, that determines if the channel will
-  be closed when [`close!`](#promesa.exec.csp/close!) is called on multiplexer o not.
+  be closed when [`close!`](#close-BANG-) is called on multiplexer o not.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L388-L446">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/offer!">`offer!`</a><a name="promesa.exec.csp/offer!"></a>
+### offer\! {#offer-BANG-}
 ``` clojure
 
 (offer! port val)
@@ -280,7 +280,7 @@ Puts a val into channel if it's possible to do so immediately.
   succeeded. Never blocks.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L311-L318">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/once-buffer">`once-buffer`</a><a name="promesa.exec.csp/once-buffer"></a>
+### once\-buffer {#once-buffer}
 ``` clojure
 
 (once-buffer)
@@ -290,7 +290,7 @@ Puts a val into channel if it's possible to do so immediately.
 Create a once buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L298-L301">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/onto-chan!">`onto-chan!`</a><a name="promesa.exec.csp/onto-chan!"></a>
+### onto\-chan\! {#onto-chan-BANG-}
 ``` clojure
 
 (onto-chan! ch coll)
@@ -305,7 +305,7 @@ Puts the contents of coll into the supplied channel.
   that will be resolved with `nil` once the items are copied.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L361-L386">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/pipe">`pipe`</a><a name="promesa.exec.csp/pipe"></a>
+### pipe {#pipe}
 ``` clojure
 
 (pipe from to)
@@ -319,7 +319,7 @@ Takes elements from the from channel and supplies them to the to
   stop consuming the from channel if the to channel closes.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L332-L359">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/pipeline">`pipeline`</a><a name="promesa.exec.csp/pipeline"></a>
+### pipeline {#pipeline}
 ``` clojure
 
 (pipeline & {:keys [typ in out f close? n exh], :or {typ :thread, close? true}})
@@ -367,7 +367,7 @@ Create a processing pipeline with the ability to specify the process
   releases.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L484-L578">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/poll!">`poll!`</a><a name="promesa.exec.csp/poll!"></a>
+### poll\! {#poll-BANG-}
 ``` clojure
 
 (poll! port)
@@ -379,7 +379,7 @@ Takes a val from port if it's possible to do so
   succeeded,  `nil` otherwise.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L320-L330">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/put">`put`</a><a name="promesa.exec.csp/put"></a>
+### put {#put}
 ``` clojure
 
 (put port val)
@@ -398,7 +398,7 @@ Schedules a put operation on the channel. Returns a promise
   milliseconds.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L119-L133">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/put!">`put!`</a><a name="promesa.exec.csp/put!"></a>
+### put\! {#put-BANG-}
 ``` clojure
 
 (put! port val)
@@ -407,10 +407,10 @@ Schedules a put operation on the channel. Returns a promise
 ```
 
 
-A blocking version of [`put`](#promesa.exec.csp/put).
+A blocking version of [`put`](#put).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L136-L143">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/sliding-buffer">`sliding-buffer`</a><a name="promesa.exec.csp/sliding-buffer"></a>
+### sliding\-buffer {#sliding-buffer}
 ``` clojure
 
 (sliding-buffer n)
@@ -420,7 +420,7 @@ A blocking version of [`put`](#promesa.exec.csp/put).
 Create a sliding buffer instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L283-L286">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/take">`take`</a><a name="promesa.exec.csp/take"></a>
+### take {#take}
 ``` clojure
 
 (take port)
@@ -439,7 +439,7 @@ Schedules a take operation on the channel. Returns a promise instance
   milliseconds.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L155-L169">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/take!">`take!`</a><a name="promesa.exec.csp/take!"></a>
+### take\! {#take-BANG-}
 ``` clojure
 
 (take! port)
@@ -448,10 +448,10 @@ Schedules a take operation on the channel. Returns a promise instance
 ```
 
 
-Blocking version of [`take`](#promesa.exec.csp/take).
+Blocking version of [`take`](#take).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L172-L179">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/tap!">`tap!`</a><a name="promesa.exec.csp/tap!"></a>
+### tap\! {#tap-BANG-}
 ``` clojure
 
 (tap! mult ch)
@@ -462,7 +462,7 @@ Blocking version of [`take`](#promesa.exec.csp/take).
 Copies the multiplexer source onto the provided channel.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L468-L475">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/thread-chan">`thread-chan`</a><a name="promesa.exec.csp/thread-chan"></a>
+### thread\-chan {#thread-chan}
 ``` clojure
 
 (thread-chan & body)
@@ -476,7 +476,7 @@ A convencience thread macro version that returns a channel instead of
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L78-L89">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/throw-uncaught">`throw-uncaught`</a><a name="promesa.exec.csp/throw-uncaught"></a>
+### throw\-uncaught {#throw-uncaught}
 ``` clojure
 
 (throw-uncaught ch cause)
@@ -487,7 +487,7 @@ A channel exception handler that throws the exception to the default
   uncaught exception handler.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L114-L117">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/timeout">`timeout`</a><a name="promesa.exec.csp/timeout"></a>
+### timeout {#timeout}
 ``` clojure
 
 (timeout ms)
@@ -498,7 +498,7 @@ Returns a promise that will be resolved in the specified timeout. The
   default scheduler will be used.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L277-L281">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/timeout-chan">`timeout-chan`</a><a name="promesa.exec.csp/timeout-chan"></a>
+### timeout\-chan {#timeout-chan}
 ``` clojure
 
 (timeout-chan ms)
@@ -511,7 +511,7 @@ Returns a channel that will be closed in the specified timeout. The
   first argument.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/csp.cljc#L264-L275">Source</a></sub></p>
 
-## <a name="promesa.exec.csp/untap!">`untap!`</a><a name="promesa.exec.csp/untap!"></a>
+### untap\! {#untap-BANG-}
 ``` clojure
 
 (untap! mult ch)

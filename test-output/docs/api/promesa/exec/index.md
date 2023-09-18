@@ -13,25 +13,25 @@ Executors & Schedulers facilities.
 
 
 
-## <a name="promesa.exec/*default-executor*">`*default-executor*`</a><a name="promesa.exec/*default-executor*"></a>
+### \*default\-executor\* {#-STAR-default-executor-STAR-}
 
 
 *dynamic*
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L59-L59">Source</a></sub></p>
 
-## <a name="promesa.exec/*default-scheduler*">`*default-scheduler*`</a><a name="promesa.exec/*default-scheduler*"></a>
+### \*default\-scheduler\* {#-STAR-default-scheduler-STAR-}
 
 
 *dynamic*
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L58-L58">Source</a></sub></p>
 
-## <a name="promesa.exec/->ScheduledTask">`->ScheduledTask`</a><a name="promesa.exec/->ScheduledTask"></a>
+### \-&gt;ScheduledTask {#--GT-ScheduledTask}
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L53-L53">Source</a></sub></p>
 
-## <a name="promesa.exec/cached-executor">`cached-executor`</a><a name="promesa.exec/cached-executor"></a>
+### cached\-executor {#cached-executor}
 ``` clojure
 
 (cached-executor & {:keys [max-size factory keepalive], :or {keepalive 60000, max-size Integer/MAX_VALUE}})
@@ -41,7 +41,7 @@ Executors & Schedulers facilities.
 A cached thread executor pool constructor.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L417-L428">Source</a></sub></p>
 
-## <a name="promesa.exec/compile-if-virtual">`compile-if-virtual`</a><a name="promesa.exec/compile-if-virtual"></a>
+### compile\-if\-virtual {#compile-if-virtual}
 ``` clojure
 
 (compile-if-virtual then else)
@@ -52,7 +52,7 @@ A cached thread executor pool constructor.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L74-L76">Source</a></sub></p>
 
-## <a name="promesa.exec/compile-when-virtual">`compile-when-virtual`</a><a name="promesa.exec/compile-when-virtual"></a>
+### compile\-when\-virtual {#compile-when-virtual}
 ``` clojure
 
 (compile-when-virtual body)
@@ -63,7 +63,7 @@ A cached thread executor pool constructor.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L77-L78">Source</a></sub></p>
 
-## <a name="promesa.exec/configure-default-executor!">`configure-default-executor!`</a><a name="promesa.exec/configure-default-executor!"></a>
+### configure\-default\-executor\! {#configure-default-executor-BANG-}
 ``` clojure
 
 (configure-default-executor! & params)
@@ -71,7 +71,7 @@ A cached thread executor pool constructor.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L573-L581">Source</a></sub></p>
 
-## <a name="promesa.exec/current-thread">`current-thread`</a><a name="promesa.exec/current-thread"></a>
+### current\-thread {#current-thread}
 ``` clojure
 
 (current-thread)
@@ -81,7 +81,7 @@ A cached thread executor pool constructor.
 Return the current thread.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L756-L759">Source</a></sub></p>
 
-## <a name="promesa.exec/current-thread-executor">`current-thread-executor`</a><a name="promesa.exec/current-thread-executor"></a>
+### current\-thread\-executor {#current-thread-executor}
 ``` clojure
 
 (current-thread-executor)
@@ -91,25 +91,25 @@ Return the current thread.
 Creates an executor instance that run tasks in the same thread.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L446-L474">Source</a></sub></p>
 
-## <a name="promesa.exec/default-current-thread-executor">`default-current-thread-executor`</a><a name="promesa.exec/default-current-thread-executor"></a>
+### default\-current\-thread\-executor {#default-current-thread-executor}
 
 
 Default Executor instance that runs the task in the same thread.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L108-L110">Source</a></sub></p>
 
-## <a name="promesa.exec/default-executor">`default-executor`</a><a name="promesa.exec/default-executor"></a>
+### default\-executor {#default-executor}
 
 
 Default executor instance, ForkJoinPool/commonPool in JVM, MicrotaskExecutor on JS.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L100-L105">Source</a></sub></p>
 
-## <a name="promesa.exec/default-scheduler">`default-scheduler`</a><a name="promesa.exec/default-scheduler"></a>
+### default\-scheduler {#default-scheduler}
 
 
 Default scheduled executor instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L93-L98">Source</a></sub></p>
 
-## <a name="promesa.exec/exec!">`exec!`</a><a name="promesa.exec/exec!"></a>
+### exec\! {#exec-BANG-}
 ``` clojure
 
 (exec! f)
@@ -121,7 +121,7 @@ Run the task in the provided executor, returns `nil`. Analogous to
   the `(.execute executor f)`. Fire and forget.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L242-L248">Source</a></sub></p>
 
-## <a name="promesa.exec/executor?">`executor?`</a><a name="promesa.exec/executor?"></a>
+### executor? {#executor-QMARK-}
 ``` clojure
 
 (executor? o)
@@ -131,7 +131,7 @@ Run the task in the provided executor, returns `nil`. Analogous to
 Returns true if `o` is an instane of Executor or satisfies IExecutor protocol.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L138-L143">Source</a></sub></p>
 
-## <a name="promesa.exec/fixed-executor">`fixed-executor`</a><a name="promesa.exec/fixed-executor"></a>
+### fixed\-executor {#fixed-executor}
 ``` clojure
 
 (fixed-executor & {:keys [parallelism factory]})
@@ -141,7 +141,7 @@ Returns true if `o` is an instane of Executor or satisfies IExecutor protocol.
 A fixed thread executor pool constructor.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L431-L436">Source</a></sub></p>
 
-## <a name="promesa.exec/fn->thread">`fn->thread`</a><a name="promesa.exec/fn->thread"></a>
+### fn\-&gt;thread {#fn--GT-thread}
 ``` clojure
 
 (fn->thread f & {:keys [daemon start priority name], :or {daemon true, start true, priority Thread/NORM_PRIORITY}})
@@ -149,7 +149,7 @@ A fixed thread executor pool constructor.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L714-L723">Source</a></sub></p>
 
-## <a name="promesa.exec/forkjoin-executor">`forkjoin-executor`</a><a name="promesa.exec/forkjoin-executor"></a>
+### forkjoin\-executor {#forkjoin-executor}
 ``` clojure
 
 (forkjoin-executor
@@ -159,7 +159,7 @@ A fixed thread executor pool constructor.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L546-L564">Source</a></sub></p>
 
-## <a name="promesa.exec/forkjoin-thread-factory">`forkjoin-thread-factory`</a><a name="promesa.exec/forkjoin-thread-factory"></a>
+### forkjoin\-thread\-factory {#forkjoin-thread-factory}
 ``` clojure
 
 (forkjoin-thread-factory & {:keys [name daemon], :or {name "promesa/forkjoin/%s", daemon true}})
@@ -167,7 +167,7 @@ A fixed thread executor pool constructor.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L323-L333">Source</a></sub></p>
 
-## <a name="promesa.exec/get-available-processors">`get-available-processors`</a><a name="promesa.exec/get-available-processors"></a>
+### get\-available\-processors {#get-available-processors}
 ``` clojure
 
 (get-available-processors)
@@ -175,7 +175,7 @@ A fixed thread executor pool constructor.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L89-L91">Source</a></sub></p>
 
-## <a name="promesa.exec/get-name">`get-name`</a><a name="promesa.exec/get-name"></a>
+### get\-name {#get-name}
 ``` clojure
 
 (get-name)
@@ -186,7 +186,7 @@ A fixed thread executor pool constructor.
 Retrieve thread name
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L768-L772">Source</a></sub></p>
 
-## <a name="promesa.exec/get-thread-id">`get-thread-id`</a><a name="promesa.exec/get-thread-id"></a>
+### get\-thread\-id {#get-thread-id}
 ``` clojure
 
 (get-thread-id)
@@ -197,7 +197,7 @@ Retrieve thread name
 Retrieves the thread ID.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L794-L799">Source</a></sub></p>
 
-## <a name="promesa.exec/interrupt!">`interrupt!`</a><a name="promesa.exec/interrupt!"></a>
+### interrupt\! {#interrupt-BANG-}
 ``` clojure
 
 (interrupt!)
@@ -208,7 +208,7 @@ Retrieves the thread ID.
 Interrupt a thread.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L811-L816">Source</a></sub></p>
 
-## <a name="promesa.exec/interrupted?">`interrupted?`</a><a name="promesa.exec/interrupted?"></a>
+### interrupted? {#interrupted-QMARK-}
 ``` clojure
 
 (interrupted?)
@@ -228,7 +228,7 @@ Check if the thread has the interrupted flag set.
   `false`.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L775-L791">Source</a></sub></p>
 
-## <a name="promesa.exec/pmap">`pmap`</a><a name="promesa.exec/pmap"></a>
+### pmap {#pmap}
 ``` clojure
 
 (pmap f coll)
@@ -247,7 +247,7 @@ Analogous to the `clojure.core/pmap` with the excetion that it allows
   this notification is removed.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L667-L694">Source</a></sub></p>
 
-## <a name="promesa.exec/run!">`run!`</a><a name="promesa.exec/run!"></a>
+### run\! {#run-BANG-}
 ``` clojure
 
 (run! f)
@@ -258,7 +258,7 @@ Analogous to the `clojure.core/pmap` with the excetion that it allows
 Run the task in the provided executor.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L250-L255">Source</a></sub></p>
 
-## <a name="promesa.exec/schedule!">`schedule!`</a><a name="promesa.exec/schedule!"></a>
+### schedule\! {#schedule-BANG-}
 ``` clojure
 
 (schedule! ms f)
@@ -273,7 +273,7 @@ Schedule a callable to be executed after the `ms` delay
   it uses the `setTimeout` function.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L268-L277">Source</a></sub></p>
 
-## <a name="promesa.exec/scheduled-executor">`scheduled-executor`</a><a name="promesa.exec/scheduled-executor"></a>
+### scheduled\-executor {#scheduled-executor}
 ``` clojure
 
 (scheduled-executor & {:keys [parallelism factory], :or {parallelism 1}})
@@ -284,7 +284,7 @@ A scheduled thread pool constructor. A ScheduledExecutor (IScheduler
   in CLJS) instance allows execute asynchronous tasks some time later.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L515-L529">Source</a></sub></p>
 
-## <a name="promesa.exec/set-name!">`set-name!`</a><a name="promesa.exec/set-name!"></a>
+### set\-name\! {#set-name-BANG-}
 ``` clojure
 
 (set-name! name)
@@ -295,7 +295,7 @@ A scheduled thread pool constructor. A ScheduledExecutor (IScheduler
 Rename thread.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L762-L765">Source</a></sub></p>
 
-## <a name="promesa.exec/shutdown!">`shutdown!`</a><a name="promesa.exec/shutdown!"></a>
+### shutdown\! {#shutdown-BANG-}
 ``` clojure
 
 (shutdown! executor)
@@ -305,7 +305,7 @@ Rename thread.
 Shutdowns the executor service.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L146-L149">Source</a></sub></p>
 
-## <a name="promesa.exec/shutdown-now!">`shutdown-now!`</a><a name="promesa.exec/shutdown-now!"></a>
+### shutdown\-now\! {#shutdown-now-BANG-}
 ``` clojure
 
 (shutdown-now! executor)
@@ -315,7 +315,7 @@ Shutdowns the executor service.
 Shutdowns and interrupts the executor service.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L152-L155">Source</a></sub></p>
 
-## <a name="promesa.exec/shutdown?">`shutdown?`</a><a name="promesa.exec/shutdown?"></a>
+### shutdown? {#shutdown-QMARK-}
 ``` clojure
 
 (shutdown? executor)
@@ -325,7 +325,7 @@ Shutdowns and interrupts the executor service.
 Check if execitor is in shutdown state.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L158-L161">Source</a></sub></p>
 
-## <a name="promesa.exec/single-executor">`single-executor`</a><a name="promesa.exec/single-executor"></a>
+### single\-executor {#single-executor}
 ``` clojure
 
 (single-executor & {:keys [factory]})
@@ -335,7 +335,7 @@ Check if execitor is in shutdown state.
 A single thread executor pool constructor.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L439-L444">Source</a></sub></p>
 
-## <a name="promesa.exec/sleep">`sleep`</a><a name="promesa.exec/sleep"></a>
+### sleep {#sleep}
 ``` clojure
 
 (sleep ms)
@@ -346,7 +346,7 @@ Turn the current thread to sleep accept a number of milliseconds or
   Duration instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L825-L831">Source</a></sub></p>
 
-## <a name="promesa.exec/submit!">`submit!`</a><a name="promesa.exec/submit!"></a>
+### submit\! {#submit-BANG-}
 ``` clojure
 
 (submit! f)
@@ -361,7 +361,7 @@ Submit a task to be executed in a provided executor
   A task is a plain clojure function.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L257-L266">Source</a></sub></p>
 
-## <a name="promesa.exec/thread">`thread`</a><a name="promesa.exec/thread"></a>
+### thread {#thread}
 ``` clojure
 
 (thread opts & body)
@@ -379,7 +379,7 @@ A low-level, not-pooled thread constructor, it accepts an optional
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L726-L739">Source</a></sub></p>
 
-## <a name="promesa.exec/thread-call">`thread-call`</a><a name="promesa.exec/thread-call"></a>
+### thread\-call {#thread-call}
 ``` clojure
 
 (thread-call f & {:as opts})
@@ -391,7 +391,7 @@ Advanced version of `p/thread-call` that creates and starts a thread
   a plain unpooled thread.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L742-L753">Source</a></sub></p>
 
-## <a name="promesa.exec/thread-factory">`thread-factory`</a><a name="promesa.exec/thread-factory"></a>
+### thread\-factory {#thread-factory}
 ``` clojure
 
 (thread-factory
@@ -403,7 +403,7 @@ Advanced version of `p/thread-call` that creates and starts a thread
 Returns an instance of promesa default thread factory.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L308-L320">Source</a></sub></p>
 
-## <a name="promesa.exec/thread-factory?">`thread-factory?`</a><a name="promesa.exec/thread-factory?"></a>
+### thread\-factory? {#thread-factory-QMARK-}
 ``` clojure
 
 (thread-factory? o)
@@ -413,7 +413,7 @@ Returns an instance of promesa default thread factory.
 Checks if `o` is an instance of ThreadFactory
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L282-L285">Source</a></sub></p>
 
-## <a name="promesa.exec/thread-id">`thread-id`</a><a name="promesa.exec/thread-id"></a>
+### thread\-id {#thread-id}
 ``` clojure
 
 (thread-id)
@@ -427,7 +427,7 @@ Retrieves the thread ID.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L802-L808">Source</a></sub></p>
 
-## <a name="promesa.exec/thread-per-task-executor">`thread-per-task-executor`</a><a name="promesa.exec/thread-per-task-executor"></a>
+### thread\-per\-task\-executor {#thread-per-task-executor}
 ``` clojure
 
 (thread-per-task-executor & {:keys [factory]})
@@ -435,7 +435,7 @@ Retrieves the thread ID.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L533-L537">Source</a></sub></p>
 
-## <a name="promesa.exec/thread?">`thread?`</a><a name="promesa.exec/thread?"></a>
+### thread? {#thread-QMARK-}
 ``` clojure
 
 (thread? t)
@@ -445,7 +445,7 @@ Retrieves the thread ID.
 Check if provided object is a thread instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L819-L822">Source</a></sub></p>
 
-## <a name="promesa.exec/throw-uncaught!">`throw-uncaught!`</a><a name="promesa.exec/throw-uncaught!"></a>
+### throw\-uncaught\! {#throw-uncaught-BANG-}
 ``` clojure
 
 (throw-uncaught! cause)
@@ -455,13 +455,13 @@ Check if provided object is a thread instance.
 Throw an exception to the current uncaught exception handler.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L834-L841">Source</a></sub></p>
 
-## <a name="promesa.exec/virtual-threads-available?">`virtual-threads-available?`</a><a name="promesa.exec/virtual-threads-available?"></a>
+### virtual\-threads\-available? {#virtual-threads-available-QMARK-}
 
 
 Var that indicates the availability of virtual threads.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L61-L70">Source</a></sub></p>
 
-## <a name="promesa.exec/vthread-per-task-executor">`vthread-per-task-executor`</a><a name="promesa.exec/vthread-per-task-executor"></a>
+### vthread\-per\-task\-executor {#vthread-per-task-executor}
 ``` clojure
 
 (vthread-per-task-executor)
@@ -469,16 +469,16 @@ Var that indicates the availability of virtual threads.
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L541-L543">Source</a></sub></p>
 
-## <a name="promesa.exec/vthread-supported?">`vthread-supported?`</a><a name="promesa.exec/vthread-supported?"></a>
+### vthread\-supported? {#vthread-supported-QMARK-}
 
 
-backward compatibility alias for [`virtual-threads-available?`](#promesa.exec/virtual-threads-available?)
+backward compatibility alias for [`virtual-threads-available?`](#virtual-threads-available-QMARK-)
 
 *deprecated*
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L81-L84">Source</a></sub></p>
 
-## <a name="promesa.exec/with-dispatch">`with-dispatch`</a><a name="promesa.exec/with-dispatch"></a>
+### with\-dispatch {#with-dispatch}
 ``` clojure
 
 (with-dispatch executor & body)
@@ -493,14 +493,14 @@ Helper macro for dispatch execution of the body to an executor
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L619-L625">Source</a></sub></p>
 
-## <a name="promesa.exec/with-dispatch!">`with-dispatch!`</a><a name="promesa.exec/with-dispatch!"></a>
+### with\-dispatch\! {#with-dispatch-BANG-}
 ``` clojure
 
 (with-dispatch! executor & body)
 ```
 
 
-Blocking version of [`with-dispatch`](#promesa.exec/with-dispatch). Useful when you want to
+Blocking version of [`with-dispatch`](#with-dispatch). Useful when you want to
   dispatch a blocking operation to a separated thread and join current
   thread waiting for result; effective when current thread is virtual
   thread.
@@ -509,7 +509,7 @@ Blocking version of [`with-dispatch`](#promesa.exec/with-dispatch). Useful when 
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L627-L642">Source</a></sub></p>
 
-## <a name="promesa.exec/with-executor">`with-executor`</a><a name="promesa.exec/with-executor"></a>
+### with\-executor {#with-executor}
 ``` clojure
 
 (with-executor executor & body)
@@ -529,12 +529,12 @@ Binds the *default-executor* var with the provided executor,
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L644-L664">Source</a></sub></p>
 
-## <a name="promesa.exec/work-stealing-executor">`work-stealing-executor`</a><a name="promesa.exec/work-stealing-executor"></a>
+### work\-stealing\-executor {#work-stealing-executor}
 ``` clojure
 
 (work-stealing-executor & params)
 ```
 
 
-An alias for the [`forkjoin-executor`](#promesa.exec/forkjoin-executor).
+An alias for the [`forkjoin-executor`](#forkjoin-executor).
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec.cljc#L567-L570">Source</a></sub></p>

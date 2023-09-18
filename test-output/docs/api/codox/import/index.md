@@ -12,7 +12,7 @@ toc_max_heading_level: 4
 
 
 
-## <a name="codox.import/foop">`foop`</a><a name="codox.import/foop"></a>
+### foop {#foop}
 ``` clojure
 
 (foop & args)

@@ -16,7 +16,7 @@ ClojureScript version.
 
 
 
-## <a name="codox.example/*conn*">`*conn*`</a><a name="codox.example/*conn*"></a>
+### \*conn\* {#-STAR-conn-STAR-}
 
 
 A dynamic var.
@@ -25,7 +25,7 @@ A dynamic var.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L73-L75">Source</a></sub></p>
 
-## <a name="codox.example/->CljsRecord">`->CljsRecord`</a><a name="codox.example/->CljsRecord"></a>
+### \-&gt;CljsRecord {#--GT-CljsRecord}
 ``` clojure
 
 (->CljsRecord aah choo)
@@ -33,11 +33,11 @@ A dynamic var.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.cljs#L13-L13">Source</a></sub></p>
 
-## <a name="codox.example/CljsRecord">`CljsRecord`</a><a name="codox.example/CljsRecord"></a>
+### CljsRecord {#CljsRecord}
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.cljs#L13-L13">Source</a></sub></p>
 
-## <a name="codox.example/Foop">`Foop`</a><a name="codox.example/Foop"></a>
+### Foop {#Foop}
 
 
 An example protocol.
@@ -46,7 +46,7 @@ An example protocol.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L46-L49">Source</a></sub></p>
 
-### <a name="codox.example/barp">`barp`</a><a name="codox.example/barp"></a>
+#### barp {#barp}
 ``` clojure
 
 (barp x y)
@@ -59,7 +59,7 @@ Another protocol function.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L49-L49">Source</a></sub></p>
 
-### <a name="codox.example/foop">`foop`</a><a name="codox.example/foop"></a>
+#### foop {#foop}
 ``` clojure
 
 (foop x)
@@ -72,7 +72,7 @@ A protocol function belonging to the protocol Foom.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L48-L48">Source</a></sub></p>
 
-## <a name="codox.example/bar">`bar`</a><a name="codox.example/bar"></a>
+### bar {#bar}
 ``` clojure
 
 (bar x & body)
@@ -85,13 +85,13 @@ This is an example macro.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L14-L16">Source</a></sub></p>
 
-## <a name="codox.example/baz">`baz`</a><a name="codox.example/baz"></a>
+### baz {#baz}
 
 
 This is an example var.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L18-L20">Source</a></sub></p>
 
-## <a name="codox.example/foo">`foo`</a><a name="codox.example/foo"></a>
+### foo {#foo}
 ``` clojure
 
 (foo x)
@@ -102,7 +102,7 @@ This is an example var.
 This is an example function.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L9-L12">Source</a></sub></p>
 
-## <a name="codox.example/foobar">`foobar`</a><a name="codox.example/foobar"></a>
+### foobar {#foobar}
 ``` clojure
 
 (foobar x)
@@ -115,7 +115,7 @@ An obsolete function.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L31-L34">Source</a></sub></p>
 
-## <a name="codox.example/foobaz">`foobaz`</a><a name="codox.example/foobaz"></a>
+### foobaz {#foobaz}
 ``` clojure
 
 (foobaz x)
@@ -128,7 +128,7 @@ An obsolete function with a specific version.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L36-L39">Source</a></sub></p>
 
-## <a name="codox.example/foom">`foom`</a><a name="codox.example/foom"></a>
+### foom {#foom}
 ``` clojure
 
 (foom x)
@@ -138,7 +138,7 @@ An obsolete function with a specific version.
 An example multimethod.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L51-L54">Source</a></sub></p>
 
-## <a name="codox.example/map->CljsRecord">`map->CljsRecord`</a><a name="codox.example/map->CljsRecord"></a>
+### map\-&gt;CljsRecord {#map--GT-CljsRecord}
 ``` clojure
 
 (map->CljsRecord m)
@@ -146,17 +146,17 @@ An example multimethod.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.cljs#L13-L13">Source</a></sub></p>
 
-## <a name="codox.example/markbar">`markbar`</a><a name="codox.example/markbar"></a>
+### markbar {#markbar}
 ``` clojure
 
 (markbar x)
 ```
 
 
-See [`foo`](#codox.example/foo), and also [[example2/bar]].
+See [`foo`](#foo), and also [[example2/bar]].
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L68-L71">Source</a></sub></p>
 
-## <a name="codox.example/markfoo">`markfoo`</a><a name="codox.example/markfoo"></a>
+### markfoo {#markfoo}
 ``` clojure
 
 (markfoo x)
@@ -166,7 +166,7 @@ See [`foo`](#codox.example/foo), and also [[example2/bar]].
 A docstring that selectively uses **markdown**.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L63-L66">Source</a></sub></p>
 
-## <a name="codox.example/quz">`quz`</a><a name="codox.example/quz"></a>
+### quz {#quz}
 ``` clojure
 
 (quz x)
@@ -179,7 +179,7 @@ Another example function.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L26-L29">Source</a></sub></p>
 
-## <a name="codox.example/quzbar">`quzbar`</a><a name="codox.example/quzbar"></a>
+### quzbar {#quzbar}
 ``` clojure
 
 (quzbar x)
@@ -192,7 +192,7 @@ A function with a lifespan.
 
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L41-L44">Source</a></sub></p>
 
-## <a name="codox.example/quzquz">`quzquz`</a><a name="codox.example/quzquz"></a>
+### quzquz {#quzquz}
 ``` clojure
 
 (quzquz x)
@@ -202,7 +202,7 @@ A function with a lifespan.
 This is a ClojureScript-only function.
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.cljs#L9-L11">Source</a></sub></p>
 
-## <a name="codox.example/zoo?">`zoo?`</a><a name="codox.example/zoo?"></a>
+### zoo? {#zoo-QMARK-}
 ``` clojure
 
 (zoo? x)

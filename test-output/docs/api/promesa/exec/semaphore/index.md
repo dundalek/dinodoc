@@ -13,7 +13,7 @@ Concurrency limiter: Semaphore
 
 
 
-## <a name="promesa.exec.semaphore/acquire!">`acquire!`</a><a name="promesa.exec.semaphore/acquire!"></a>
+### acquire\! {#acquire-BANG-}
 ``` clojure
 
 (acquire! sem)
@@ -22,7 +22,7 @@ Concurrency limiter: Semaphore
 
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/semaphore.clj#L37-L44">Source</a></sub></p>
 
-## <a name="promesa.exec.semaphore/create">`create`</a><a name="promesa.exec.semaphore/create"></a>
+### create {#create}
 ``` clojure
 
 (create & {:keys [permits], :or {permits 1}})
@@ -32,7 +32,7 @@ Concurrency limiter: Semaphore
 Creates a Semaphore instance.
 <p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/semaphore.clj#L51-L55">Source</a></sub></p>
 
-## <a name="promesa.exec.semaphore/release!">`release!`</a><a name="promesa.exec.semaphore/release!"></a>
+### release\! {#release-BANG-}
 ``` clojure
 
 (release! sem)

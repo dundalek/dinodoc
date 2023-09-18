@@ -12,7 +12,7 @@ toc_max_heading_level: 4
 
 
 
-## <a name="samples.protocols/IBulkhead">`IBulkhead`</a><a name="samples.protocols/IBulkhead"></a>
+### IBulkhead {#IBulkhead}
 
 
 Bulkhead main API
@@ -21,7 +21,7 @@ Bulkhead main API
 
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L7-L10">Source</a></sub></p>
 
-### <a name="samples.protocols/-get-stats">`-get-stats`</a><a name="samples.protocols/-get-stats"></a>
+#### \-get\-stats {#-get-stats}
 ``` clojure
 
 (-get-stats _)
@@ -34,7 +34,7 @@ Get internal statistics of the bulkhead instance
 
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L9-L9">Source</a></sub></p>
 
-### <a name="samples.protocols/-invoke!">`-invoke!`</a><a name="samples.protocols/-invoke!"></a>
+#### \-invoke\! {#-invoke-BANG-}
 ``` clojure
 
 (-invoke! _ f)
@@ -47,14 +47,14 @@ Call synchronously a function under bulkhead context
 
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L10-L10">Source</a></sub></p>
 
-## <a name="samples.protocols/IQueue">`IQueue`</a><a name="samples.protocols/IQueue"></a>
+### IQueue {#IQueue}
 
 
 *protocol*
 
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L3-L5">Source</a></sub></p>
 
-### <a name="samples.protocols/-offer!">`-offer!`</a><a name="samples.protocols/-offer!"></a>
+#### \-offer\! {#-offer-BANG-}
 ``` clojure
 
 (-offer! _ _)
@@ -65,7 +65,7 @@ Call synchronously a function under bulkhead context
 
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L5-L5">Source</a></sub></p>
 
-### <a name="samples.protocols/-poll!">`-poll!`</a><a name="samples.protocols/-poll!"></a>
+#### \-poll\! {#-poll-BANG-}
 ``` clojure
 
 (-poll! _)

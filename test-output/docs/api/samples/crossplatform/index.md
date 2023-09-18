@@ -13,7 +13,7 @@ And this docstring comes from CLJS.
 
 
 
-## <a name="samples.crossplatform/shared-name">`shared-name`</a><a name="samples.crossplatform/shared-name"></a>
+### shared\-name {#shared-name}
 ``` clojure
 
 (shared-name)
@@ -23,7 +23,7 @@ And this docstring comes from CLJS.
 CLJ docstring
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/crossplatform.clj#L6-L8">Source</a></sub></p>
 
-## <a name="samples.crossplatform/some-clj-fn">`some-clj-fn`</a><a name="samples.crossplatform/some-clj-fn"></a>
+### some\-clj\-fn {#some-clj-fn}
 ``` clojure
 
 (some-clj-fn)
@@ -31,7 +31,7 @@ CLJ docstring
 
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/crossplatform.clj#L4-L4">Source</a></sub></p>
 
-## <a name="samples.crossplatform/some-cljs-fn">`some-cljs-fn`</a><a name="samples.crossplatform/some-cljs-fn"></a>
+### some\-cljs\-fn {#some-cljs-fn}
 ``` clojure
 
 (some-cljs-fn)
