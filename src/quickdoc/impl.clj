@@ -262,7 +262,10 @@
                 collapse-nss (:collapse-nss opts)]
             (when collapse-nss (println "<details>\n\n"))
             (when collapse-nss (println "<summary><code>" ns-name "</code></summary>\n\n"))
-            (println (format "# <a name=\"%s\">%s</a>\n\n" ns-name ns-name))
+            ;; Printing h1 is not necessary since docusaurus will fill it in
+            ;; But using <a> will end up rendering it with link color which could look nicer
+            ;; But in that case should also make sure to escape properly
+            #_(println (format "# <a name=\"%s\">%s</a>\n\n" ns-name ns-name))
             (when-let [doc (:doc ns)]
               (print-docstring ns->vars ns-name doc opts))
             (print-ns-metadata-line ns)
