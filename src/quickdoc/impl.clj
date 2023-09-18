@@ -134,7 +134,19 @@
 (defn print-ns-metadata-line [ns]
   (print-metadata-line (select-keys ns [:deprecated :added])))
 
-(defn print-var [ns->vars ns-name var _source {:keys [collapse-vars] :as opts}]
+(defn print-var-header [ns-name var]
+  (print "##" (format "<a name=\"%s/%s\">`%s`</a>"
+                      ns-name
+                      (:name var)
+                      (:name var))))
+
+(defn print-protocol-member-header [ns-name var]
+  (print "###" (format "<a name=\"%s/%s\">`%s`</a>"
+                       ns-name
+                       (:name var)
+                       (:name var))))
+
+(defn print-var-impl [print-header ns->vars ns-name var _source {:keys [collapse-vars] :as opts}]
   (println)
   (when (var-filter var)
     (when collapse-vars (println "<details>\n\n"))
@@ -143,10 +155,7 @@
                     (when-let [summary (var-summary var)]
                       (str " - " summary)))
                "</summary>\n\n"))
-    (print "##" (format "<a name=\"%s/%s\">`%s`</a>"
-                        ns-name
-                        (:name var)
-                        (:name var)))
+    (print-header ns-name var)
     ;; I found the icon too big and drawing too much attention, so I reverted to
     ;; printing the source link in a <sub> below again
     #_(println (format " [📃](%s)"
@@ -179,7 +188,12 @@
     (print-var-metadata-line var)
     ;; This needs to be in its own paragraph since the docstring may end with an indented list
     (println (format "<p><sub><a href=\"%s\">Source</a></sub></p>" (var-source var opts)))
+    (doseq [member (:protocol-members var)]
+      (print-var-impl print-protocol-member-header ns->vars ns-name member _source opts))
     (when collapse-vars (println "</details>\n\n"))))
+
+(defn print-var [ns->vars ns-name var _source opts]
+  (print-var-impl print-var-header ns->vars ns-name var _source opts))
 
 (defn print-ns-frontmatter [ns-name]
   (println "---")
@@ -195,6 +209,17 @@
   (println "---")
   (println))
 
+(defn vars-with-grouped-protocols [vars]
+  (let [name->protocol-members (-> (group-by :protocol-name vars)
+                                   (update-vals #(sort-by :name %)))]
+    (->> (name->protocol-members nil)
+         (group-by :name)
+         (map (fn [[_ vars]]
+                (let [var (last vars)
+                      protocol-members (name->protocol-members (:name var))]
+                  (cond-> var
+                    protocol-members (assoc :protocol-members protocol-members))))))))
+
 (defn print-namespace [ns-defs ns->vars ns-name vars opts overrides]
   (let [ns (get-in ns-defs [ns-name 0])
         filename (:filename ns)
@@ -209,7 +234,8 @@
       (let [var-map (zipmap (map :name vars) vars)
             var-map (merge-with merge var-map overriden-ns)]
         (when-let [vars (seq (filter var-filter (vals var-map)))]
-          (let [ana (group-by :name vars)
+          (let [ana (->> (vars-with-grouped-protocols vars)
+                         (group-by :name))
                 collapse-nss (:collapse-nss opts)]
             (when collapse-nss (println "<details>\n\n"))
             (when collapse-nss (println "<summary><code>" ns-name "</code></summary>\n\n"))
