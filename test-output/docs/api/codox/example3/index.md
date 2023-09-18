@@ -28,6 +28,9 @@ A dynamic var.
 
 
 An example protocol.
+
+*protocol*
+
 <p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L43-L46">Source</a></sub></p>
 
 #### barp {#barp}
@@ -38,9 +41,8 @@ An example protocol.
 
 Another protocol function.
 
-*deprecated*
+*protocol | deprecated*
 
-<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L46-L46">Source</a></sub></p>
 
 #### foop {#foop}
 ``` clojure
@@ -49,7 +51,9 @@ Another protocol function.
 
 
 A protocol function belonging to the protocol Foom.
-<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example3.cljs#L45-L45">Source</a></sub></p>
+
+*protocol*
+
 
 ### baz {#baz}
 

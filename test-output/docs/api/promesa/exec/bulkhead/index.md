@@ -40,7 +40,6 @@ Get internal statistics of the bulkhead instance
 
 *protocol*
 
-<p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/bulkhead.clj#L42-L42">Source</a></sub></p>
 
 #### \-invoke\! {#-invoke-BANG-}
 ``` clojure
@@ -52,7 +51,6 @@ Call synchronously a function under bulkhead context
 
 *protocol*
 
-<p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/bulkhead.clj#L43-L43">Source</a></sub></p>
 
 ### IQueue {#IQueue}
 
@@ -69,7 +67,6 @@ Call synchronously a function under bulkhead context
 
 *protocol*
 
-<p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/bulkhead.clj#L38-L38">Source</a></sub></p>
 
 #### \-poll\! {#-poll-BANG-}
 ``` clojure
@@ -79,7 +76,6 @@ Call synchronously a function under bulkhead context
 
 *protocol*
 
-<p><sub><a href="https://github.com/funcool/promesa/blob/master/src/promesa/exec/bulkhead.clj#L37-L37">Source</a></sub></p>
 
 ### bulkhead? {#bulkhead-QMARK-}
 ``` clojure

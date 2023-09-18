@@ -28,7 +28,6 @@ Get internal statistics of the bulkhead instance
 
 *protocol*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L9-L9">Source</a></sub></p>
 
 #### \-invoke\! {#-invoke-BANG-}
 ``` clojure
@@ -40,7 +39,6 @@ Call synchronously a function under bulkhead context
 
 *protocol*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L10-L10">Source</a></sub></p>
 
 ### IQueue {#IQueue}
 
@@ -57,7 +55,6 @@ Call synchronously a function under bulkhead context
 
 *protocol*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L5-L5">Source</a></sub></p>
 
 #### \-poll\! {#-poll-BANG-}
 ``` clojure
@@ -67,4 +64,3 @@ Call synchronously a function under bulkhead context
 
 *protocol*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L4-L4">Source</a></sub></p>

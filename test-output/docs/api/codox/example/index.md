@@ -52,7 +52,6 @@ Another protocol function.
 
 *protocol | deprecated*
 
-<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L49-L49">Source</a></sub></p>
 
 #### foop {#foop}
 ``` clojure
@@ -64,7 +63,6 @@ A protocol function belonging to the protocol Foom.
 
 *protocol*
 
-<p><sub><a href="https://github.com/weavejester/codox/blob/master/example/src/clojure/codox/example.clj#L48-L48">Source</a></sub></p>
 
 ### bar {#bar}
 ``` clojure
