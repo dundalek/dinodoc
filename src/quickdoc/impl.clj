@@ -136,10 +136,14 @@
              (extract-var-links var-regex docstring))
      docstring)))
 
+(defn defined-by-protocol? [{:keys [defined-by] :as _var}]
+  (or (= defined-by 'clojure.core/defprotocol)
+      (= defined-by 'cljs.core/defprotocol)))
+
 (defn print-metadata-line [m]
   (let [macro? (and (:arglist-strs m)
                     (:macro m))
-        protocol? (= (:defined-by m) 'clojure.core/defprotocol)
+        protocol? (defined-by-protocol? m)
         {:keys [deprecated added]} m
         deprecated-str (cond
                          (true? deprecated) "deprecated"
@@ -209,8 +213,11 @@
       (println)
       (print-docstring ns->vars ns-name doc opts))
     (print-var-metadata-line var)
-    ;; This needs to be in its own paragraph since the docstring may end with an indented list
-    (println (format "<p><sub><a href=\"%s\">Source</a></sub></p>" (var-source var opts)))
+    ;; Do not print source link for protocol members because it only adds noise
+    (when-not (and (defined-by-protocol? var)
+                   (empty? (:protocol-members var)))
+      ;; This needs to be in its own paragraph since the docstring may end with an indented list
+      (println (format "<p><sub><a href=\"%s\">Source</a></sub></p>" (var-source var opts))))
     (doseq [member (:protocol-members var)]
       (print-var-impl print-protocol-member-header ns->vars ns-name member _source opts))
     (when collapse-vars (println "</details>\n\n"))))
