@@ -1,5 +1,10 @@
+---
+sidebar_label: source
+title: samples.source
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
 
------
 # <a name="samples.source">samples.source</a>
 
 

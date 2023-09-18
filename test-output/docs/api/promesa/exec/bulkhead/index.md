@@ -1,5 +1,10 @@
+---
+sidebar_label: bulkhead
+title: promesa.exec.bulkhead
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
 
------
 # <a name="promesa.exec.bulkhead">promesa.exec.bulkhead</a>
 
 

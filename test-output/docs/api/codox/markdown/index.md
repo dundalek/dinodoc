@@ -1,5 +1,10 @@
+---
+sidebar_label: markdown
+title: codox.markdown
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
 
------
 # <a name="codox.markdown">codox.markdown</a>
 
 

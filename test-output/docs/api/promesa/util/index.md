@@ -1,5 +1,10 @@
+---
+sidebar_label: util
+title: promesa.util
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
 
------
 # <a name="promesa.util">promesa.util</a>
 
 

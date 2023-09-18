@@ -1,5 +1,10 @@
+---
+sidebar_label: example3
+title: codox.example3
+toc_min_heading_level: 2
+toc_max_heading_level: 4
+---
 
------
 # <a name="codox.example3">codox.example3</a>
 
 
