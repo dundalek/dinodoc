@@ -4,6 +4,7 @@
    #?(:bb [babashka.pods :as pods]
       :clj [clj-kondo.core :as clj-kondo])
    [clojure.java.io :as io]
+   [clojure.string :as str]
    [quickdoc.impl :as impl]))
 
 #?(:bb
@@ -41,7 +42,7 @@
     :collect {:source-paths []}}}
   [opts]
   (let [{:as opts
-         :keys [outfile
+         :keys [outdir
                 source-paths
                 overrides]}   (merge {:git/branch   "main"
                                       :outfile      "API.md"
@@ -67,14 +68,12 @@
         ns-defs (:namespace-definitions ana)
         ns-defs (group-by :name ns-defs)
         nss (group-by :ns var-defs)
-        ns->vars (update-vals nss (comp set (partial map :name)))
-        toc (with-out-str (impl/print-toc nss ns-defs opts overrides))
-        docs (with-out-str
-               (run! (fn [[ns-name vars]]
-                       (impl/print-namespace ns-defs ns->vars ns-name vars opts overrides))
-                     (sort-by first nss)))
-        docs (str toc docs)]
-    (when outfile
-      (io/make-parents outfile)
-      (spit outfile docs))
-    {:markdown docs}))
+        ns->vars (update-vals nss (comp set (partial map :name)))]
+    (run! (fn [[ns-name vars]]
+            (let [docs (with-out-str
+                         (impl/print-namespace ns-defs ns->vars ns-name vars opts overrides))
+                  outfile (str outdir "/" (str/replace ns-name #"\." "/") "/index.md")]
+              (when-not (str/blank? docs)
+                (io/make-parents outfile)
+                (spit outfile docs))))
+          (sort-by first nss))))
