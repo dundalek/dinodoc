@@ -5,9 +5,6 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# <a name="promesa.exec.csp">promesa.exec.csp</a>
-
-
 A core.async analogous implementation of channels that uses promises
   instead of callbacks for all operations and are intended to be used
   as-is (using blocking operations) in go-blocks backed by virtual

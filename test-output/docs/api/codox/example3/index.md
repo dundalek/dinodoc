@@ -5,9 +5,6 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# <a name="codox.example3">codox.example3</a>
-
-
 This is an example namespace for testing ClojureScript support.
 
   Some more detailed description down here.

@@ -5,9 +5,6 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# <a name="codox.example2">codox.example2</a>
-
-
 
 *deprecated in 2.0 | added in 1.1*
 

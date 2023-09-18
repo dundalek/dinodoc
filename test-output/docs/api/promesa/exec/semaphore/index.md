@@ -5,9 +5,6 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# <a name="promesa.exec.semaphore">promesa.exec.semaphore</a>
-
-
 Concurrency limiter: Semaphore
 
 

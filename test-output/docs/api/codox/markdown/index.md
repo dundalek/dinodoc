@@ -5,9 +5,6 @@ toc_min_heading_level: 2
 toc_max_heading_level: 4
 ---
 
-# <a name="codox.markdown">codox.markdown</a>
-
-
 This is an example of a namespace written in markdown, rather than the usual
   plaintext format.
 
