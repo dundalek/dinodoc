@@ -20,7 +20,7 @@ We need to escape var names otherwise earmuffs are not shown but interpreted as 
 
 *dynamic*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L9-L11">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L13-L15">Source</a></sub></p>
 
 ### &lt;&lt; {#-LT--LT-}
 ``` clojure
@@ -29,14 +29,23 @@ We need to escape var names otherwise earmuffs are not shown but interpreted as 
 
 
 Angle brackets in var name
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L17-L19">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L21-L23">Source</a></sub></p>
+
+### Foo {#Foo}
+``` clojure
+(Foo)
+```
+
+
+Foo with different case, link does not clash with [`foo`](#foo).
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L9-L11">Source</a></sub></p>
 
 ### \_underscore\-surrounded\_ {#-underscore-surrounded-}
 ``` clojure
 (_underscore-surrounded_)
 ```
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L13-L13">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L17-L17">Source</a></sub></p>
 
 ### a\-macro {#a-macro}
 ``` clojure
@@ -48,7 +57,7 @@ hello
 
 *macro*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L44-L46">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L48-L50">Source</a></sub></p>
 
 ### added\-and\-deprecated {#added-and-deprecated}
 ``` clojure
@@ -58,7 +67,7 @@ hello
 
 *deprecated | added in 8.0*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L39-L42">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L43-L46">Source</a></sub></p>
 
 ### added\-tag {#added-tag}
 ``` clojure
@@ -68,7 +77,7 @@ hello
 
 *added*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L31-L33">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L35-L37">Source</a></sub></p>
 
 ### added\-version {#added-version}
 ``` clojure
@@ -78,7 +87,7 @@ hello
 
 *added in 8.0*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L35-L37">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L39-L41">Source</a></sub></p>
 
 ### deprecated\-tag {#deprecated-tag}
 ``` clojure
@@ -90,7 +99,7 @@ Doc string
 
 *deprecated*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L21-L24">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L25-L28">Source</a></sub></p>
 
 ### deprecated\-version {#deprecated-version}
 ``` clojure
@@ -102,7 +111,7 @@ Doc string
 
 *deprecated in 9.0*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L26-L29">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L30-L33">Source</a></sub></p>
 
 ### foo {#foo}
 ``` clojure
@@ -110,7 +119,7 @@ Doc string
 ```
 
 
-Hello
+Hello, there is also [`Foo`](#Foo) that differs in casing.
 <p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L5-L7">Source</a></sub></p>
 
 ### has\-&gt;arrow {#has--GT-arrow}
@@ -118,7 +127,7 @@ Hello
 (has->arrow)
 ```
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L15-L15">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L19-L19">Source</a></sub></p>
 
 ### links\-backticks {#links-backticks}
 ``` clojure
@@ -134,7 +143,7 @@ Link to a var in the current namespace: [`foo`](#foo)
 
   Link to a var containing a special character: [`has->arrow`](#has--GT-arrow)
   
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L48-L57">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L52-L61">Source</a></sub></p>
 
 ### links\-backticks\-in\-codeblock {#links-backticks-in-codeblock}
 ``` clojure
@@ -150,7 +159,7 @@ Link to a var in the current namespace: [`foo`](#foo)
 
   ;; Link to a namespace: [`samples.protocols`](../../samples/protocols/)
   ```
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L59-L68">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L63-L72">Source</a></sub></p>
 
 ### links\-backticks\-multiple\-occurences {#links-backticks-multiple-occurences}
 ``` clojure
@@ -159,7 +168,7 @@ Link to a var in the current namespace: [`foo`](#foo)
 
 
 Same link referenced multiple times will get messed up: [[`foo`](#foo)](#foo) and [[`foo`](#foo)](#foo)
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L70-L72">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L74-L76">Source</a></sub></p>
 
 ### links\-wikilinks {#links-wikilinks}
 ``` clojure
@@ -174,4 +183,4 @@ Link to a var in the current namespace: [`foo`](#foo)
   Link to a namespace: [`samples.protocols`](../../samples/protocols/)
 
   Link with a title supported by codox: [[samples.crossplatform/some-clj-fn|some-title]]
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L74-L82">Source</a></sub></p>
+<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/source.clj#L78-L86">Source</a></sub></p>

@@ -3,7 +3,11 @@
  samples.source)
 
 (defn foo
-  "Hello"
+  "Hello, there is also `Foo` that differs in casing."
+  [])
+
+(defn Foo
+  "Foo with different case, link does not clash with `foo`."
   [])
 
 (def ^{:dynamic true
