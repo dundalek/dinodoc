@@ -76,9 +76,9 @@
           path (or (some-> path str) ".")
           outdir (or outdir (fs/file-name path))
           outdir (str root-outdir "/" outdir)
-          doc-path (or doc-path "doc")
+          doc-path (str path "/" (or doc-path "doc"))
           source-paths [(str path "/src")]
-          cljdoc-path (str path "/" doc-path "/cljdoc.edn")
+          cljdoc-path (str  doc-path "/cljdoc.edn")
           api-docs-dir (str outdir "/api")
           readme-path (str path "/README.md")
           doc-tree (or doc-tree
