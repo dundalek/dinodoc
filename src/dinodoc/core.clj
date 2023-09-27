@@ -46,21 +46,17 @@
   ([opts i item]
    (let [{:keys [parent-path input-path root?]} opts
          [label {:keys [file]} & children] item
-         path (str parent-path "/" (slugify label))
-         file-path (if (and root? (zero? i))
-                     parent-path
-                     path)]
-     (fs/create-dirs path)
-     (fs/copy (str input-path "/" file) (str file-path "/index.md"))
+         path (str parent-path "/" (some-> label slugify))
+         file-path (cond
+                     (and root? (zero? i)) (str parent-path "/index.md")
+                     label (str path "/index.md")
+                     :else (str parent-path "/" (strip-docusaurus-path (fs/file-name file))))]
+     (fs/create-dirs (fs/parent file-path))
      (when file
        (copy-with-frontmatter (str input-path "/" file)
-                              (str file-path "/index.md")
-                              {:sidebar_position i
-                               :sidebar_label label}))
-     #_(spit (str file-path "/_category_.json")
-             (json/generate-string
-              {:position i
-               :label label}))
+                              file-path
+                              (cond-> {:sidebar_position i}
+                                label (assoc :sidebar_label label))))
      (process-doc-tree {:parent-path path
                         :input-path input-path
                         :root? false}
@@ -87,25 +83,24 @@
                               :cljdoc.doc/tree)))]
       (println "Generating" path)
 
-      (when doc-tree
-        (process-doc-tree {:parent-path outdir
-                           :input-path path
-                           :root? true}
-                          doc-tree))
       (let [processed-doc-file? (set (collect-doc-files doc-tree))
             doc-files (->> (concat (when (fs/exists? readme-path)
                                      [readme-path])
                                    (->> (fs/glob doc-path "*.md")
                                         (map str)))
-                           (remove processed-doc-file?))]
-        (doseq [[i file] (map-indexed list doc-files)]
-          (let [rel-path (cond
-                           (and (zero? i) (zero? (count processed-doc-file?))) "index.md"
-                           (str/starts-with? file doc-path) (str/replace-first file doc-path "")
-                           :else file)
-                target-path (str outdir "/" (strip-docusaurus-path rel-path))]
-            (fs/create-dirs (fs/parent target-path))
-            (fs/copy file target-path))))
+                           (map (fn [file]
+                                  (if (str/starts-with? file path)
+                                    (str/replace-first file path "")
+                                    file)))
+                           (remove processed-doc-file?)
+                           (sort)
+                           (map (fn [file]
+                                  [nil {:file file}])))]
+        (process-doc-tree {:parent-path outdir
+                           :input-path path
+                           :root? true}
+                          (concat doc-tree
+                                  doc-files)))
 
       (qd/quickdoc
        {:source-paths source-paths
