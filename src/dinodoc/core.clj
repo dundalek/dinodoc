@@ -67,8 +67,8 @@
   (fs/create-dir root-outdir)
   (doseq [input paths]
     (let [{:keys [github/repo git/branch
-                  path doc-path doc-tree outdir]} (merge (select-keys opts [:github/repo :git/branch])
-                                                         (if (map? input) input {:path input}))
+                  include-readme? path doc-path doc-tree outdir]} (merge (select-keys opts [:github/repo :git/branch])
+                                                                         (if (map? input) input {:path input}))
           path (or (some-> path str) ".")
           outdir (or outdir (fs/file-name path))
           outdir (str root-outdir "/" outdir)
@@ -84,7 +84,8 @@
       (println "Generating" path)
 
       (let [processed-doc-file? (set (collect-doc-files doc-tree))
-            doc-files (->> (concat (when (fs/exists? readme-path)
+            doc-files (->> (concat (when (and (not= include-readme? false)
+                                              (fs/exists? readme-path))
                                      [readme-path])
                                    (->> (fs/glob doc-path "*.md")
                                         (map str)))
