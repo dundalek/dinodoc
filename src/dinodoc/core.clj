@@ -89,8 +89,8 @@
                                    (->> (fs/glob doc-path "*.md")
                                         (map str)))
                            (map (fn [file]
-                                  (if (str/starts-with? file path)
-                                    (str/replace-first file path "")
+                                  (if (str/starts-with? file (str path "/"))
+                                    (str/replace-first file (str path "/") "")
                                     file)))
                            (remove processed-doc-file?)
                            (sort)
