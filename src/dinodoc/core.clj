@@ -5,7 +5,8 @@
    [clojure.edn :as edn]
    [clojure.string :as str]
    [quickdoc.api :as qd]
-   [slugify.core :refer [slugify]]))
+   [slugify.core :refer [slugify]]
+   [cheshire.core :as json]))
 
 (defn slugify-path [path]
   (let [[_ path extension] (or (re-matches #"(.*)(\.\p{Alnum}+)" path)
@@ -49,14 +50,17 @@
          path (str parent-path "/" (some-> label slugify))
          file-path (cond
                      (and root? (zero? i)) (str parent-path "/index.md")
-                     label (str path "/index.md")
+                     (and label (seq children)) (str path "/index.md")
+                     label (str parent-path "/" (slugify label) "." (fs/extension file))
                      :else (str parent-path "/" (strip-docusaurus-path (fs/file-name file))))]
      (fs/create-dirs (fs/parent file-path))
-     (when file
-       (copy-with-frontmatter (str input-path "/" file)
-                              file-path
-                              (cond-> {:sidebar_position i}
-                                label (assoc :sidebar_label label))))
+     (cond
+       file (copy-with-frontmatter (str input-path "/" file)
+                                   file-path
+                                   (cond-> {:sidebar_position i}
+                                     label (assoc :sidebar_label label)))
+       label (spit (str path "/_category_.json")
+                   (json/generate-string {:position i  :label label})))
      (process-doc-tree {:parent-path path
                         :input-path input-path
                         :root? false}
