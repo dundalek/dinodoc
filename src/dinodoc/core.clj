@@ -1,12 +1,13 @@
 (ns dinodoc.core
   (:require
    [babashka.fs :as fs]
+   [cheshire.core :as json]
+   [clj-kondo.core :as clj-kondo]
    [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
    [clojure.string :as str]
    [quickdoc.api :as qd]
-   [slugify.core :refer [slugify]]
-   [cheshire.core :as json]))
+   [slugify.core :refer [slugify]]))
 
 (defn slugify-path [path]
   (let [[_ path extension] (or (re-matches #"(.*)(\.\p{Alnum}+)" path)
@@ -66,57 +67,73 @@
                         :root? false}
                        children))))
 
-(defn generate [{:keys [paths outdir] root-outdir :outdir :as opts}]
-  (fs/delete-tree root-outdir)
-  (fs/create-dir root-outdir)
-  (doseq [input paths]
-    (let [{:keys [github/repo git/branch
-                  include-readme? path doc-path doc-tree outdir]} (merge (select-keys opts [:github/repo :git/branch])
-                                                                         (if (map? input) input {:path input}))
-          path (or (some-> path str) ".")
-          outdir (or outdir (fs/file-name path))
-          outdir (str root-outdir "/" outdir)
-          doc-path (str path "/" (or doc-path "doc"))
-          source-paths [(str path "/src")]
-          cljdoc-path (str  doc-path "/cljdoc.edn")
-          api-docs-dir (str outdir "/api")
-          readme-path (str path "/README.md")
-          doc-tree (or doc-tree
-                       (when (fs/exists? cljdoc-path)
-                         (->> (edn/read-string (slurp cljdoc-path))
-                              :cljdoc.doc/tree)))]
-      (println "Generating" path)
+(defn- normalize-input [input root-opts]
+  (let [root-outdir (:outdir root-opts)
+        {:keys [github/repo git/branch
+                include-readme? path doc-path doc-tree outdir]} (merge (select-keys root-opts [:github/repo :git/branch])
+                                                                       (if (map? input) input {:path input}))
+        path (or (some-> path str) ".")
+        outdir (or outdir (fs/file-name path))
+        outdir (str root-outdir "/" outdir)
+        doc-path (str path "/" (or doc-path "doc"))
+        source-paths [(str path "/src")]
+        cljdoc-path (str  doc-path "/cljdoc.edn")
+        api-docs-dir (str outdir "/api")
+        readme-path (when-not (false? include-readme?)
+                      (str path "/README.md"))
+        doc-tree (or doc-tree
+                     (when (fs/exists? cljdoc-path)
+                       (->> (edn/read-string (slurp cljdoc-path))
+                            :cljdoc.doc/tree)))
+        processed-doc-file? (set (collect-doc-files doc-tree))
+        doc-files (->> (concat (when (and readme-path
+                                          (fs/exists? readme-path))
+                                 [readme-path])
+                               (->> (fs/glob doc-path "*.md")
+                                    (map str)))
+                       (map (fn [file]
+                              (if (str/starts-with? file (str path "/"))
+                                (str/replace-first file (str path "/") "")
+                                file)))
+                       (remove processed-doc-file?)
+                       (sort)
+                       (map (fn [file]
+                              [nil {:file file}])))]
+    {:path path
+     :readme-path readme-path
+     :doc-tree (concat doc-tree
+                       doc-files)
+     :outdir outdir
+     :source-paths source-paths
+     :api-docs-dir api-docs-dir
+     :github/repo repo
+     :git/branch branch}))
 
-      (let [processed-doc-file? (set (collect-doc-files doc-tree))
-            doc-files (->> (concat (when (and (not= include-readme? false)
-                                              (fs/exists? readme-path))
-                                     [readme-path])
-                                   (->> (fs/glob doc-path "*.md")
-                                        (map str)))
-                           (map (fn [file]
-                                  (if (str/starts-with? file (str path "/"))
-                                    (str/replace-first file (str path "/") "")
-                                    file)))
-                           (remove processed-doc-file?)
-                           (sort)
-                           (map (fn [file]
-                                  [nil {:file file}])))]
+(defn generate [{:keys [paths] root-outdir :outdir :as root-opts}]
+  (let [inputs (->> paths
+                    (map #(normalize-input % root-opts)))]
+    (fs/delete-tree root-outdir)
+    (fs/create-dir root-outdir)
+
+    (doseq [input inputs]
+      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch]} input]
+        (println "Generating" path)
+
         (process-doc-tree {:parent-path outdir
                            :input-path path
                            :root? true}
-                          (concat doc-tree
-                                  doc-files)))
+                          doc-tree)
 
-      (qd/quickdoc
-       {:source-paths source-paths
-        :filename-remove-prefix path
-        :outdir api-docs-dir
-        :git/branch branch
-        :github/repo repo})
+        (qd/quickdoc
+         {:source-paths source-paths
+          :filename-remove-prefix path
+          :outdir api-docs-dir
+          :git/branch branch
+          :github/repo repo})
 
-      (when (fs/exists? api-docs-dir)
-        (spit (str api-docs-dir "/_category_.json")
-              "{\"label\":\"API\"}")))))
+        (when (fs/exists? api-docs-dir)
+          (spit (str api-docs-dir "/_category_.json")
+                "{\"label\":\"API\"}"))))))
 
 (comment
   (def doc-tree
