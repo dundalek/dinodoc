@@ -109,7 +109,7 @@
      :github/repo repo
      :git/branch branch}))
 
-(defn generate [{:keys [paths] root-outdir :outdir :as root-opts}]
+(defn generate [{:keys [paths api-docs] root-outdir :outdir :as root-opts}]
   (let [inputs (->> paths
                     (map #(normalize-input % root-opts)))]
     (fs/delete-tree root-outdir)
@@ -117,16 +117,33 @@
 
     (doseq [input inputs]
       (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch]} input]
-        (println "Generating" path)
 
         (process-doc-tree {:parent-path outdir
                            :input-path path
                            :root? true}
                           doc-tree)
 
+        (when (not= api-docs :global)
+          (println "Generating" path)
+          (qd/quickdoc
+           {:source-paths source-paths
+            :filename-remove-prefix path
+            :outdir api-docs-dir
+            :git/branch branch
+            :github/repo repo})
+
+          (when (fs/exists? api-docs-dir)
+            (spit (str api-docs-dir "/_category_.json")
+                  "{\"label\":\"API\"}")))))
+
+    (when (= api-docs :global)
+      (let [source-paths (mapcat :source-paths inputs)
+            {:keys [github/repo git/branch]} root-opts
+            api-docs-dir (str root-outdir "/api")]
         (qd/quickdoc
          {:source-paths source-paths
-          :filename-remove-prefix path
+          ;; TODO filename-remove-prefix
+          ; :filename-remove-prefix path
           :outdir api-docs-dir
           :git/branch branch
           :github/repo repo})
@@ -139,4 +156,35 @@
   (def doc-tree
     (-> (slurp "../promesa/promesa/doc/cljdoc.edn")
         (edn/read-string)
-        :cljdoc.doc/tree)))
+        :cljdoc.doc/tree))
+
+  (defn run [source-paths]
+    (:analysis (clj-kondo/run! {:lint source-paths
+                                :config {:skip-comments true
+                                         :output {:analysis
+                                                  {:arglists true
+                                                   :var-definitions {:meta [:no-doc
+                                                                            :skip-wiki
+                                                                            :arglists]}
+                                                   :namespace-definitions {:meta [:no-doc
+                                                                                  :skip-wiki]}}}}})))
+
+  (let [a (run ["reitit/modules/reitit-core/src"])
+        b (run ["reitit/modules/reitit-swagger/src"])
+
+        ab (run ["reitit/modules/reitit-core/src"
+                 "reitit/modules/reitit-swagger/src"])]
+   ; (=
+   ;  (set (concat  (:var-definitions a)
+   ;                (:var-definitions b)))
+   ;
+   ;  (set (:var-definitions ab)))
+
+    (=
+     (set (concat  (:namespace-definitions a)
+                   (:namespace-definitions b)))
+
+     (set (:namespace-definitions ab))))
+
+  (tap> (run ["../samples/a/src"
+              "../samples/b/src"])))
