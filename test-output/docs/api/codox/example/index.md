@@ -3,6 +3,7 @@ sidebar_label: example
 title: codox.example
 toc_min_heading_level: 2
 toc_max_heading_level: 4
+custom_edit_url:
 ---
 
 ClojureScript version.

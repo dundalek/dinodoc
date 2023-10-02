@@ -46,7 +46,7 @@
    (doseq [[i item] (map-indexed list items)]
      (process-doc-tree opts i item)))
   ([opts i item]
-   (let [{:keys [parent-path input-path root?]} opts
+   (let [{:keys [parent-path input-path make-edit-url root?]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          file-path (cond
@@ -58,18 +58,20 @@
      (cond
        file (copy-with-frontmatter (str input-path "/" file)
                                    file-path
-                                   (cond-> {:sidebar_position i}
+                                   (cond-> {:sidebar_position i
+                                            :custom_edit_url (make-edit-url file)}
                                      label (assoc :sidebar_label label)))
        label (spit (str path "/_category_.json")
                    (json/generate-string {:position i  :label label})))
      (process-doc-tree {:parent-path path
                         :input-path input-path
+                        :make-edit-url make-edit-url
                         :root? false}
                        children))))
 
 (defn- normalize-input [input root-opts]
   (let [root-outdir (:outdir root-opts)
-        {:keys [github/repo git/branch
+        {:keys [github/repo git/branch make-edit-url
                 include-readme? path doc-path doc-tree outdir]} (merge (select-keys root-opts [:github/repo :git/branch])
                                                                        (if (map? input) input {:path input}))
         path (or (some-> path str) ".")
@@ -81,6 +83,9 @@
         api-docs-dir (str outdir "/api")
         readme-path (when-not (false? include-readme?)
                       (str path "/README.md"))
+        make-edit-url (or make-edit-url
+                          (fn [filename]
+                            (str repo "/tree/" branch "/" filename)))
         doc-tree (or doc-tree
                      (when (fs/exists? cljdoc-path)
                        (->> (edn/read-string (slurp cljdoc-path))
@@ -107,7 +112,8 @@
      :source-paths source-paths
      :api-docs-dir api-docs-dir
      :github/repo repo
-     :git/branch branch}))
+     :git/branch branch
+     :make-edit-url make-edit-url}))
 
 (defn generate [{:keys [paths api-docs] root-outdir :outdir :as root-opts}]
   (let [inputs (->> paths
@@ -116,11 +122,12 @@
     (fs/create-dir root-outdir)
 
     (doseq [input inputs]
-      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch]} input]
+      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch make-edit-url]} input]
 
         (process-doc-tree {:parent-path outdir
                            :input-path path
-                           :root? true}
+                           :root? true
+                           :make-edit-url make-edit-url}
                           doc-tree)
 
         (when (not= api-docs :global)

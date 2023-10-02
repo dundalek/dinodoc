@@ -3,6 +3,7 @@ sidebar_label: exec
 title: promesa.exec
 toc_min_heading_level: 2
 toc_max_heading_level: 4
+custom_edit_url:
 ---
 
 Executors & Schedulers facilities.

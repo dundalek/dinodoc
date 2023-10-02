@@ -3,6 +3,7 @@ sidebar_label: csp
 title: promesa.exec.csp
 toc_min_heading_level: 2
 toc_max_heading_level: 4
+custom_edit_url:
 ---
 
 A core.async analogous implementation of channels that uses promises
