@@ -236,6 +236,8 @@
   ;; increase max heading level because we are using h4 for protocol members
   (println "toc_min_heading_level: 2")
   (println "toc_max_heading_level: 4")
+  ;; disable the "Edit this page" link because individual vars within the namespace already have "source" link
+  (println "custom_edit_url:")
   (println "---")
   (println))
 
