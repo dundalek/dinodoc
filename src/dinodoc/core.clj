@@ -7,6 +7,7 @@
    [clojure.edn :as edn]
    [clojure.string :as str]
    [quickdoc.api :as qd]
+   [quickdoc.impl :as impl]
    [slugify.core :refer [slugify]]))
 
 (defn slugify-path [path]
@@ -24,12 +25,26 @@
   (slugify-path "A A/B (x)/c")
   (slugify-path "A A/My Doc.md"))
 
-(defn- copy-with-frontmatter [src target data]
-  (spit (fs/file target)
-        (str "---\n"
-             (yaml/generate-string data)
-             "---\n\n"
-             (slurp (fs/file src)))))
+(defn make-ns->vars [analysis]
+  (let [var-defs (:var-definitions analysis)
+        nss (group-by :ns var-defs)
+        ns->vars (update-vals nss (comp set (partial map :name)))]
+    ns->vars))
+
+(defn- copy-with-frontmatter [src target data analysis]
+  (let [content (slurp (fs/file src))
+        current-ns nil
+        path-prefix "./api"
+        ns->vars (make-ns->vars analysis)
+        format-href (fn [target-ns target-var]
+                      (let [formatted-ns (str path-prefix "/" (impl/absolute-namespace-link target-ns))]
+                        (impl/format-href formatted-ns target-var)))
+        content (impl/format-docstring* ns->vars current-ns format-href content {:var-regex impl/backticks-and-wikilinks-pattern})]
+    (spit (fs/file target)
+          (str "---\n"
+               (yaml/generate-string data)
+               "---\n\n"
+               content))))
 
 (defn- collect-doc-files [doc-tree]
   (cond
@@ -46,7 +61,7 @@
    (doseq [[i item] (map-indexed list items)]
      (process-doc-tree opts i item)))
   ([opts i item]
-   (let [{:keys [parent-path input-path make-edit-url root?]} opts
+   (let [{:keys [parent-path input-path make-edit-url analysis root?]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          file-path (cond
@@ -60,12 +75,14 @@
                                    file-path
                                    (cond-> {:sidebar_position i
                                             :custom_edit_url (make-edit-url file)}
-                                     label (assoc :sidebar_label label)))
+                                     label (assoc :sidebar_label label))
+                                   analysis)
        label (spit (str path "/_category_.json")
                    (json/generate-string {:position i  :label label})))
      (process-doc-tree {:parent-path path
                         :input-path input-path
                         :make-edit-url make-edit-url
+                        :analysis analysis
                         :root? false}
                        children))))
 
@@ -115,6 +132,18 @@
      :git/branch branch
      :make-edit-url make-edit-url}))
 
+(defn run-analysis [source-paths]
+  (-> (clj-kondo/run! {:lint source-paths
+                       :config {:skip-comments true
+                                :output {:analysis
+                                         {:arglists true
+                                          :var-definitions {:meta [:no-doc
+                                                                   :skip-wiki
+                                                                   :arglists]}
+                                          :namespace-definitions {:meta [:no-doc
+                                                                         :skip-wiki]}}}}})
+      :analysis))
+
 (defn generate [{:keys [paths api-docs] root-outdir :outdir :as root-opts}]
   (let [inputs (->> paths
                     (map #(normalize-input % root-opts)))]
@@ -122,18 +151,21 @@
     (fs/create-dir root-outdir)
 
     (doseq [input inputs]
-      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch make-edit-url]} input]
+      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch make-edit-url]} input
+            analysis (run-analysis source-paths)]
 
         (process-doc-tree {:parent-path outdir
                            :input-path path
                            :root? true
-                           :make-edit-url make-edit-url}
+                           :make-edit-url make-edit-url
+                           :analysis analysis}
                           doc-tree)
 
         (when (not= api-docs :global)
           (println "Generating" path)
           (qd/quickdoc
-           {:source-paths source-paths
+           {;:source-paths source-paths
+            :analysis analysis
             :filename-remove-prefix path
             :outdir api-docs-dir
             :git/branch branch
@@ -195,3 +227,4 @@
 
   (tap> (run ["../samples/a/src"
               "../samples/b/src"])))
+

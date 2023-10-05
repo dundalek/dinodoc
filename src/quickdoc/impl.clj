@@ -100,12 +100,15 @@
        (map (fn [[raw & inners]]
               [raw (some identity inners)]))))
 
+(defn absolute-namespace-link [target-ns]
+  (str (str/replace (str target-ns) #"\." "/")
+       "/"))
+
 (defn namespace-link [current-ns target-ns]
   (str (->> (repeat (count (str/split (str current-ns) #"\.")) "..")
             (str/join "/"))
        "/"
-       (str/replace (str target-ns) #"\." "/")
-       "/"))
+       (absolute-namespace-link target-ns)))
 
 (defn format-href [target-ns target-var]
   (str

@@ -44,6 +44,7 @@
   (let [{:as opts
          :keys [outdir
                 source-paths
+                analysis
                 overrides]}   (merge {:git/branch   "main"
                                       :outfile      "API.md"
                                       :source-paths ["src"]
@@ -55,16 +56,17 @@
                                       :backticks #"`(.*?)`"
                                       :wikilinks #"\[\[(.*?)\]\]"
                                       :backticks-and-wikilinks impl/backticks-and-wikilinks-pattern))
-        ana (-> (clj-kondo/run! {:lint source-paths
-                                 :config {:skip-comments true
-                                          :output {:analysis
-                                                   {:arglists true
-                                                    :var-definitions {:meta [:no-doc
-                                                                             :skip-wiki
-                                                                             :arglists]}
-                                                    :namespace-definitions {:meta [:no-doc
-                                                                                   :skip-wiki]}}}}})
-                :analysis)
+        ana (or analysis
+                (-> (clj-kondo/run! {:lint source-paths
+                                     :config {:skip-comments true
+                                              :output {:analysis
+                                                       {:arglists true
+                                                        :var-definitions {:meta [:no-doc
+                                                                                 :skip-wiki
+                                                                                 :arglists]}
+                                                        :namespace-definitions {:meta [:no-doc
+                                                                                       :skip-wiki]}}}}})
+                    :analysis))
         var-defs (:var-definitions ana)
         ns-defs (:namespace-definitions ana)
         ns-defs (group-by :name ns-defs)
