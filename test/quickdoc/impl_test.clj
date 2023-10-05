@@ -79,6 +79,11 @@
   (is (= "../../promesa/core/" (impl/namespace-link 'promesa.core 'promesa.core)))
   (is (= "../../promesa/exec/csp/" (impl/namespace-link 'promesa.exec 'promesa.exec.csp))))
 
+(deftest format-href-test
+  (is (= "a#b" (impl/format-href "a" "b")))
+  (is (= "a" (impl/format-href "a" nil)))
+  (is (= "#b" (impl/format-href nil "b"))))
+
 (deftest format-docstring-test
   (let [ns->vars {'a.b #{'x->y}}
         opts {:var-regex impl/backticks-and-wikilinks-pattern}]

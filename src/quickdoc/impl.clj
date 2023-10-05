@@ -107,29 +107,32 @@
        (str/replace (str target-ns) #"\." "/")
        "/"))
 
+(defn format-href [target-ns target-var]
+  (str
+   (or target-ns "")
+   (if target-var (str "#" (heading-id target-var)) "")))
+
 (defn format-docstring [ns->vars current-ns docstring opts]
   (if-some [var-regex (:var-regex opts)]
     (reduce (fn [docstring [raw inner]]
-              (cond
-                  ;; Looks qualified
-                (str/includes? inner "/")
-                (let [split (str/split inner #"/")]
-                  (if (and (= (count split) 2)
-                           (get-in ns->vars [(symbol (first split))
-                                             (symbol (second split))]))
-                    (str/replace docstring raw (format "[`%s`](%s#%s)" inner
-                                                       (namespace-link current-ns (symbol (first split)))
-                                                       (heading-id (second split))))
-
-                    docstring))
-                  ;; Not qualified, maybe a namespace
-                (contains? ns->vars (symbol inner))
-                (str/replace docstring raw (format "[`%s`](%s)" inner (namespace-link current-ns inner)))
-                  ;; Not qualified, maybe a var in the current namespace
-                (get-in ns->vars [current-ns (symbol inner)])
-                (str/replace docstring raw (format "[`%s`](#%s)" inner (heading-id inner)))
-                  ;; Just regular markdown backticks
-                :else
+              (if-some [href (cond
+                               ;; Looks qualified
+                               (str/includes? inner "/")
+                               (let [split (str/split inner #"/")]
+                                 (when (and (= (count split) 2)
+                                            (get-in ns->vars [(symbol (first split))
+                                                              (symbol (second split))]))
+                                   (format-href
+                                    (namespace-link current-ns (symbol (first split)))
+                                    (second split))))
+                               ;; Not qualified, maybe a namespace
+                               (contains? ns->vars (symbol inner))
+                               (format-href (namespace-link current-ns inner) nil)
+                               ;; Not qualified, maybe a var in the current namespace
+                               (get-in ns->vars [current-ns (symbol inner)])
+                               (format-href nil inner))]
+                (str/replace docstring raw (format "[`%s`](%s)" inner href))
+                ;; Just regular markdown backticks
                 docstring))
             docstring
             (extract-var-links var-regex docstring))
