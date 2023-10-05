@@ -112,7 +112,7 @@
    (or target-ns "")
    (if target-var (str "#" (heading-id target-var)) "")))
 
-(defn format-docstring [ns->vars current-ns docstring opts]
+(defn format-docstring* [ns->vars current-ns format-href docstring opts]
   (if-some [var-regex (:var-regex opts)]
     (reduce (fn [docstring [raw inner]]
               (if-some [href (cond
@@ -123,11 +123,11 @@
                                             (get-in ns->vars [(symbol (first split))
                                                               (symbol (second split))]))
                                    (format-href
-                                    (namespace-link current-ns (symbol (first split)))
+                                    (symbol (first split))
                                     (second split))))
                                ;; Not qualified, maybe a namespace
                                (contains? ns->vars (symbol inner))
-                               (format-href (namespace-link current-ns inner) nil)
+                               (format-href inner nil)
                                ;; Not qualified, maybe a var in the current namespace
                                (get-in ns->vars [current-ns (symbol inner)])
                                (format-href nil inner))]
@@ -137,6 +137,12 @@
             docstring
             (extract-var-links var-regex docstring))
     docstring))
+
+(defn format-docstring [ns->vars current-ns docstring opts]
+  (let [format-href (fn [target-ns target-var]
+                      (format-href (when target-ns (namespace-link current-ns target-ns))
+                                   target-var))]
+    (format-docstring* ns->vars current-ns format-href docstring opts)))
 
 (defn print-docstring [ns->vars current-ns docstring opts]
   (println
