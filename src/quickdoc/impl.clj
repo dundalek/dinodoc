@@ -107,34 +107,37 @@
        (str/replace (str target-ns) #"\." "/")
        "/"))
 
+(defn format-docstring [ns->vars current-ns docstring opts]
+  (if-some [var-regex (:var-regex opts)]
+    (reduce (fn [docstring [raw inner]]
+              (cond
+                  ;; Looks qualified
+                (str/includes? inner "/")
+                (let [split (str/split inner #"/")]
+                  (if (and (= (count split) 2)
+                           (get-in ns->vars [(symbol (first split))
+                                             (symbol (second split))]))
+                    (str/replace docstring raw (format "[`%s`](%s#%s)" inner
+                                                       (namespace-link current-ns (symbol (first split)))
+                                                       (heading-id (second split))))
+
+                    docstring))
+                  ;; Not qualified, maybe a namespace
+                (contains? ns->vars (symbol inner))
+                (str/replace docstring raw (format "[`%s`](%s)" inner (namespace-link current-ns inner)))
+                  ;; Not qualified, maybe a var in the current namespace
+                (get-in ns->vars [current-ns (symbol inner)])
+                (str/replace docstring raw (format "[`%s`](#%s)" inner (heading-id inner)))
+                  ;; Just regular markdown backticks
+                :else
+                docstring))
+            docstring
+            (extract-var-links var-regex docstring))
+    docstring))
+
 (defn print-docstring [ns->vars current-ns docstring opts]
   (println
-   (if-some [var-regex (:var-regex opts)]
-     (reduce (fn [docstring [raw inner]]
-               (cond
-                  ;; Looks qualified
-                 (str/includes? inner "/")
-                 (let [split (str/split inner #"/")]
-                   (if (and (= (count split) 2)
-                            (get-in ns->vars [(symbol (first split))
-                                              (symbol (second split))]))
-                     (str/replace docstring raw (format "[`%s`](%s#%s)" inner
-                                                        (namespace-link current-ns (symbol (first split)))
-                                                        (heading-id (second split))))
-
-                     docstring))
-                  ;; Not qualified, maybe a namespace
-                 (contains? ns->vars (symbol inner))
-                 (str/replace docstring raw (format "[`%s`](%s)" inner (namespace-link current-ns inner)))
-                  ;; Not qualified, maybe a var in the current namespace
-                 (get-in ns->vars [current-ns (symbol inner)])
-                 (str/replace docstring raw (format "[`%s`](#%s)" inner (heading-id inner)))
-                  ;; Just regular markdown backticks
-                 :else
-                 docstring))
-             docstring
-             (extract-var-links var-regex docstring))
-     docstring)))
+   (format-docstring ns->vars current-ns docstring opts)))
 
 (defn defined-by-protocol? [{:keys [defined-by] :as _var}]
   (or (= defined-by 'clojure.core/defprotocol)
