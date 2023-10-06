@@ -31,10 +31,9 @@
         ns->vars (update-vals nss (comp set (partial map :name)))]
     ns->vars))
 
-(defn- copy-with-frontmatter [{:keys [src target data analysis api-path-prefix]}]
+(defn- copy-with-frontmatter [{:keys [src target data ns->vars api-path-prefix]}]
   (let [content (slurp (fs/file src))
         current-ns nil
-        ns->vars (make-ns->vars analysis)
         format-href (fn [target-ns target-var]
                       (let [formatted-ns (str api-path-prefix "/" (impl/absolute-namespace-link target-ns))]
                         (impl/format-href formatted-ns target-var)))
@@ -70,7 +69,7 @@
    (doseq [[i item] (map-indexed list items)]
      (process-doc-tree opts i item)))
   ([opts i item]
-   (let [{:keys [root-path parent-path input-path make-edit-url analysis]} opts
+   (let [{:keys [root-path parent-path input-path make-edit-url ns->vars]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          root? (= root-path parent-path)
@@ -86,17 +85,12 @@
                                     :data (cond-> {:sidebar_position i
                                                    :custom_edit_url (make-edit-url file)}
                                             label (assoc :sidebar_label label))
-                                    :analysis analysis
+                                    :ns->vars ns->vars
                                     :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
                                                           "/api")})
        label (spit (str path "/_category_.json")
                    (json/generate-string {:position i  :label label})))
-     (process-doc-tree {:root-path root-path
-                        :parent-path path
-                        :input-path input-path
-                        :make-edit-url make-edit-url
-                        :analysis analysis
-                        :root? false}
+     (process-doc-tree (assoc opts :parent-path path)
                        children))))
 
 (defn- normalize-input [input root-opts]
@@ -188,7 +182,7 @@
                            :parent-path outdir
                            :input-path path
                            :make-edit-url make-edit-url
-                           :analysis analysis}
+                           :ns->vars (make-ns->vars analysis)}
                           doc-tree)
 
         (when (not= api-docs :global)
