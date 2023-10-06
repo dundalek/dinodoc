@@ -31,13 +31,12 @@
         ns->vars (update-vals nss (comp set (partial map :name)))]
     ns->vars))
 
-(defn- copy-with-frontmatter [src target data analysis]
+(defn- copy-with-frontmatter [{:keys [src target data analysis api-path-prefix]}]
   (let [content (slurp (fs/file src))
         current-ns nil
-        path-prefix "./api"
         ns->vars (make-ns->vars analysis)
         format-href (fn [target-ns target-var]
-                      (let [formatted-ns (str path-prefix "/" (impl/absolute-namespace-link target-ns))]
+                      (let [formatted-ns (str api-path-prefix "/" (impl/absolute-namespace-link target-ns))]
                         (impl/format-href formatted-ns target-var)))
         content (impl/format-docstring* ns->vars current-ns format-href content {:var-regex impl/backticks-and-wikilinks-pattern})]
     (spit (fs/file target)
@@ -56,14 +55,25 @@
     (map? doc-tree) [(:file doc-tree)]
     :else nil))
 
+(defn path-to-root [path]
+  (let [segments (dec (count (re-seq #"/" path)))]
+    (if (pos? segments)
+      (str/join "/" (repeat segments ".."))
+      ".")))
+
+(comment
+  (path-to-root "/frontend/controllers.md")
+  (path-to-root "/controllers.md"))
+
 (defn- process-doc-tree
   ([opts items]
    (doseq [[i item] (map-indexed list items)]
      (process-doc-tree opts i item)))
   ([opts i item]
-   (let [{:keys [parent-path input-path make-edit-url analysis root?]} opts
+   (let [{:keys [root-path parent-path input-path make-edit-url analysis]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
+         root? (= root-path parent-path)
          file-path (cond
                      (and root? (zero? i)) (str parent-path "/index.md")
                      (and label (seq children)) (str path "/index.md")
@@ -71,15 +81,18 @@
                      :else (str parent-path "/" (strip-docusaurus-path (fs/file-name file))))]
      (fs/create-dirs (fs/parent file-path))
      (cond
-       file (copy-with-frontmatter (str input-path "/" file)
-                                   file-path
-                                   (cond-> {:sidebar_position i
-                                            :custom_edit_url (make-edit-url file)}
-                                     label (assoc :sidebar_label label))
-                                   analysis)
+       file (copy-with-frontmatter {:src (str input-path "/" file)
+                                    :target file-path
+                                    :data (cond-> {:sidebar_position i
+                                                   :custom_edit_url (make-edit-url file)}
+                                            label (assoc :sidebar_label label))
+                                    :analysis analysis
+                                    :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
+                                                          "/api")})
        label (spit (str path "/_category_.json")
                    (json/generate-string {:position i  :label label})))
-     (process-doc-tree {:parent-path path
+     (process-doc-tree {:root-path root-path
+                        :parent-path path
                         :input-path input-path
                         :make-edit-url make-edit-url
                         :analysis analysis
@@ -146,41 +159,17 @@
 
 (defn generate [{:keys [paths api-docs] root-outdir :outdir :as root-opts}]
   (let [inputs (->> paths
-                    (map #(normalize-input % root-opts)))]
+                    (map #(normalize-input % root-opts)))
+        global-analysis (when (= api-docs :global)
+                          (run-analysis (mapcat :source-paths inputs)))]
     (fs/delete-tree root-outdir)
     (fs/create-dir root-outdir)
 
-    (doseq [input inputs]
-      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch make-edit-url]} input
-            analysis (run-analysis source-paths)]
-
-        (process-doc-tree {:parent-path outdir
-                           :input-path path
-                           :root? true
-                           :make-edit-url make-edit-url
-                           :analysis analysis}
-                          doc-tree)
-
-        (when (not= api-docs :global)
-          (println "Generating" path)
-          (qd/quickdoc
-           {;:source-paths source-paths
-            :analysis analysis
-            :filename-remove-prefix path
-            :outdir api-docs-dir
-            :git/branch branch
-            :github/repo repo})
-
-          (when (fs/exists? api-docs-dir)
-            (spit (str api-docs-dir "/_category_.json")
-                  "{\"label\":\"API\"}")))))
-
     (when (= api-docs :global)
-      (let [source-paths (mapcat :source-paths inputs)
-            {:keys [github/repo git/branch]} root-opts
+      (let [{:keys [github/repo git/branch]} root-opts
             api-docs-dir (str root-outdir "/api")]
         (qd/quickdoc
-         {:source-paths source-paths
+         {:analysis global-analysis
           ;; TODO filename-remove-prefix
           ; :filename-remove-prefix path
           :outdir api-docs-dir
@@ -189,7 +178,31 @@
 
         (when (fs/exists? api-docs-dir)
           (spit (str api-docs-dir "/_category_.json")
-                "{\"label\":\"API\"}"))))))
+                "{\"label\":\"API\"}"))))
+
+    (doseq [input inputs]
+      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch make-edit-url]} input
+            analysis (or global-analysis (run-analysis source-paths))]
+
+        (process-doc-tree {:root-path outdir
+                           :parent-path outdir
+                           :input-path path
+                           :make-edit-url make-edit-url
+                           :analysis analysis}
+                          doc-tree)
+
+        (when (not= api-docs :global)
+          (println "Generating" path)
+          (qd/quickdoc
+           {:analysis analysis
+            :filename-remove-prefix path
+            :outdir api-docs-dir
+            :git/branch branch
+            :github/repo repo})
+
+          (when (fs/exists? api-docs-dir)
+            (spit (str api-docs-dir "/_category_.json")
+                  "{\"label\":\"API\"}")))))))
 
 (comment
   (def doc-tree
