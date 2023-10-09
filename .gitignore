@@ -4,3 +4,4 @@ test/out
 .clj-kondo/*
 !.clj-kondo/config.edn
 .nrepl-port
+/target
