@@ -6,7 +6,7 @@
    [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
    [clojure.string :as str]
-   [dinodoc.impl :refer [doc-tree->file-map replace-links]]
+   [dinodoc.impl :refer [doc-tree->file-map replace-links path-to-root]]
    [quickdoc.api :as qd]
    [quickdoc.impl :as impl]
    [slugify.core :refer [slugify]]))
@@ -56,16 +56,6 @@
 
     (map? doc-tree) [(:file doc-tree)]
     :else nil))
-
-(defn path-to-root [path]
-  (let [segments (dec (count (re-seq #"/" path)))]
-    (if (pos? segments)
-      (str/join "/" (repeat segments ".."))
-      ".")))
-
-(comment
-  (path-to-root "/frontend/controllers.md")
-  (path-to-root "/controllers.md"))
 
 (defn- process-doc-tree
   ([opts items]

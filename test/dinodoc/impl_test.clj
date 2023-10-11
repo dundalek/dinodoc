@@ -3,6 +3,15 @@
    [clojure.test :refer [deftest is]]
    [dinodoc.impl :as impl]))
 
+(deftest path-to-root-test
+  (is (= "." (impl/path-to-root "/controllers.md")))
+  (is (= ".." (impl/path-to-root "/frontend/controllers.md")))
+  (is (= "../.." (impl/path-to-root "/frontend/foo/controllers.md")))
+
+  (is (= "." (impl/path-to-root "controllers.md")))
+  (is (= ".." (impl/path-to-root "frontend/controllers.md")))
+  (is (= "../.." (impl/path-to-root "frontend/foo/controllers.md"))))
+
 (deftest replace-links-test
   (is (= "[title](b.md)"
          (impl/replace-links "[title](b.md)" {:source "a.md"
