@@ -17,3 +17,17 @@
                    (if-some [replacement (get link-map href)]
                      (str "[" title "](" path-to-root "/" replacement ")")
                      match)))))
+
+(defn doc-tree->file-map
+  ([doc-tree]
+   (doc-tree->file-map doc-tree {} ""))
+  ([doc-tree file-map parent-path]
+   (reduce (fn [m [label {:keys [file]} & xs]]
+             (let [path (str parent-path label)]
+               (doc-tree->file-map xs
+                                   (cond-> m
+                                     file (assoc file path))
+                                   (str path "/"))))
+
+           file-map
+           doc-tree)))
