@@ -6,6 +6,7 @@
    [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
    [clojure.string :as str]
+   [dinodoc.impl :refer [doc-tree->file-map replace-links]]
    [quickdoc.api :as qd]
    [quickdoc.impl :as impl]
    [slugify.core :refer [slugify]]))
@@ -31,12 +32,14 @@
         ns->vars (update-vals nss (comp set (partial map :name)))]
     ns->vars))
 
-(defn- copy-with-frontmatter [{:keys [src target data ns->vars api-path-prefix]}]
+(defn- copy-with-frontmatter [{:keys [file src target data ns->vars api-path-prefix file-map]}]
   (let [content (slurp (fs/file src))
         current-ns nil
         format-href (fn [target-ns target-var]
                       (let [formatted-ns (str api-path-prefix "/" (impl/absolute-namespace-link target-ns))]
                         (impl/format-href formatted-ns target-var)))
+        content (replace-links content {:source file
+                                        :link-map file-map})
         content (impl/format-docstring* ns->vars current-ns format-href content {:var-regex impl/backticks-and-wikilinks-pattern})]
     (spit (fs/file target)
           (str "---\n"
@@ -69,7 +72,7 @@
    (doseq [[i item] (map-indexed list items)]
      (process-doc-tree opts i item)))
   ([opts i item]
-   (let [{:keys [root-path parent-path input-path make-edit-url ns->vars]} opts
+   (let [{:keys [root-path parent-path input-path make-edit-url ns->vars file-map]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          root? (= root-path parent-path)
@@ -80,16 +83,20 @@
                      :else (str parent-path "/" (strip-docusaurus-path (fs/file-name file))))]
      (fs/create-dirs (fs/parent file-path))
      (cond
-       file (copy-with-frontmatter {:src (str input-path "/" file)
+       file (copy-with-frontmatter {:file file
+                                    :src (str input-path "/" file)
                                     :target file-path
                                     :data (cond-> {:sidebar_position i
                                                    :custom_edit_url (make-edit-url file)}
                                             label (assoc :sidebar_label label))
                                     :ns->vars ns->vars
                                     :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
-                                                          "/api")})
-       label (spit (str path "/_category_.json")
-                   (json/generate-string {:position i  :label label})))
+                                                          "/api")
+                                    :file-map file-map})
+       label (do
+               (fs/create-dirs path)
+               (spit (str path "/_category_.json")
+                     (json/generate-string {:position i  :label label}))))
      (process-doc-tree (assoc opts :parent-path path)
                        children))))
 
@@ -118,6 +125,7 @@
         doc-files (->> (concat (when (and readme-path
                                           (fs/exists? readme-path))
                                  [readme-path])
+                               ;; rendering files from top level for now, handle hierarchy later
                                (->> (fs/glob doc-path "*.md")
                                     (map str)))
                        (map (fn [file]
@@ -151,8 +159,25 @@
                                                                          :skip-wiki]}}}}})
       :analysis))
 
-(defn generate [{:keys [paths api-docs] root-outdir :outdir :as root-opts}]
-  (let [inputs (->> paths
+(defn generate
+  "Options:
+  * `:paths` -
+    or map of
+    * `:path`
+    * `:outdir`
+    * `:doc-path` - default `\"doc\"`
+    * `:doc-tree` - `:cljdoc.doc/tree`
+    * `:include-readme?` - README.md default true
+    * `:make-edit-url` -
+    * `:github/repo` -
+    * `:git/branch` -
+  * `:outdir` -
+  * `:api-docs` - `:global`
+  * `:github/repo` -
+  * `:git/branch` -
+  "
+  [{:keys [paths api-docs] root-outdir :outdir :as root-opts}]
+  (let [inputs (->> (if (seq paths) paths ["."])
                     (map #(normalize-input % root-opts)))
         global-analysis (when (= api-docs :global)
                           (run-analysis (mapcat :source-paths inputs)))]
@@ -176,13 +201,20 @@
 
     (doseq [input inputs]
       (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch make-edit-url]} input
-            analysis (or global-analysis (run-analysis source-paths))]
+            analysis (or global-analysis (run-analysis source-paths))
+            file-map (->> (doc-tree->file-map doc-tree)
+                          (map (fn [[src target]]
+                                 [src (if target
+                                        (slugify-path (str target "." (fs/extension src)))
+                                        (str/replace src #"^doc/" ""))]))
+                          (into {}))]
 
         (process-doc-tree {:root-path outdir
                            :parent-path outdir
                            :input-path path
                            :make-edit-url make-edit-url
-                           :ns->vars (make-ns->vars analysis)}
+                           :ns->vars (make-ns->vars analysis)
+                           :file-map file-map}
                           doc-tree)
 
         (when (not= api-docs :global)
@@ -233,5 +265,8 @@
      (set (:namespace-definitions ab))))
 
   (tap> (run ["../samples/a/src"
-              "../samples/b/src"])))
+              "../samples/b/src"]))
 
+  (generate
+   {:paths ["test-resources/fixlinks-sample"]
+    :outdir "tmp"}))
