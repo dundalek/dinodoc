@@ -4,39 +4,52 @@
    [clojure.java.io :as io]
    [clojure.java.shell :refer [sh]]
    [clojure.string :as str]
-   [quickdoc.api]))
+   [quickdoc.api]
+   [dinodoc.core :as dinodoc]))
 
-(def out-path "test-output/docs/api")
+; (def out-path "test-output/docs/api")
+;
+; (do
+;   (sh "rm" "-rf" out-path)
+;   (sh "mkdir" "-p" out-path))
+;
+; (do
+;   ;; Just overwriting when iterating otherwise docusaurus watcher gets confused
+;   ;; For clean slate also remove out-path above, but then docusaurus needs to be restarted
+;   (spit (str out-path "/index.md")
+;         "---\ntitle: Namespaces\n---\n\nHere can be auto-generated overview")
+;   (quickdoc.api/quickdoc
+;    {:git/branch "master"
+;     :github/repo "https://github.com/funcool/promesa"
+;     :source-paths ["test-projects/promesa/src"]
+;     :outdir out-path
+;     :filename-remove-prefix "test-projects/promesa/"})
+;   (quickdoc.api/quickdoc
+;    {:git/branch "master"
+;     :github/repo "https://github.com/weavejester/codox"
+;     :source-paths ["test-projects/codox/example/src"]
+;     :outdir out-path
+;     :filename-remove-prefix "test-projects/codox/"})
+;   (quickdoc.api/quickdoc
+;    {:git/branch "master"
+;     :github/repo "https://github.com/borkdude/quickdoc"
+;     :source-paths ["test-projects/samples/src"]
+;     :outdir out-path
+;     :filename-remove-prefix "test-projects/samples"}))
+;
+; (shutdown-agents)
 
-(do
-  (sh "rm" "-rf" out-path)
-  (sh "mkdir" "-p" out-path))
-
-(do
-  ;; Just overwriting when iterating otherwise docusaurus watcher gets confused
-  ;; For clean slate also remove out-path above, but then docusaurus needs to be restarted
-  (spit (str out-path "/index.md")
-        "---\ntitle: Namespaces\n---\n\nHere can be auto-generated overview")
-  (quickdoc.api/quickdoc
-   {:git/branch "master"
-    :github/repo "https://github.com/funcool/promesa"
-    :source-paths ["test-projects/promesa/src"]
-    :outdir out-path
-    :filename-remove-prefix "test-projects/promesa/"})
-  (quickdoc.api/quickdoc
-   {:git/branch "master"
-    :github/repo "https://github.com/weavejester/codox"
-    :source-paths ["test-projects/codox/example/src"]
-    :outdir out-path
-    :filename-remove-prefix "test-projects/codox/"})
-  (quickdoc.api/quickdoc
-   {:git/branch "master"
-    :github/repo "https://github.com/borkdude/quickdoc"
-    :source-paths ["test-projects/samples/src"]
-    :outdir out-path
-    :filename-remove-prefix "test-projects/samples"}))
-
-(shutdown-agents)
+;; Specifying different repos for different inputs in global mode is broken
+(dinodoc/generate
+ {:paths [{:path "test-projects/promesa"
+           :github/repo "https://github.com/funcool/promesa"}
+          {:path "test-projects/codox/example"
+           :github/repo "https://github.com/weavejester/codox"}
+          {:path "test-projects/samples"
+           :github/repo "https://github.com/dundalek/dinodoc"}]
+  :outdir "test-output/docs"
+  :api-docs :global
+  :git/branch "master"})
 
 (comment
   (let [source-paths ["codox/example/src" "quickdoc/test-resources"]]
