@@ -17,7 +17,7 @@ Bulkhead main API
 
 *protocol*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L7-L10">Source</a></sub></p>
+<p><sub><a href="/blob/master/test-projects/samples/src/samples/protocols.clj#L7-L10">Source</a></sub></p>
 
 #### \-get\-stats {#-get-stats}
 ``` clojure
@@ -46,7 +46,7 @@ Call synchronously a function under bulkhead context
 
 *protocol*
 
-<p><sub><a href="https://github.com/borkdude/quickdoc/blob/master//src/samples/protocols.clj#L3-L5">Source</a></sub></p>
+<p><sub><a href="/blob/master/test-projects/samples/src/samples/protocols.clj#L3-L5">Source</a></sub></p>
 
 #### \-offer\! {#-offer-BANG-}
 ``` clojure
