@@ -5,3 +5,4 @@ test/out
 !.clj-kondo/config.edn
 .nrepl-port
 /target
+/tmp
