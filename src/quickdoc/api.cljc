@@ -1,5 +1,5 @@
 (ns quickdoc.api
-  "API namespace for quickdoc."
+  {:no-doc true}
   (:require
    #?(:bb [babashka.pods :as pods]
       :clj [clj-kondo.core :as clj-kondo])

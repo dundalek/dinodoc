@@ -1,4 +1,5 @@
 (ns dinodoc.impl
+  {:no-doc true}
   (:require
    [clojure.string :as str]
    [babashka.fs :as fs]))

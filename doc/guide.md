@@ -18,7 +18,7 @@ Following two examples are the same, the second is shorter by using common `:git
 
 Specifying options for each input individually:
 
-```clj
+```clojure
 (dinodoc/generate
   {:inputs [{:path "foo"
              :git/branch "main"
@@ -30,7 +30,7 @@ Specifying options for each input individually:
 
 Specifying common options globally:
 
-```clj
+```clojure
 (dinodoc/generate
   {:inputs [{:path "foo"
              :github/repo "https://github.com/org/foo"}
@@ -41,13 +41,13 @@ Specifying common options globally:
 
 ### Monorepo with multiple modules 
 
-The [reitit]() example demonstrates documentation for a single monorepo with multiple modules.
+The [reitit](#) example demonstrates documentation for a single monorepo with multiple modules.
 
 1) The root path includes `doc/` directory with markdown articles.
 2) Inputs for modules are specified by concating the result of `fs/list-dir`. Since these use default convention they will be coerced to inputs.
 3) `:api-docs` is set to `:global` which will collect namespaces from all inputs into a single API hierarchy.
 
-```clj
+```clojure
 (require '[babashka.fs :as fs])
 
 (dinodoc/generate
@@ -61,7 +61,7 @@ The [reitit]() example demonstrates documentation for a single monorepo with mul
   :github/repo "https://github.com/metosin/reitit"})
 ```
 
-The [Polylith]() example shows a monorepo where a separate API hierarchy is rendered for each component.
+The [Polylith](#) example shows a monorepo where a separate API hierarchy is rendered for each component.
 
 1) Polylith repo contains `doc/` directory with markdown files, but it does not contain `cljdoc.edn` for curation so `doc-tree` is defined manually.
 2) Passing curated `doc-tree` to the input.
@@ -69,7 +69,7 @@ The [Polylith]() example shows a monorepo where a separate API hierarchy is rend
 
 In the future it might be useful to have an integration with Polylith that would automatically handle projects, bases and components.
 
-```clj
+```clojure
 (def doc-tree [["Polylith" {:file "doc/readme.md"}]]) ;; (1)
 
 (dinodoc/generate
@@ -91,7 +91,7 @@ Currently Dinodoc copies over only markdown files, so any other assets like imag
 
 In the future it would probably be useful if Dinodoc detected referenced image assets and copied them over automatically.
 
-```clj
+```clojure
 (require '[babashka.fs :as fs])
 
 (dinodoc/generate ...)

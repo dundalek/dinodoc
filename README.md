@@ -20,16 +20,16 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 
 ## Examples
 
-- [Promesa](/doc.clj) ([view]())
+- [Promesa](/doc.clj) ([view](#))
   - single project with curated doc pages and API docs
   - compare with [codox](https://funcool.github.io/promesa/latest/) and [cljdoc](https://cljdoc.org/d/funcool/promesa/11.0.678/)
-- [Reitit]() ([view]())
+- [Reitit](#) ([view](#))
   - monorepo with multiple modules
   - API docs combined into a single namespace hierarchy
-- [Polylith]() ([view]())
+- [Polylith](#) ([view](#))
    - monorepo with components
    - API docs rendered separately for each component
-- [Ring]() ([view]())
+- [Ring](#) ([view](#))
   - mix of monorepo and multiple repos
   - modules in a main monorepo and additional modules in separate repositories
   - API docs rendered separately under each module
@@ -41,19 +41,19 @@ figure out good defaults to work minimal configuration and figure out what confi
 
 ## Usage
 
-1) Create a new [Docusaurus](https://docusaurus.io/docs) site:  
+1. Create a new [Docusaurus](https://docusaurus.io/docs) site:  
    ```sh
    npx create-docusaurus@latest my-website classic
    ```
-2) Add alias with dependencies to `deps.edn`:
-   ```clj
+2. Add alias with dependencies to `deps.edn`:
+   ```clojure
    {:aliases
     {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../../quickdoc"}
            :main-opts ["doc.clj"]}}}
    ```
-3) Create the script to generate docs and save as `doc.clj`:  
+3. Create the script to generate docs and save as `doc.clj`:  
    Defaults are to use source files in `src/` to generate API docs and `doc/` for markdown pages.
-   ```clj
+   ```clojure
    (ns doc
      (:require [dinodoc.core :as dinodoc]))
 
@@ -63,9 +63,9 @@ figure out good defaults to work minimal configuration and figure out what confi
      :git/branch "main"
      :github/repo "https://github.com/your-org/your-repo"})
    ```
-4) Generate markdown API docs:  
+4. Generate markdown API docs:  
    `clojure -M:doc`
-5) Render the site:  
+5. Render the site:  
    `npm start` to start dev-server in watch mode  
    `npm run build` to build the static site for deployment
 
@@ -73,7 +73,7 @@ figure out good defaults to work minimal configuration and figure out what confi
 
 - [Guide](doc/guide.md) describes options and configuration in more detail.
 - [Design](doc/design.md) discusses design principles and considerations.
-- [Reference]()
+- [Reference](#)
 
 ## Credits
 

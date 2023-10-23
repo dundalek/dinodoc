@@ -11,7 +11,7 @@
    [quickdoc.impl :as impl]
    [slugify.core :refer [slugify]]))
 
-(defn slugify-path [path]
+(defn- slugify-path [path]
   (let [[_ path extension] (or (re-matches #"(.*)(\.\p{Alnum}+)" path)
                                [nil path ""])]
     (str (->> (str/split path #"/")
@@ -19,14 +19,14 @@
               (str/join "/"))
          extension)))
 
-(defn strip-docusaurus-path [path]
+(defn- strip-docusaurus-path [path]
   (str/replace path "?" ""))
 
 (comment
   (slugify-path "A A/B (x)/c")
   (slugify-path "A A/My Doc.md"))
 
-(defn make-ns->vars [analysis]
+(defn- make-ns->vars [analysis]
   (let [var-defs (:var-definitions analysis)
         nss (group-by :ns var-defs)
         ns->vars (update-vals nss (comp set (partial map :name)))]
@@ -137,7 +137,7 @@
      :git/branch branch
      :make-edit-url make-edit-url}))
 
-(defn run-analysis [source-paths]
+(defn- run-analysis [source-paths]
   (-> (clj-kondo/run! {:lint source-paths
                        :config {:skip-comments true
                                 :output {:analysis
