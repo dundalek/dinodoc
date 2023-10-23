@@ -1,5 +1,5 @@
 ---
-{sidebar_position: 6, custom_edit_url: 'https://github.com/funcool/promesa/tree/master/doc/contributing.md'}
+{sidebar_position: 5, custom_edit_url: 'https://github.com/funcool/promesa/tree/master/doc/contributing.md'}
 ---
 
 # Contributing

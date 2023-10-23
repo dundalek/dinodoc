@@ -52,8 +52,7 @@ The [reitit](#) example demonstrates documentation for a single monorepo with mu
 
 (dinodoc/generate
  {:paths (concat
-          [{:path "." ;; (1)
-            :include-readme? false}]
+          [{:path "."}] ;; (1)
           (fs/list-dir "modules")) ;; (2)
   :outdir "docs"
   :api-docs :global ;; (3)

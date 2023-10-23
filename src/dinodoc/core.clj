@@ -93,8 +93,8 @@
 (defn- normalize-input [input root-opts]
   (let [root-outdir (:outdir root-opts)
         {:keys [github/repo git/branch make-edit-url
-                include-readme? path doc-path doc-tree outdir]} (merge (select-keys root-opts [:github/repo :git/branch])
-                                                                       (if (map? input) input {:path input}))
+                path doc-path doc-tree outdir]} (merge (select-keys root-opts [:github/repo :git/branch])
+                                                       (if (map? input) input {:path input}))
         path (or (some-> path str) ".")
         outdir (or outdir (fs/file-name path))
         outdir (str root-outdir "/" outdir)
@@ -102,32 +102,29 @@
         source-paths [(str path "/src")]
         cljdoc-path (str  doc-path "/cljdoc.edn")
         api-docs-dir (str outdir "/api")
-        readme-path (when-not (false? include-readme?)
-                      (str path "/README.md"))
         make-edit-url (or make-edit-url
                           (fn [filename]
                             (str repo "/tree/" branch "/" filename)))
         doc-tree (or doc-tree
                      (when (fs/exists? cljdoc-path)
                        (->> (edn/read-string (slurp cljdoc-path))
-                            :cljdoc.doc/tree)))
+                            :cljdoc.doc/tree))
+                     (when (fs/exists? (str path "/README.md"))
+                       [[nil {:file "README.md"}]]))
         processed-doc-file? (set (collect-doc-files doc-tree))
-        doc-files (->> (concat (when (and readme-path
-                                          (fs/exists? readme-path))
-                                 [readme-path])
-                               ;; rendering files from top level for now, handle hierarchy later
-                               (->> (fs/glob doc-path "*.md")
-                                    (map str)))
-                       (map (fn [file]
-                              (if (str/starts-with? file (str path "/"))
-                                (str/replace-first file (str path "/") "")
-                                file)))
-                       (remove processed-doc-file?)
-                       (sort)
-                       (map (fn [file]
-                              [nil {:file file}])))]
+        doc-files (->>
+                   ;; rendering files from top level for now, handle hierarchy later
+                   (fs/glob doc-path "*.md")
+                   (map str)
+                   (map (fn [file]
+                          (if (str/starts-with? file (str path "/"))
+                            (str/replace-first file (str path "/") "")
+                            file)))
+                   (remove processed-doc-file?)
+                   (sort)
+                   (map (fn [file]
+                          [nil {:file file}])))]
     {:path path
-     :readme-path readme-path
      :doc-tree (concat doc-tree
                        doc-files)
      :outdir outdir
@@ -157,7 +154,6 @@
     * `:outdir`
     * `:doc-path` - default `\"doc\"`
     * `:doc-tree` - `:cljdoc.doc/tree`
-    * `:include-readme?` - README.md default true
     * `:make-edit-url` -
     * `:github/repo` -
     * `:git/branch` -
