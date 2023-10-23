@@ -2,7 +2,7 @@
   (:require
    [clojure.java.shell :refer [sh]]
    [clojure.string :as str]
-   [clojure.test :refer [deftest is]]
+   [clojure.test :refer [deftest is testing]]
    [dinodoc.core :as dinodoc]
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]))
 
@@ -74,13 +74,42 @@
       (fspit "README.md" "# This is readme")
       (fspit "doc/a.md" "# Page A")
       (fspit "doc/b.md" "# Page B")
-      (let [outdir (str dir "/docs")]
-        (dinodoc/generate {:paths [{:path dir
-                                    :outdir "."}]
-                           :outdir outdir
-                           :github/repo "repo"
-                           :git/branch "main"})
-        (is (= {"a.md" "---\n{sidebar_position: 1, custom_edit_url: repo/tree/main/doc/a.md}\n---\n\n# Page A",
-                "b.md" "---\n{sidebar_position: 2, custom_edit_url: repo/tree/main/doc/b.md}\n---\n\n# Page B",
-                "index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/README.md}\n---\n\n# This is readme"}
-               (fsdata outdir)))))))
+      (let [doc-tree [["Hello" {:file "README.md"}]
+                      ;; "B" is renamed  and goes before "A" so it will have sidebar_position set accordingly
+                      ["The B" {:file "doc/b.md"}]]
+                      ;; "A" is not present, but will be added by auto-discovering
+            expected {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/README.md, sidebar_label: Hello}\n---\n\n# This is readme"
+                      "the-b.md" "---\n{sidebar_position: 1, custom_edit_url: repo/tree/main/doc/b.md, sidebar_label: The B}\n---\n\n# Page B"
+                      "a.md" "---\n{sidebar_position: 2, custom_edit_url: repo/tree/main/doc/a.md}\n---\n\n# Page A"}]
+
+        (testing "Auto-discovering articles"
+          (let [outdir (str dir "/docs-auto-discovered")]
+            (dinodoc/generate {:paths [{:path dir
+                                        :outdir "."}]
+                               :outdir outdir
+                               :github/repo "repo"
+                               :git/branch "main"})
+            (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/README.md}\n---\n\n# This is readme"
+                    "a.md" "---\n{sidebar_position: 1, custom_edit_url: repo/tree/main/doc/a.md}\n---\n\n# Page A"
+                    "b.md" "---\n{sidebar_position: 2, custom_edit_url: repo/tree/main/doc/b.md}\n---\n\n# Page B"}
+                   (fsdata outdir)))))
+
+        (testing "Curating articles with :doc-tree option"
+          (let [outdir (str dir "/docs-doc-tree")]
+            (dinodoc/generate {:paths [{:path dir
+                                        :outdir "."
+                                        :doc-tree doc-tree}]
+                               :outdir outdir
+                               :github/repo "repo"
+                               :git/branch "main"})
+            (is (= expected (fsdata outdir)))))
+
+        (testing "Curating articles using cljdoc.edn"
+          (let [outdir (str dir "/docs-cljdoc")]
+            (fspit "doc/cljdoc.edn" (pr-str {:cljdoc.doc/tree doc-tree}))
+            (dinodoc/generate {:paths [{:path dir
+                                        :outdir "."}]
+                               :outdir outdir
+                               :github/repo "repo"
+                               :git/branch "main"})
+            (is (= expected (fsdata outdir)))))))))
