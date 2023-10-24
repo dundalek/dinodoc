@@ -348,3 +348,80 @@
           ;; this could be normalized to remove the `nested` segment
           (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../nested/the-b.md)"))
           (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../nested/the-a.md)")))))))
+
+(deftest generate-namespace-links
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "xyz/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
+      (fspit "xyz/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
+      (fspit "xyz/src/example/main.clj" "(ns example.main)\n(defn foo [])")
+      (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
+      (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
+      (let [outdir (str dir "/docs")
+            _ (dinodoc/generate {:paths [{:path (str dir "/xyz")}
+                                         {:path (str dir "/abc")}]
+                                 :outdir outdir
+                                 :github/repo "repo"
+                                 :git/branch "main"})
+            data (fsdata outdir)]
+        (testing "backtick links"
+          (is (str/includes?
+               (get-in data ["xyz" "index.md"])
+               "lorem [`example.main/foo`](./api/example/main/#foo) ipsum"))
+          (is (str/includes?
+               (get-in data ["xyz" "index.md"])
+               "ipsum `example.main/bar` dolor")))
+
+        (testing "wiki links"
+          (is (str/includes?
+               (get-in data ["xyz" "b.md"])
+               "lorem [`example.main/foo`](./api/example/main/#foo) ipsum"))
+          (is (str/includes?
+               (get-in data ["xyz" "b.md"])
+               "ipsum [[example.main/bar]] dolor")))
+
+        (testing "links from separate are input not replaced"
+             ;; Should we implement linking across inputs?
+             ;; Would likely need to figure some disambiguation in case of conflict.
+          (is (str/includes?
+               (get-in data ["abc" "index.md"])
+               "ipsum `example.main/bar` dolor"))
+          (is (str/includes?
+               (get-in data ["abc" "b.md"])
+               "ipsum [[example.main/bar]] dolor")))))))
+
+;; bug - broken test
+#_(deftest generate-namespace-links-global-mode
+    (with-temp-dir
+      (fn [{:keys [dir fspit]}]
+        (fspit "xyz/src/example/main.clj" "(ns example.main)\n(defn foo [])")
+        (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
+        (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
+        (let [outdir #_(str dir "/docs") "test-output/docs"
+              _ (dinodoc/generate {:paths [{:path (str dir "/xyz")}
+                                           {:path (str dir "/abc")
+                                            :doc-tree [["a" {:file "doc/a.md"}]
+                                                       ["nested" {}
+                                                        ["b" {:file "doc/b.md"}]]]}]
+                                   :api-docs :global
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          ; (is (= {} data))))))
+
+          (testing "backtick links"
+            (is (str/includes?
+                 (get-in data ["abc" "index.md"])
+                 "lorem [`example.main/foo`](../api/example/main/#foo) ipsum"))
+            (is (str/includes?
+                 (get-in data ["abc" "index.md"])
+                 "ipsum `example.main/bar` dolor")))
+
+          (testing "wiki links"
+            (is (str/includes?
+                 (get-in data ["abc" "nested" "b.md"])
+                 "lorem [`example.main/foo`](../../api/example/main/#foo) ipsum"))
+            (is (str/includes?
+                 (get-in data ["abc" "nested" "b.md"])
+                 "ipsum [[example.main/bar]] dolor")))))))
