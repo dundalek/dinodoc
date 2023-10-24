@@ -214,3 +214,137 @@
                   ;; But Docusaurus does not like some special characters like `?` so we need to do some stripping
                   "B Question.md" "---\n{sidebar_position: 1, custom_edit_url: 'repo/tree/main/doc/B Question?.md'}\n---\n\nFile B"}
                  (fsdata outdir))))))))
+
+(deftest generate-link-fixer
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "doc/a.md" "[B](./b.md)")
+      (fspit "doc/b.md" "[A](a.md)")
+
+      (testing "same level"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree [["The A" {:file "doc/a.md"}]
+                                                       ["The B" {:file "doc/b.md"}]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          (is (str/includes? (get-in data ["index.md"]) "[B](the-b.md)"))
+          ; (is (str/includes? (get-in data ["the-b.md"]) "[B](index.md)"))
+          ;; bug
+          (is (str/includes? (get-in data ["the-b.md"]) "[A](the-a.md)"))))
+
+      (testing "b nested down"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree [["The A" {:file "doc/a.md"}]
+                                                       ["nested" {}
+                                                        ["The B" {:file "doc/b.md"}]]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          (is (str/includes? (get-in data ["index.md"]) "[B](nested/the-b.md)"))
+          ; ; (is (str/includes? (get-in data ["nested" "the-b.md"]) "[B](../index.md)"))
+          ; ;; bug
+          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../the-a.md)"))))
+
+      (testing "b nested up"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree
+                                            [["nested" {}
+                                              ["The A" {:file "doc/a.md"}]]
+                                             ["The B" {:file "doc/b.md"}]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../the-b.md)"))
+          (is (str/includes? (get-in data ["the-b.md"]) "nested/the-a.md"))))
+
+      (testing "both nested"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree [["nested" {}
+                                                        ["The A" {:file "doc/a.md"}]
+                                                        ["The B" {:file "doc/b.md"}]]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          ;; this could be normalized to remove the `nested` segment
+          (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../nested/the-b.md)"))
+          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../nested/the-a.md)")))))))
+
+(deftest generate-link-fixer-with-nested
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "doc/a.md" "[B](nested/b.md)")
+      (fspit "doc/nested/b.md" "[A](../a.md)")
+
+      (testing "same level"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree [["The A" {:file "doc/a.md"}]
+                                                       ["The B" {:file "doc/nested/b.md"}]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          (is (str/includes? (get-in data ["index.md"]) "[B](the-b.md)"))
+          ; (is (str/includes? (get-in data ["the-b.md"]) "[B](index.md)"))
+          ;; bug
+          (is (str/includes? (get-in data ["the-b.md"]) "[A](the-a.md)"))))
+
+      (testing "b nested down"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree [["The A" {:file "doc/a.md"}]
+                                                       ["nested" {}
+                                                        ["The B" {:file "doc/nested/b.md"}]]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          (is (str/includes? (get-in data ["index.md"]) "[B](nested/the-b.md)"))
+          ; ; (is (str/includes? (get-in data ["nested" "the-b.md"]) "[B](../index.md)"))
+          ; ;; bug
+          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../the-a.md)"))))
+
+      (testing "b nested up"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree
+                                            [["nested" {}
+                                              ["The A" {:file "doc/a.md"}]]
+                                             ["The B" {:file "doc/nested/b.md"}]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../the-b.md)"))
+          (is (str/includes? (get-in data ["the-b.md"]) "nested/the-a.md"))))
+
+      (testing "both nested"
+        (let [outdir (str dir "/docs-same-level")
+              _ (dinodoc/generate {:paths [{:path dir
+                                            :outdir "."
+                                            :doc-tree [["nested" {}
+                                                        ["The A" {:file "doc/a.md"}]
+                                                        ["The B" {:file "doc/nested/b.md"}]]]}]
+                                   :outdir outdir
+                                   :github/repo "repo"
+                                   :git/branch "main"})
+              data (fsdata outdir)]
+          ;; this could be normalized to remove the `nested` segment
+          (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../nested/the-b.md)"))
+          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../nested/the-a.md)")))))))
