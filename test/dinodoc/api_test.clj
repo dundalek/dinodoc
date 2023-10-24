@@ -195,3 +195,22 @@
                                                  "the-c.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/c.md, sidebar_label: The C}\n---\n\n# Page C"}
                                    "the-d.md" "---\n{sidebar_position: 2, custom_edit_url: repo/tree/main/doc/d.md, sidebar_label: The D}\n---\n\n# Page D"}}
                    (fsdata outdir)))))))))
+
+(deftest generate-autodiscover-articles
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "doc/A File.md" "File A")
+      (fspit "doc/B Question?.md" "File B")
+      (testing "nested"
+        (let [outdir (str dir "/docs")]
+          (dinodoc/generate {:paths [{:path dir
+                                      :outdir "."}]
+                             :outdir outdir
+                             :github/repo "repo"
+                             :git/branch "main"})
+          (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/A File.md}\n---\n\nFile A"
+                  ;; For autodiscovered articles we preserver the filename (not slugifying it).
+                  ;; This is to make sure that articles that do not specify title like `# Title` will get more human readable label in the sidebar.
+                  ;; But Docusaurus does not like some special characters like `?` so we need to do some stripping
+                  "B Question.md" "---\n{sidebar_position: 1, custom_edit_url: 'repo/tree/main/doc/B Question?.md'}\n---\n\nFile B"}
+                 (fsdata outdir))))))))
