@@ -115,11 +115,8 @@
         doc-files (->>
                    ;; rendering files from top level for now, handle hierarchy later
                    (fs/glob doc-path "*.md")
-                   (map str)
                    (map (fn [file]
-                          (if (str/starts-with? file (str path "/"))
-                            (str/replace-first file (str path "/") "")
-                            file)))
+                          (str/replace-first (str file) (str path "/") "")))
                    (remove processed-doc-file?)
                    (sort)
                    (map (fn [file]
