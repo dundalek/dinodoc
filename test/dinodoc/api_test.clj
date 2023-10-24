@@ -52,6 +52,20 @@
         (testing "No file is created if there are no vars"
           (is (= {} (fsdata outdir))))))))
 
+(deftest generate-customize-doc-path
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (let [outdir (str dir "/docs")]
+        (fspit "articles/a.md" "Lorem ipsum")
+        (dinodoc/generate {:paths [{:path dir
+                                    :outdir "."
+                                    :doc-path "articles"}]
+                           :outdir outdir
+                           :github/repo "repo"
+                           :git/branch "main"})
+        (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/articles/a.md}\n---\n\nLorem ipsum"}
+               (fsdata outdir)))))))
+
 (deftest generate-api-mode-global
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
