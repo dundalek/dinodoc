@@ -6,25 +6,10 @@
    [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
    [clojure.string :as str]
-   [dinodoc.impl :refer [doc-tree->file-map replace-links path-to-root]]
+   [dinodoc.impl :refer [doc-tree->file-map replace-links path-to-root slugify-path strip-docusaurus-path]]
    [quickdoc.api :as qd]
    [quickdoc.impl :as impl]
    [slugify.core :refer [slugify]]))
-
-(defn- slugify-path [path]
-  (let [[_ path extension] (or (re-matches #"(.*)(\.\p{Alnum}+)" path)
-                               [nil path ""])]
-    (str (->> (str/split path #"/")
-              (map slugify)
-              (str/join "/"))
-         extension)))
-
-(defn- strip-docusaurus-path [path]
-  (str/replace path "?" ""))
-
-(comment
-  (slugify-path "A A/B (x)/c")
-  (slugify-path "A A/My Doc.md"))
 
 (defn- make-ns->vars [analysis]
   (let [var-defs (:var-definitions analysis)

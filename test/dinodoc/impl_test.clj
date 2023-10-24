@@ -1,6 +1,6 @@
 (ns dinodoc.impl-test
   (:require
-   [clojure.test :refer [deftest is]]
+   [clojure.test :refer [deftest is testing]]
    [dinodoc.impl :as impl]))
 
 (deftest path-to-root-test
@@ -77,3 +77,8 @@
                                     ["bb" {:file "b.md"}]]])))
   (is (= {"a.md" nil}
          (impl/doc-tree->file-map [[nil {:file "a.md"}]]))))
+
+(deftest slugify-path-test
+  (is (= "a-a/b-x/c" (impl/slugify-path "A A/B (x)/c")))
+  (testing "dot in file extension is preserved"
+    (is (= "a-a/my-doc.md" (impl/slugify-path "A A/My Doc.md")))))
