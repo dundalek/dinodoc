@@ -58,8 +58,8 @@ figure out good defaults to work minimal configuration and figure out what confi
      (:require [dinodoc.core :as dinodoc]))
 
    (dinodoc/generate
-    {:paths ["."]
-     :outdir "docs"
+    {:inputs ["."]
+     :output-path "docs"
      :git/branch "main"
      :github/repo "https://github.com/your-org/your-repo"})
    ```
@@ -73,7 +73,7 @@ figure out good defaults to work minimal configuration and figure out what confi
 
 - [Guide](doc/guide.md) describes options and configuration in more detail.
 - [Design](doc/design.md) discusses design principles and considerations.
-- [Reference](#)
+- [API Reference](#)
 
 ## Credits
 

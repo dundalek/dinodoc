@@ -51,11 +51,11 @@ The [reitit](#) example demonstrates documentation for a single monorepo with mu
 (require '[babashka.fs :as fs])
 
 (dinodoc/generate
- {:paths (concat
-          [{:path "."}] ;; (1)
-          (fs/list-dir "modules")) ;; (2)
-  :outdir "docs"
-  :api-docs :global ;; (3)
+ {:inputs (concat
+           [{:path "."}] ;; (1)
+           (fs/list-dir "modules")) ;; (2)
+  :output-path "docs"
+  :api-mode :global ;; (3)
   :git/branch "master"
   :github/repo "https://github.com/metosin/reitit"})
 ```
@@ -72,14 +72,14 @@ In the future it might be useful to have an integration with Polylith that would
 (def doc-tree [["Polylith" {:file "doc/readme.md"}]]) ;; (1)
 
 (dinodoc/generate
- {:paths (concat
-          [{:path "."
-            :doc-tree doc-tree}] ;; (2)
-          (->> (fs/list-dir "components")
-               (map (fn [path]
-                      {:path path
-                       :outdir (str "Components/" (fs/file-name path))})))) ;; (3)
-  :outdir "docs"
+ {:inputs (concat
+           [{:path "."
+             :doc-tree doc-tree}] ;; (2)
+           (->> (fs/list-dir "components")
+                (map (fn [path]
+                       {:path path
+                        :output-path (str "Components/" (fs/file-name path))})))) ;; (3)
+  :output-path "docs"
   :git/branch "master"
   :github/repo "https://github.com/polyfy/polylith"})
 ```
