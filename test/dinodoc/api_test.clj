@@ -15,7 +15,7 @@
              :github/repo "https://github.com/weavejester/codox"}
             {:path "test-projects/samples"
              :github/repo "https://github.com/dundalek/dinodoc"}]
-    :outdir "test-output/docs"
+    :output-path "test-output/docs"
     :api-docs :global
     :git/branch "master"})
   ;; We compare if output is the same as committed state, git status returns empty output if there are no changes.
@@ -28,61 +28,61 @@
 (deftest generate-foo
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
-      (let [outdir (str dir "/docs")]
+      (let [output-path (str dir "/docs")]
         (fspit "src/example/main.clj" "(ns example.main)\n(defn foo [])")
         (dinodoc/generate {:paths [{:path dir
-                                    :outdir "."}]
-                           :outdir outdir
+                                    :output-path "."}]
+                           :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
         (is (str/includes?
-             (get-in (fsdata outdir) ["api" "example" "main" "index.md"])
+             (get-in (fsdata output-path) ["api" "example" "main" "index.md"])
              "\n### foo {#foo}\n"))))))
 
 (deftest generate-blank
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
-      (let [outdir (str dir "/docs")]
+      (let [output-path (str dir "/docs")]
         (fspit "src/example/main.clj" "(ns example.main)\n")
         (dinodoc/generate {:paths [{:path dir
-                                    :outdir "."}]
-                           :outdir outdir
+                                    :output-path "."}]
+                           :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
         (testing "No file is created if there are no vars"
-          (is (= {} (fsdata outdir))))))))
+          (is (= {} (fsdata output-path))))))))
 
 (deftest generate-customize-doc-path
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
-      (let [outdir (str dir "/docs")]
+      (let [output-path (str dir "/docs")]
         (fspit "articles/a.md" "Lorem ipsum")
         (dinodoc/generate {:paths [{:path dir
-                                    :outdir "."
+                                    :output-path "."
                                     :doc-path "articles"}]
-                           :outdir outdir
+                           :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
         (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/articles/a.md}\n---\n\nLorem ipsum"}
-               (fsdata outdir)))))))
+               (fsdata output-path)))))))
 
 (deftest generate-customize-source-paths
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
-      (let [outdir (str dir "/docs")]
+      (let [output-path (str dir "/docs")]
         (fspit "src-clj/example/server.clj" "(ns example.server)\n(defn foo [])")
         (fspit "src-cljs/example/client.cljs" "(ns example.client)\n(defn bar [])")
         (dinodoc/generate {:paths [{:path dir
-                                    :outdir "."
+                                    :output-path "."
                                     :source-paths ["src-clj" "src-cljs"]}]
-                           :outdir outdir
+                           :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
         (is (str/includes?
-             (get-in (fsdata outdir) ["api" "example" "server" "index.md"])
+             (get-in (fsdata output-path) ["api" "example" "server" "index.md"])
              "\n### foo {#foo}\n"))
         (is (str/includes?
-             (get-in (fsdata outdir) ["api" "example" "client" "index.md"])
+             (get-in (fsdata output-path) ["api" "example" "client" "index.md"])
              "\n### bar {#bar}\n"))))))
 
 (deftest generate-api-mode-global
@@ -90,25 +90,25 @@
     (fn [{:keys [dir fspit]}]
       (fspit "a/src/example/a_main.clj" "(ns example.a-main)\n(defn foo [])")
       (fspit "b/src/example/b_main.clj" "(ns example.b-main)\n(defn bar [])")
-      (let [outdir (str dir "/docs-separate")
+      (let [output-path (str dir "/docs-separate")
             _ (dinodoc/generate {:paths [(str dir "/a")
                                          (str dir "/b")]
-                                 :outdir outdir
+                                 :output-path output-path
                                  :github/repo "repo"
                                  :git/branch "main"})
-            data (fsdata outdir)]
+            data (fsdata output-path)]
         (is (str/includes? (get-in data ["a" "api" "example" "a-main" "index.md"])
                            "\n### foo {#foo}\n"))
         (is (str/includes? (get-in data ["b" "api" "example" "b-main" "index.md"])
                            "\n### bar {#bar}\n")))
-      (let [outdir (str dir "/docs-global")
+      (let [output-path (str dir "/docs-global")
             _ (dinodoc/generate {:paths [(str dir "/a")
                                          (str dir "/b")]
-                                 :outdir outdir
+                                 :output-path output-path
                                  :api-docs :global
                                  :github/repo "repo"
                                  :git/branch "main"})
-            data (fsdata outdir)]
+            data (fsdata output-path)]
         (is (str/includes? (get-in data ["api" "example" "a-main" "index.md"])
                            "\n### foo {#foo}\n"))
         (is (str/includes? (get-in data ["api" "example" "b-main" "index.md"])
@@ -129,36 +129,36 @@
                       "a.md" "---\n{sidebar_position: 2, custom_edit_url: repo/tree/main/doc/a.md}\n---\n\n# Page A"}]
 
         (testing "Auto-discovering articles"
-          (let [outdir (str dir "/docs-auto-discovered")]
+          (let [output-path (str dir "/docs-auto-discovered")]
             (dinodoc/generate {:paths [{:path dir
-                                        :outdir "."}]
-                               :outdir outdir
+                                        :output-path "."}]
+                               :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
             (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/README.md}\n---\n\n# This is readme"
                     "a.md" "---\n{sidebar_position: 1, custom_edit_url: repo/tree/main/doc/a.md}\n---\n\n# Page A"
                     "b.md" "---\n{sidebar_position: 2, custom_edit_url: repo/tree/main/doc/b.md}\n---\n\n# Page B"}
-                   (fsdata outdir)))))
+                   (fsdata output-path)))))
 
         (testing "Curating articles with :doc-tree option"
-          (let [outdir (str dir "/docs-doc-tree")]
+          (let [output-path (str dir "/docs-doc-tree")]
             (dinodoc/generate {:paths [{:path dir
-                                        :outdir "."
+                                        :output-path "."
                                         :doc-tree doc-tree}]
-                               :outdir outdir
+                               :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
-            (is (= expected (fsdata outdir)))))
+            (is (= expected (fsdata output-path)))))
 
         (testing "Curating articles using cljdoc.edn"
-          (let [outdir (str dir "/docs-cljdoc")]
+          (let [output-path (str dir "/docs-cljdoc")]
             (fspit "doc/cljdoc.edn" (pr-str {:cljdoc.doc/tree doc-tree}))
             (dinodoc/generate {:paths [{:path dir
-                                        :outdir "."}]
-                               :outdir outdir
+                                        :output-path "."}]
+                               :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
-            (is (= expected (fsdata outdir)))))))))
+            (is (= expected (fsdata output-path)))))))))
 
 (deftest generate-doc-tree-with-nesting
   (with-temp-dir
@@ -168,37 +168,37 @@
       (fspit "doc/c.md" "# Page C")
       (fspit "doc/d.md" "# Page D")
       (testing "nested"
-        (let [outdir (str dir "/docs-nested")
+        (let [output-path (str dir "/docs-nested")
               doc-tree [["Top-level B" {:file "doc/b.md"}
                          ["The A" {:file "doc/a.md"}]
                          ["The C" {:file "doc/c.md"}]]]]
           (dinodoc/generate {:paths [{:path dir
-                                      :outdir "."
+                                      :output-path "."
                                       :doc-tree doc-tree}]
-                             :outdir outdir
+                             :output-path output-path
                              :github/repo "repo"
                              :git/branch "main"})
           (is (= {"d.md" "---\n{sidebar_position: 1, custom_edit_url: repo/tree/main/doc/d.md}\n---\n\n# Page D"
                   "index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/b.md, sidebar_label: Top-level B}\n---\n\n# Page B"
                   "top-level-b" {"the-a.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/a.md, sidebar_label: The A}\n---\n\n# Page A"
                                  "the-c.md" "---\n{sidebar_position: 1, custom_edit_url: repo/tree/main/doc/c.md, sidebar_label: The C}\n---\n\n# Page C"}}
-                 (fsdata outdir)))))
+                 (fsdata output-path)))))
       (testing "more-nesting"
-        (let [outdir (str dir "/docs-more-nesting")
+        (let [output-path (str dir "/docs-more-nesting")
               doc-tree [["Top-level B" {:file "doc/b.md"}
                          ["The A" {:file "doc/a.md"}
                           ["The C" {:file "doc/c.md"}]]]]]
           (dinodoc/generate {:paths [{:path dir
-                                      :outdir "."
+                                      :output-path "."
                                       :doc-tree doc-tree}]
-                             :outdir outdir
+                             :output-path output-path
                              :github/repo "repo"
                              :git/branch "main"})
           (is (= {"d.md" "---\n{sidebar_position: 1, custom_edit_url: repo/tree/main/doc/d.md}\n---\n\n# Page D"
                   "index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/b.md, sidebar_label: Top-level B}\n---\n\n# Page B"
                   "top-level-b" {"the-a" {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/a.md, sidebar_label: The A}\n---\n\n# Page A"
                                           "the-c.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/c.md, sidebar_label: The C}\n---\n\n# Page C"}}}
-                 (fsdata outdir))))))))
+                 (fsdata output-path))))))))
 
 (deftest generate-doc-tree-categories-without-content
   (with-temp-dir
@@ -214,11 +214,11 @@
                         ["The C" {:file "doc/c.md"}]]
                        ["The D" {:file "doc/d.md"}]]]]
         (testing "nested"
-          (let [outdir (str dir "/docs")]
+          (let [output-path (str dir "/docs")]
             (dinodoc/generate {:paths [{:path dir
-                                        :outdir "."
+                                        :output-path "."
                                         :doc-tree doc-tree}]
-                               :outdir outdir
+                               :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
             (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/b.md, sidebar_label: Top-level B}\n---\n\n# Page B"
@@ -227,7 +227,7 @@
                                    "c-category" {"_category_.json" "{\"position\":1,\"label\":\"C Category\"}"
                                                  "the-c.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/c.md, sidebar_label: The C}\n---\n\n# Page C"}
                                    "the-d.md" "---\n{sidebar_position: 2, custom_edit_url: repo/tree/main/doc/d.md, sidebar_label: The D}\n---\n\n# Page D"}}
-                   (fsdata outdir)))))))))
+                   (fsdata output-path)))))))))
 
 (deftest generate-autodiscover-articles
   (with-temp-dir
@@ -235,10 +235,10 @@
       (fspit "doc/A File.md" "File A")
       (fspit "doc/B Question?.md" "File B")
       (testing "nested"
-        (let [outdir (str dir "/docs")]
+        (let [output-path (str dir "/docs")]
           (dinodoc/generate {:paths [{:path dir
-                                      :outdir "."}]
-                             :outdir outdir
+                                      :output-path "."}]
+                             :output-path output-path
                              :github/repo "repo"
                              :git/branch "main"})
           (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/doc/A File.md}\n---\n\nFile A"
@@ -246,7 +246,7 @@
                   ;; This is to make sure that articles that do not specify title like `# Title` will get more human readable label in the sidebar.
                   ;; But Docusaurus does not like some special characters like `?` so we need to do some stripping
                   "B Question.md" "---\n{sidebar_position: 1, custom_edit_url: 'repo/tree/main/doc/B Question?.md'}\n---\n\nFile B"}
-                 (fsdata outdir))))))))
+                 (fsdata output-path))))))))
 
 (deftest generate-link-fixer
   (with-temp-dir
@@ -255,62 +255,62 @@
       (fspit "doc/b.md" "[A](a.md)")
 
       (testing "same level"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree [["The A" {:file "doc/a.md"}]
                                                        ["The B" {:file "doc/b.md"}]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](the-b.md)"))
           ; (is (str/includes? (get-in data ["the-b.md"]) "[B](index.md)"))
           ;; bug
           (is (str/includes? (get-in data ["the-b.md"]) "[A](the-a.md)"))))
 
       (testing "b nested down"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree [["The A" {:file "doc/a.md"}]
                                                        ["nested" {}
                                                         ["The B" {:file "doc/b.md"}]]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](nested/the-b.md)"))
           ; ; (is (str/includes? (get-in data ["nested" "the-b.md"]) "[B](../index.md)"))
           ; ;; bug
           (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../the-a.md)"))))
 
       (testing "b nested up"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree
                                             [["nested" {}
                                               ["The A" {:file "doc/a.md"}]]
                                              ["The B" {:file "doc/b.md"}]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../the-b.md)"))
           (is (str/includes? (get-in data ["the-b.md"]) "nested/the-a.md"))))
 
       (testing "both nested"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree [["nested" {}
                                                         ["The A" {:file "doc/a.md"}]
                                                         ["The B" {:file "doc/b.md"}]]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           ;; this could be normalized to remove the `nested` segment
           (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../nested/the-b.md)"))
           (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../nested/the-a.md)")))))))
@@ -322,62 +322,62 @@
       (fspit "doc/nested/b.md" "[A](../a.md)")
 
       (testing "same level"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree [["The A" {:file "doc/a.md"}]
                                                        ["The B" {:file "doc/nested/b.md"}]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](the-b.md)"))
           ; (is (str/includes? (get-in data ["the-b.md"]) "[B](index.md)"))
           ;; bug
           (is (str/includes? (get-in data ["the-b.md"]) "[A](the-a.md)"))))
 
       (testing "b nested down"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree [["The A" {:file "doc/a.md"}]
                                                        ["nested" {}
                                                         ["The B" {:file "doc/nested/b.md"}]]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](nested/the-b.md)"))
           ; ; (is (str/includes? (get-in data ["nested" "the-b.md"]) "[B](../index.md)"))
           ; ;; bug
           (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../the-a.md)"))))
 
       (testing "b nested up"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree
                                             [["nested" {}
                                               ["The A" {:file "doc/a.md"}]]
                                              ["The B" {:file "doc/nested/b.md"}]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../the-b.md)"))
           (is (str/includes? (get-in data ["the-b.md"]) "nested/the-a.md"))))
 
       (testing "both nested"
-        (let [outdir (str dir "/docs-same-level")
+        (let [output-path (str dir "/docs-same-level")
               _ (dinodoc/generate {:paths [{:path dir
-                                            :outdir "."
+                                            :output-path "."
                                             :doc-tree [["nested" {}
                                                         ["The A" {:file "doc/a.md"}]
                                                         ["The B" {:file "doc/nested/b.md"}]]]}]
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           ;; this could be normalized to remove the `nested` segment
           (is (str/includes? (get-in data ["nested" "the-a.md"]) "[B](../nested/the-b.md)"))
           (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../nested/the-a.md)")))))))
@@ -390,13 +390,13 @@
       (fspit "xyz/src/example/main.clj" "(ns example.main)\n(defn foo [])")
       (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
       (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
-      (let [outdir (str dir "/docs")
+      (let [output-path (str dir "/docs")
             _ (dinodoc/generate {:paths [{:path (str dir "/xyz")}
                                          {:path (str dir "/abc")}]
-                                 :outdir outdir
+                                 :output-path output-path
                                  :github/repo "repo"
                                  :git/branch "main"})
-            data (fsdata outdir)]
+            data (fsdata output-path)]
         (testing "backtick links"
           (is (str/includes?
                (get-in data ["xyz" "index.md"])
@@ -430,17 +430,17 @@
         (fspit "xyz/src/example/main.clj" "(ns example.main)\n(defn foo [])")
         (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
         (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
-        (let [outdir #_(str dir "/docs") "test-output/docs"
+        (let [output-path #_(str dir "/docs") "test-output/docs"
               _ (dinodoc/generate {:paths [{:path (str dir "/xyz")}
                                            {:path (str dir "/abc")
                                             :doc-tree [["a" {:file "doc/a.md"}]
                                                        ["nested" {}
                                                         ["b" {:file "doc/b.md"}]]]}]
                                    :api-docs :global
-                                   :outdir outdir
+                                   :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
-              data (fsdata outdir)]
+              data (fsdata output-path)]
           ; (is (= {} data))))))
 
           (testing "backtick links"

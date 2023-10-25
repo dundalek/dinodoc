@@ -76,12 +76,12 @@
                        children))))
 
 (defn- normalize-input [input root-opts]
-  (let [root-outdir (:outdir root-opts)
+  (let [root-outdir (:output-path root-opts)
         {:keys [github/repo git/branch make-edit-url source-paths
-                path doc-path doc-tree outdir]} (merge (select-keys root-opts [:github/repo :git/branch])
-                                                       (if (map? input) input {:path input}))
+                path doc-path doc-tree output-path]} (merge (select-keys root-opts [:github/repo :git/branch])
+                                                            (if (map? input) input {:path input}))
         path (or (some-> path str) ".")
-        outdir (or outdir (fs/file-name path))
+        outdir (or output-path (fs/file-name path))
         outdir (str root-outdir "/" outdir)
         doc-path (str path "/" (or doc-path "doc"))
         source-paths (->> (or source-paths ["src"])
@@ -110,7 +110,7 @@
     {:path path
      :doc-tree (concat doc-tree
                        doc-files)
-     :outdir outdir
+     :output-path outdir
      :source-paths source-paths
      :api-docs-dir api-docs-dir
      :github/repo repo
@@ -146,7 +146,7 @@ Options:
     * `:edit-url-fn` - Function that gets a `filename` parameter and returns a custom edit url, signature: `(fn [filename])`
   "
   [opts]
-  (let [{:keys [paths api-docs] root-outdir :outdir :as root-opts} opts
+  (let [{:keys [paths api-docs] root-outdir :output-path :as root-opts} opts
         inputs (->> (if (seq paths) paths ["."])
                     (map #(normalize-input % root-opts)))
         global-analysis (when (= api-docs :global)
@@ -170,7 +170,7 @@ Options:
                 "{\"label\":\"API\"}"))))
 
     (doseq [input inputs]
-      (let [{:keys [path doc-tree outdir source-paths api-docs-dir github/repo git/branch make-edit-url]} input
+      (let [{:keys [path doc-tree output-path source-paths api-docs-dir github/repo git/branch make-edit-url]} input
             analysis (or global-analysis (run-analysis source-paths))
             file-map (->> (doc-tree->file-map doc-tree)
                           (map (fn [[src target]]
@@ -179,8 +179,8 @@ Options:
                                         (str/replace src #"^doc/" ""))]))
                           (into {}))]
 
-        (process-doc-tree {:root-path outdir
-                           :parent-path outdir
+        (process-doc-tree {:root-path output-path
+                           :parent-path output-path
                            :input-path path
                            :make-edit-url make-edit-url
                            :ns->vars (make-ns->vars analysis)
