@@ -59,9 +59,7 @@ figure out good defaults to work minimal configuration and figure out what confi
 
    (dinodoc/generate
     {:inputs ["."]
-     :output-path "docs"
-     :git/branch "main"
-     :github/repo "https://github.com/your-org/your-repo"})
+     :output-path "docs"})
    ```
 4. Generate markdown API docs:  
    `clojure -M:doc`

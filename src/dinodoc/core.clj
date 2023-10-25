@@ -9,6 +9,7 @@
    [dinodoc.impl :refer [doc-tree->file-map replace-links path-to-root slugify-path strip-docusaurus-path]]
    [quickdoc.api :as qd]
    [quickdoc.impl :as impl]
+   [dinodoc.impl.git :as git]
    [slugify.core :refer [slugify]]))
 
 (defn- make-ns->vars [analysis]
@@ -89,6 +90,11 @@
                           (map #(str path "/" %)))
         cljdoc-path (str  doc-path "/cljdoc.edn")
         api-docs-dir (str outdir "/api")
+        [repo branch] (if (and repo branch)
+                        [repo branch]
+                        ;; potential optimization: could skip detection if `edit-url-fn` option is set
+                        (let [{:keys [url branch]} (git/detect-repo-info path)]
+                          [url branch]))
         edit-url-fn (or edit-url-fn
                         (fn [filename]
                           (str repo "/tree/" branch "/" filename)))
@@ -142,7 +148,7 @@ Options:
     * `:source-paths` - Directories with source files for API docs, relative to `:path` (default: `[\"src\"]`)
     * `:doc-path` - Directory with markdown articles, relative to `:path` (default `\"doc\"`)
     * `:doc-tree` - Tree of articles in the format of `:cljdoc.doc/tree` (default: tries to read `:doc-path`/`cljdoc.edn`)
-    * `:github/repo` - Link to Github repo used for generating  \"Edit this page\" links (string)
+    * `:github/repo` - Link to Github repo used for generating  \"Edit this page\" links, for example `https://github.com/org/repo` (string)
     * `:git/branch` - Default git branch, used for \"Edit this page\" links (string)
     * `:edit-url-fn` - Function that gets a `filename` parameter and returns a custom edit url, signature: `(fn [filename])`
   "

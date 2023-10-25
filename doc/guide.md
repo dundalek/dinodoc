@@ -55,9 +55,7 @@ The [reitit](#) example demonstrates documentation for a single monorepo with mu
            [{:path "."}] ;; (1)
            (fs/list-dir "modules")) ;; (2)
   :output-path "docs"
-  :api-mode :global ;; (3)
-  :git/branch "master"
-  :github/repo "https://github.com/metosin/reitit"})
+  :api-mode :global}) ;; (3)
 ```
 
 The [Polylith](#) example shows a monorepo where a separate API hierarchy is rendered for each component.
@@ -79,9 +77,7 @@ In the future it might be useful to have an integration with Polylith that would
                 (map (fn [path]
                        {:path path
                         :output-path (str "Components/" (fs/file-name path))})))) ;; (3)
-  :output-path "docs"
-  :git/branch "master"
-  :github/repo "https://github.com/polyfy/polylith"})
+  :output-path "docs"})
 ```
 
 ### Image assets
