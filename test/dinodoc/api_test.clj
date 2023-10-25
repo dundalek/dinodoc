@@ -66,6 +66,25 @@
         (is (= {"index.md" "---\n{sidebar_position: 0, custom_edit_url: repo/tree/main/articles/a.md}\n---\n\nLorem ipsum"}
                (fsdata outdir)))))))
 
+(deftest generate-customize-source-paths
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (let [outdir (str dir "/docs")]
+        (fspit "src-clj/example/server.clj" "(ns example.server)\n(defn foo [])")
+        (fspit "src-cljs/example/client.cljs" "(ns example.client)\n(defn bar [])")
+        (dinodoc/generate {:paths [{:path dir
+                                    :outdir "."
+                                    :source-paths ["src-clj" "src-cljs"]}]
+                           :outdir outdir
+                           :github/repo "repo"
+                           :git/branch "main"})
+        (is (str/includes?
+             (get-in (fsdata outdir) ["api" "example" "server" "index.md"])
+             "\n### foo {#foo}\n"))
+        (is (str/includes?
+             (get-in (fsdata outdir) ["api" "example" "client" "index.md"])
+             "\n### bar {#bar}\n"))))))
+
 (deftest generate-api-mode-global
   (with-temp-dir
     (fn [{:keys [dir fspit]}]

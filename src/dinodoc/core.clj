@@ -77,14 +77,15 @@
 
 (defn- normalize-input [input root-opts]
   (let [root-outdir (:outdir root-opts)
-        {:keys [github/repo git/branch make-edit-url
+        {:keys [github/repo git/branch make-edit-url source-paths
                 path doc-path doc-tree outdir]} (merge (select-keys root-opts [:github/repo :git/branch])
                                                        (if (map? input) input {:path input}))
         path (or (some-> path str) ".")
         outdir (or outdir (fs/file-name path))
         outdir (str root-outdir "/" outdir)
         doc-path (str path "/" (or doc-path "doc"))
-        source-paths [(str path "/src")]
+        source-paths (->> (or source-paths ["src"])
+                          (map #(str path "/" %)))
         cljdoc-path (str  doc-path "/cljdoc.edn")
         api-docs-dir (str outdir "/api")
         make-edit-url (or make-edit-url
