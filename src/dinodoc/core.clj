@@ -146,15 +146,15 @@ Options:
     * `:edit-url-fn` - Function that gets a `filename` parameter and returns a custom edit url, signature: `(fn [filename])`
   "
   [opts]
-  (let [{:keys [inputs api-docs] root-outdir :output-path :as root-opts} opts
+  (let [{:keys [inputs api-mode] root-outdir :output-path :as root-opts} opts
         inputs (->> (if (seq inputs) inputs ["."])
                     (map #(normalize-input % root-opts)))
-        global-analysis (when (= api-docs :global)
+        global-analysis (when (= api-mode :global)
                           (run-analysis (mapcat :source-paths inputs)))]
     (fs/delete-tree root-outdir)
     (fs/create-dir root-outdir)
 
-    (when (= api-docs :global)
+    (when (= api-mode :global)
       (let [{:keys [github/repo git/branch]} root-opts
             api-docs-dir (str root-outdir "/api")]
         (qd/quickdoc
@@ -187,7 +187,7 @@ Options:
                            :file-map file-map}
                           doc-tree)
 
-        (when (not= api-docs :global)
+        (when (not= api-mode :global)
           (println "Generating" path)
           (qd/quickdoc
            {:analysis analysis

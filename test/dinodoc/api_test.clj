@@ -16,7 +16,7 @@
              {:path "test-projects/samples"
               :github/repo "https://github.com/dundalek/dinodoc"}]
     :output-path "test-output/docs"
-    :api-docs :global
+    :api-mode :global
     :git/branch "master"})
   ;; We compare if output is the same as committed state, git status returns empty output if there are no changes.
   ;; If implementation changes and expected state needs to be updated, commit the changes after inspecting the diff.
@@ -105,7 +105,7 @@
             _ (dinodoc/generate {:inputs [(str dir "/a")
                                           (str dir "/b")]
                                  :output-path output-path
-                                 :api-docs :global
+                                 :api-mode :global
                                  :github/repo "repo"
                                  :git/branch "main"})
             data (fsdata output-path)]
@@ -436,7 +436,7 @@
                                              :doc-tree [["a" {:file "doc/a.md"}]
                                                         ["nested" {}
                                                          ["b" {:file "doc/b.md"}]]]}]
-                                   :api-docs :global
+                                   :api-mode :global
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
