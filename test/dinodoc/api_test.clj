@@ -9,12 +9,12 @@
 (deftest generate-approval-test
   ;; Specifying different repos for different inputs in global mode is broken, need to fix later
   (dinodoc/generate
-   {:paths [{:path "test-projects/promesa"
-             :github/repo "https://github.com/funcool/promesa"}
-            {:path "test-projects/codox/example"
-             :github/repo "https://github.com/weavejester/codox"}
-            {:path "test-projects/samples"
-             :github/repo "https://github.com/dundalek/dinodoc"}]
+   {:inputs [{:path "test-projects/promesa"
+              :github/repo "https://github.com/funcool/promesa"}
+             {:path "test-projects/codox/example"
+              :github/repo "https://github.com/weavejester/codox"}
+             {:path "test-projects/samples"
+              :github/repo "https://github.com/dundalek/dinodoc"}]
     :output-path "test-output/docs"
     :api-docs :global
     :git/branch "master"})
@@ -30,8 +30,8 @@
     (fn [{:keys [dir fspit]}]
       (let [output-path (str dir "/docs")]
         (fspit "src/example/main.clj" "(ns example.main)\n(defn foo [])")
-        (dinodoc/generate {:paths [{:path dir
-                                    :output-path "."}]
+        (dinodoc/generate {:inputs [{:path dir
+                                     :output-path "."}]
                            :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
@@ -44,8 +44,8 @@
     (fn [{:keys [dir fspit]}]
       (let [output-path (str dir "/docs")]
         (fspit "src/example/main.clj" "(ns example.main)\n")
-        (dinodoc/generate {:paths [{:path dir
-                                    :output-path "."}]
+        (dinodoc/generate {:inputs [{:path dir
+                                     :output-path "."}]
                            :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
@@ -57,9 +57,9 @@
     (fn [{:keys [dir fspit]}]
       (let [output-path (str dir "/docs")]
         (fspit "articles/a.md" "Lorem ipsum")
-        (dinodoc/generate {:paths [{:path dir
-                                    :output-path "."
-                                    :doc-path "articles"}]
+        (dinodoc/generate {:inputs [{:path dir
+                                     :output-path "."
+                                     :doc-path "articles"}]
                            :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
@@ -72,9 +72,9 @@
       (let [output-path (str dir "/docs")]
         (fspit "src-clj/example/server.clj" "(ns example.server)\n(defn foo [])")
         (fspit "src-cljs/example/client.cljs" "(ns example.client)\n(defn bar [])")
-        (dinodoc/generate {:paths [{:path dir
-                                    :output-path "."
-                                    :source-paths ["src-clj" "src-cljs"]}]
+        (dinodoc/generate {:inputs [{:path dir
+                                     :output-path "."
+                                     :source-paths ["src-clj" "src-cljs"]}]
                            :output-path output-path
                            :github/repo "repo"
                            :git/branch "main"})
@@ -91,8 +91,8 @@
       (fspit "a/src/example/a_main.clj" "(ns example.a-main)\n(defn foo [])")
       (fspit "b/src/example/b_main.clj" "(ns example.b-main)\n(defn bar [])")
       (let [output-path (str dir "/docs-separate")
-            _ (dinodoc/generate {:paths [(str dir "/a")
-                                         (str dir "/b")]
+            _ (dinodoc/generate {:inputs [(str dir "/a")
+                                          (str dir "/b")]
                                  :output-path output-path
                                  :github/repo "repo"
                                  :git/branch "main"})
@@ -102,8 +102,8 @@
         (is (str/includes? (get-in data ["b" "api" "example" "b-main" "index.md"])
                            "\n### bar {#bar}\n")))
       (let [output-path (str dir "/docs-global")
-            _ (dinodoc/generate {:paths [(str dir "/a")
-                                         (str dir "/b")]
+            _ (dinodoc/generate {:inputs [(str dir "/a")
+                                          (str dir "/b")]
                                  :output-path output-path
                                  :api-docs :global
                                  :github/repo "repo"
@@ -130,8 +130,8 @@
 
         (testing "Auto-discovering articles"
           (let [output-path (str dir "/docs-auto-discovered")]
-            (dinodoc/generate {:paths [{:path dir
-                                        :output-path "."}]
+            (dinodoc/generate {:inputs [{:path dir
+                                         :output-path "."}]
                                :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
@@ -142,9 +142,9 @@
 
         (testing "Curating articles with :doc-tree option"
           (let [output-path (str dir "/docs-doc-tree")]
-            (dinodoc/generate {:paths [{:path dir
-                                        :output-path "."
-                                        :doc-tree doc-tree}]
+            (dinodoc/generate {:inputs [{:path dir
+                                         :output-path "."
+                                         :doc-tree doc-tree}]
                                :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
@@ -153,8 +153,8 @@
         (testing "Curating articles using cljdoc.edn"
           (let [output-path (str dir "/docs-cljdoc")]
             (fspit "doc/cljdoc.edn" (pr-str {:cljdoc.doc/tree doc-tree}))
-            (dinodoc/generate {:paths [{:path dir
-                                        :output-path "."}]
+            (dinodoc/generate {:inputs [{:path dir
+                                         :output-path "."}]
                                :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
@@ -172,9 +172,9 @@
               doc-tree [["Top-level B" {:file "doc/b.md"}
                          ["The A" {:file "doc/a.md"}]
                          ["The C" {:file "doc/c.md"}]]]]
-          (dinodoc/generate {:paths [{:path dir
-                                      :output-path "."
-                                      :doc-tree doc-tree}]
+          (dinodoc/generate {:inputs [{:path dir
+                                       :output-path "."
+                                       :doc-tree doc-tree}]
                              :output-path output-path
                              :github/repo "repo"
                              :git/branch "main"})
@@ -188,9 +188,9 @@
               doc-tree [["Top-level B" {:file "doc/b.md"}
                          ["The A" {:file "doc/a.md"}
                           ["The C" {:file "doc/c.md"}]]]]]
-          (dinodoc/generate {:paths [{:path dir
-                                      :output-path "."
-                                      :doc-tree doc-tree}]
+          (dinodoc/generate {:inputs [{:path dir
+                                       :output-path "."
+                                       :doc-tree doc-tree}]
                              :output-path output-path
                              :github/repo "repo"
                              :git/branch "main"})
@@ -215,9 +215,9 @@
                        ["The D" {:file "doc/d.md"}]]]]
         (testing "nested"
           (let [output-path (str dir "/docs")]
-            (dinodoc/generate {:paths [{:path dir
-                                        :output-path "."
-                                        :doc-tree doc-tree}]
+            (dinodoc/generate {:inputs [{:path dir
+                                         :output-path "."
+                                         :doc-tree doc-tree}]
                                :output-path output-path
                                :github/repo "repo"
                                :git/branch "main"})
@@ -236,8 +236,8 @@
       (fspit "doc/B Question?.md" "File B")
       (testing "nested"
         (let [output-path (str dir "/docs")]
-          (dinodoc/generate {:paths [{:path dir
-                                      :output-path "."}]
+          (dinodoc/generate {:inputs [{:path dir
+                                       :output-path "."}]
                              :output-path output-path
                              :github/repo "repo"
                              :git/branch "main"})
@@ -256,10 +256,10 @@
 
       (testing "same level"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree [["The A" {:file "doc/a.md"}]
-                                                       ["The B" {:file "doc/b.md"}]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree [["The A" {:file "doc/a.md"}]
+                                                        ["The B" {:file "doc/b.md"}]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -271,11 +271,11 @@
 
       (testing "b nested down"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree [["The A" {:file "doc/a.md"}]
-                                                       ["nested" {}
-                                                        ["The B" {:file "doc/b.md"}]]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree [["The A" {:file "doc/a.md"}]
+                                                        ["nested" {}
+                                                         ["The B" {:file "doc/b.md"}]]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -287,12 +287,12 @@
 
       (testing "b nested up"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree
-                                            [["nested" {}
-                                              ["The A" {:file "doc/a.md"}]]
-                                             ["The B" {:file "doc/b.md"}]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree
+                                             [["nested" {}
+                                               ["The A" {:file "doc/a.md"}]]
+                                              ["The B" {:file "doc/b.md"}]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -302,11 +302,11 @@
 
       (testing "both nested"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree [["nested" {}
-                                                        ["The A" {:file "doc/a.md"}]
-                                                        ["The B" {:file "doc/b.md"}]]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree [["nested" {}
+                                                         ["The A" {:file "doc/a.md"}]
+                                                         ["The B" {:file "doc/b.md"}]]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -323,10 +323,10 @@
 
       (testing "same level"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree [["The A" {:file "doc/a.md"}]
-                                                       ["The B" {:file "doc/nested/b.md"}]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree [["The A" {:file "doc/a.md"}]
+                                                        ["The B" {:file "doc/nested/b.md"}]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -338,11 +338,11 @@
 
       (testing "b nested down"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree [["The A" {:file "doc/a.md"}]
-                                                       ["nested" {}
-                                                        ["The B" {:file "doc/nested/b.md"}]]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree [["The A" {:file "doc/a.md"}]
+                                                        ["nested" {}
+                                                         ["The B" {:file "doc/nested/b.md"}]]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -354,12 +354,12 @@
 
       (testing "b nested up"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree
-                                            [["nested" {}
-                                              ["The A" {:file "doc/a.md"}]]
-                                             ["The B" {:file "doc/nested/b.md"}]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree
+                                             [["nested" {}
+                                               ["The A" {:file "doc/a.md"}]]
+                                              ["The B" {:file "doc/nested/b.md"}]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -369,11 +369,11 @@
 
       (testing "both nested"
         (let [output-path (str dir "/docs-same-level")
-              _ (dinodoc/generate {:paths [{:path dir
-                                            :output-path "."
-                                            :doc-tree [["nested" {}
-                                                        ["The A" {:file "doc/a.md"}]
-                                                        ["The B" {:file "doc/nested/b.md"}]]]}]
+              _ (dinodoc/generate {:inputs [{:path dir
+                                             :output-path "."
+                                             :doc-tree [["nested" {}
+                                                         ["The A" {:file "doc/a.md"}]
+                                                         ["The B" {:file "doc/nested/b.md"}]]]}]
                                    :output-path output-path
                                    :github/repo "repo"
                                    :git/branch "main"})
@@ -391,8 +391,8 @@
       (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
       (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
       (let [output-path (str dir "/docs")
-            _ (dinodoc/generate {:paths [{:path (str dir "/xyz")}
-                                         {:path (str dir "/abc")}]
+            _ (dinodoc/generate {:inputs [{:path (str dir "/xyz")}
+                                          {:path (str dir "/abc")}]
                                  :output-path output-path
                                  :github/repo "repo"
                                  :git/branch "main"})
@@ -431,11 +431,11 @@
         (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
         (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
         (let [output-path #_(str dir "/docs") "test-output/docs"
-              _ (dinodoc/generate {:paths [{:path (str dir "/xyz")}
-                                           {:path (str dir "/abc")
-                                            :doc-tree [["a" {:file "doc/a.md"}]
-                                                       ["nested" {}
-                                                        ["b" {:file "doc/b.md"}]]]}]
+              _ (dinodoc/generate {:inputs [{:path (str dir "/xyz")}
+                                            {:path (str dir "/abc")
+                                             :doc-tree [["a" {:file "doc/a.md"}]
+                                                        ["nested" {}
+                                                         ["b" {:file "doc/b.md"}]]]}]
                                    :api-docs :global
                                    :output-path output-path
                                    :github/repo "repo"

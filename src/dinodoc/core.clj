@@ -146,8 +146,8 @@ Options:
     * `:edit-url-fn` - Function that gets a `filename` parameter and returns a custom edit url, signature: `(fn [filename])`
   "
   [opts]
-  (let [{:keys [paths api-docs] root-outdir :output-path :as root-opts} opts
-        inputs (->> (if (seq paths) paths ["."])
+  (let [{:keys [inputs api-docs] root-outdir :output-path :as root-opts} opts
+        inputs (->> (if (seq inputs) inputs ["."])
                     (map #(normalize-input % root-opts)))
         global-analysis (when (= api-docs :global)
                           (run-analysis (mapcat :source-paths inputs)))]
