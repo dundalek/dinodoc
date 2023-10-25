@@ -47,7 +47,7 @@
    (doseq [[i item] (map-indexed list items)]
      (process-doc-tree opts i item)))
   ([opts i item]
-   (let [{:keys [root-path parent-path input-path make-edit-url ns->vars file-map]} opts
+   (let [{:keys [root-path parent-path input-path edit-url-fn ns->vars file-map]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          root? (= root-path parent-path)
@@ -62,7 +62,7 @@
                                     :src (str input-path "/" file)
                                     :target file-path
                                     :data (cond-> {:sidebar_position i
-                                                   :custom_edit_url (make-edit-url file)}
+                                                   :custom_edit_url (edit-url-fn file)}
                                             label (assoc :sidebar_label label))
                                     :ns->vars ns->vars
                                     :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
@@ -77,7 +77,7 @@
 
 (defn- normalize-input [input root-opts]
   (let [root-outdir (:output-path root-opts)
-        {:keys [github/repo git/branch make-edit-url source-paths
+        {:keys [github/repo git/branch edit-url-fn source-paths
                 path doc-path doc-tree output-path]} (merge (select-keys root-opts [:github/repo :git/branch])
                                                             (if (map? input) input {:path input}))
         path (or (some-> path str) ".")
@@ -88,9 +88,9 @@
                           (map #(str path "/" %)))
         cljdoc-path (str  doc-path "/cljdoc.edn")
         api-docs-dir (str outdir "/api")
-        make-edit-url (or make-edit-url
-                          (fn [filename]
-                            (str repo "/tree/" branch "/" filename)))
+        edit-url-fn (or edit-url-fn
+                        (fn [filename]
+                          (str repo "/tree/" branch "/" filename)))
         doc-tree (or doc-tree
                      (when (fs/exists? cljdoc-path)
                        (->> (edn/read-string (slurp cljdoc-path))
@@ -115,7 +115,7 @@
      :api-docs-dir api-docs-dir
      :github/repo repo
      :git/branch branch
-     :make-edit-url make-edit-url}))
+     :edit-url-fn edit-url-fn}))
 
 (defn- run-analysis [source-paths]
   (-> (clj-kondo/run! {:lint source-paths
@@ -170,7 +170,7 @@ Options:
                 "{\"label\":\"API\"}"))))
 
     (doseq [input inputs]
-      (let [{:keys [path doc-tree output-path source-paths api-docs-dir github/repo git/branch make-edit-url]} input
+      (let [{:keys [path doc-tree output-path source-paths api-docs-dir github/repo git/branch edit-url-fn]} input
             analysis (or global-analysis (run-analysis source-paths))
             file-map (->> (doc-tree->file-map doc-tree)
                           (map (fn [[src target]]
@@ -182,7 +182,7 @@ Options:
         (process-doc-tree {:root-path output-path
                            :parent-path output-path
                            :input-path path
-                           :make-edit-url make-edit-url
+                           :edit-url-fn edit-url-fn
                            :ns->vars (make-ns->vars analysis)
                            :file-map file-map}
                           doc-tree)
