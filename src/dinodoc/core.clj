@@ -43,12 +43,13 @@
     (map? doc-tree) [(:file doc-tree)]
     :else nil))
 
-(defn- process-doc-tree
+(defn- process-doc-tree-pure
   ([opts items]
-   (doseq [[i item] (map-indexed list items)]
-     (process-doc-tree opts i item)))
+   (->> (map-indexed list items)
+        (mapcat (fn [[i item]]
+                  (process-doc-tree-pure opts i item)))))
   ([opts i item]
-   (let [{:keys [root-path parent-path input-path edit-url-fn ns->vars file-map]} opts
+   (let [{:keys [root-path parent-path input-path edit-url-fn ns->vars]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          root? (= root-path parent-path)
@@ -56,25 +57,35 @@
                      (and root? (zero? i)) (str parent-path "/index.md")
                      (and label (seq children)) (str path "/index.md")
                      label (str parent-path "/" (slugify label) "." (fs/extension file))
-                     :else (str parent-path "/" (strip-docusaurus-path (fs/file-name file))))]
-     (fs/create-dirs (fs/parent file-path))
-     (cond
-       file (copy-with-frontmatter {:file file
-                                    :src (str input-path "/" file)
-                                    :target file-path
-                                    :data (cond-> {:sidebar_position i
-                                                   :custom_edit_url (edit-url-fn file)}
-                                            label (assoc :sidebar_label label))
-                                    :ns->vars ns->vars
-                                    :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
-                                                          "/api")
-                                    :file-map file-map})
-       label (do
-               (fs/create-dirs path)
-               (spit (str path "/_category_.json")
-                     (json/generate-string {:position i  :label label}))))
-     (process-doc-tree (assoc opts :parent-path path)
-                       children))))
+                     :else (str parent-path "/" (strip-docusaurus-path (fs/file-name file))))
+         op (cond
+              file [:copy-with-frontmatter {:file file
+                                            :src (str input-path "/" file)
+                                            :target file-path
+                                            :data (cond-> {:sidebar_position i
+                                                           :custom_edit_url (edit-url-fn file)}
+                                                    label (assoc :sidebar_label label))
+                                            :ns->vars ns->vars
+                                            :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
+                                                                  "/api")}]
+              label (do
+                      [:spit (str path "/_category_.json")
+                       (json/generate-string {:position i  :label label})]))]
+     (concat (if op [op] [])
+             (process-doc-tree-pure (assoc opts :parent-path path)
+                                    children)))))
+
+(defn- process-doc-tree! [ops file-map]
+  (doseq [[op & args] ops]
+    (case op
+      :copy-with-frontmatter
+      (let [[{:keys [target] :as opts}] args]
+        (fs/create-dirs (fs/parent target))
+        (copy-with-frontmatter (assoc opts :file-map file-map)))
+      :spit
+      (let [[target content] args]
+        (fs/create-dirs (fs/parent target))
+        (spit target content)))))
 
 (defn- normalize-input [input root-opts]
   (let [root-outdir (:output-path root-opts)
@@ -179,20 +190,19 @@ Options:
     (doseq [input inputs]
       (let [{:keys [path doc-tree output-path source-paths api-docs-dir github/repo git/branch edit-url-fn]} input
             analysis (or global-analysis (run-analysis source-paths))
-            file-map (->> (doc-tree->file-map doc-tree)
-                          (map (fn [[src target]]
-                                 [src (if target
-                                        (slugify-path (str target "." (fs/extension src)))
-                                        (str/replace src #"^doc/" ""))]))
-                          (into {}))]
-
-        (process-doc-tree {:root-path output-path
+            doc-tree-opts {:root-path output-path
                            :parent-path output-path
                            :input-path path
                            :edit-url-fn edit-url-fn
-                           :ns->vars (make-ns->vars analysis)
-                           :file-map file-map}
-                          doc-tree)
+                           :ns->vars (make-ns->vars analysis)}
+            doc-tree-ops (process-doc-tree-pure doc-tree-opts doc-tree)
+            new-file-map (->> doc-tree-ops
+                              (filter #(= (first %) :copy-with-frontmatter))
+                              (map (fn [[_ {:keys [file target]}]]
+                                     [file (str/replace-first target (str output-path "/") "")]))
+                              (into {}))]
+
+        (process-doc-tree! doc-tree-ops new-file-map)
 
         (when (not= api-mode :global)
           (println "Generating" path)

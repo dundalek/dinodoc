@@ -265,9 +265,7 @@
                                    :git/branch "main"})
               data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](the-b.md)"))
-          ; (is (str/includes? (get-in data ["the-b.md"]) "[B](index.md)"))
-          ;; bug
-          (is (str/includes? (get-in data ["the-b.md"]) "[A](the-a.md)"))))
+          (is (str/includes? (get-in data ["the-b.md"]) "[A](index.md)"))))
 
       (testing "b nested down"
         (let [output-path (str dir "/docs-same-level")
@@ -281,9 +279,7 @@
                                    :git/branch "main"})
               data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](nested/the-b.md)"))
-          ; ; (is (str/includes? (get-in data ["nested" "the-b.md"]) "[B](../index.md)"))
-          ; ;; bug
-          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../the-a.md)"))))
+          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../index.md)"))))
 
       (testing "b nested up"
         (let [output-path (str dir "/docs-same-level")
@@ -332,9 +328,7 @@
                                    :git/branch "main"})
               data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](the-b.md)"))
-          ; (is (str/includes? (get-in data ["the-b.md"]) "[B](index.md)"))
-          ;; bug
-          (is (str/includes? (get-in data ["the-b.md"]) "[A](the-a.md)"))))
+          (is (str/includes? (get-in data ["the-b.md"]) "[A](index.md)"))))
 
       (testing "b nested down"
         (let [output-path (str dir "/docs-same-level")
@@ -348,9 +342,7 @@
                                    :git/branch "main"})
               data (fsdata output-path)]
           (is (str/includes? (get-in data ["index.md"]) "[B](nested/the-b.md)"))
-          ; ; (is (str/includes? (get-in data ["nested" "the-b.md"]) "[B](../index.md)"))
-          ; ;; bug
-          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../the-a.md)"))))
+          (is (str/includes? (get-in data ["nested" "the-b.md"]) "[A](../index.md)"))))
 
       (testing "b nested up"
         (let [output-path (str dir "/docs-same-level")
