@@ -415,38 +415,36 @@
                (get-in data ["abc" "b.md"])
                "ipsum [[example.main/bar]] dolor")))))))
 
-;; bug - broken test
-#_(deftest generate-namespace-links-global-mode
-    (with-temp-dir
-      (fn [{:keys [dir fspit]}]
-        (fspit "xyz/src/example/main.clj" "(ns example.main)\n(defn foo [])")
-        (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
-        (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
-        (let [output-path #_(str dir "/docs") "test-output/docs"
-              _ (dinodoc/generate {:inputs [{:path (str dir "/xyz")}
-                                            {:path (str dir "/abc")
-                                             :doc-tree [["a" {:file "doc/a.md"}]
-                                                        ["nested" {}
-                                                         ["b" {:file "doc/b.md"}]]]}]
-                                   :api-mode :global
-                                   :output-path output-path
-                                   :github/repo "repo"
-                                   :git/branch "main"})
-              data (fsdata output-path)]
-          ; (is (= {} data))))))
+(deftest generate-namespace-links-global-mode
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "xyz/src/example/main.clj" "(ns example.main)\n(defn foo [])")
+      (fspit "abc/doc/a.md" "lorem `example.main/foo` ipsum `example.main/bar` dolor")
+      (fspit "abc/doc/b.md" "lorem [[example.main/foo]] ipsum [[example.main/bar]] dolor")
+      (let [output-path (str dir "/docs")
+            _ (dinodoc/generate {:inputs [{:path (str dir "/xyz")}
+                                          {:path (str dir "/abc")
+                                           :doc-tree [["a" {:file "doc/a.md"}]
+                                                      ["nested" {}
+                                                       ["b" {:file "doc/b.md"}]]]}]
+                                 :api-mode :global
+                                 :output-path output-path
+                                 :github/repo "repo"
+                                 :git/branch "main"})
+            data (fsdata output-path)]
 
-          (testing "backtick links"
-            (is (str/includes?
-                 (get-in data ["abc" "index.md"])
-                 "lorem [`example.main/foo`](../api/example/main/#foo) ipsum"))
-            (is (str/includes?
-                 (get-in data ["abc" "index.md"])
-                 "ipsum `example.main/bar` dolor")))
+        (testing "backtick links"
+          (is (str/includes?
+               (get-in data ["abc" "index.md"])
+               "lorem [`example.main/foo`](../api/example/main/#foo) ipsum"))
+          (is (str/includes?
+               (get-in data ["abc" "index.md"])
+               "ipsum `example.main/bar` dolor")))
 
-          (testing "wiki links"
-            (is (str/includes?
-                 (get-in data ["abc" "nested" "b.md"])
-                 "lorem [`example.main/foo`](../../api/example/main/#foo) ipsum"))
-            (is (str/includes?
-                 (get-in data ["abc" "nested" "b.md"])
-                 "ipsum [[example.main/bar]] dolor")))))))
+        (testing "wiki links"
+          (is (str/includes?
+               (get-in data ["abc" "nested" "b.md"])
+               "lorem [`example.main/foo`](../../api/example/main/#foo) ipsum"))
+          (is (str/includes?
+               (get-in data ["abc" "nested" "b.md"])
+               "ipsum [[example.main/bar]] dolor")))))))

@@ -75,17 +75,17 @@ Promise library exposes two styles of APIs:
 - Fix many bugs on current CSP impl
 - Add first class support for errors on channels
 - Add metadata support for channels
-- Add [`promesa.exec/get-thread-id`](./api/promesa/exec/#get-thread-id) as replacement for the deprecated `thread-id` function.
-- Add [`promesa.exec/fn->thread`](./api/promesa/exec/#fn--GT-thread) thread constructor
-- Add [`promesa.exec/thread-call`](./api/promesa/exec/#thread-call) thread constructor (advanced version of
-  [`promesa.core/thread-call`](./api/promesa/core/#thread-call)) that creates unpooled threads
-- Add [`promesa.exec/set-name!`](./api/promesa/exec/#set-name-BANG-) helper for set/update thread name
-- Add [`promesa.exec/get-name`](./api/promesa/exec/#get-name) helper for retrieve thread name
-- Add [`promesa.util/try!`](./api/promesa/util/#try-BANG-) macro helper that wrap expression into a try/catch block and
+- Add [`promesa.exec/get-thread-id`](../api/promesa/exec/#get-thread-id) as replacement for the deprecated `thread-id` function.
+- Add [`promesa.exec/fn->thread`](../api/promesa/exec/#fn--GT-thread) thread constructor
+- Add [`promesa.exec/thread-call`](../api/promesa/exec/#thread-call) thread constructor (advanced version of
+  [`promesa.core/thread-call`](../api/promesa/core/#thread-call)) that creates unpooled threads
+- Add [`promesa.exec/set-name!`](../api/promesa/exec/#set-name-BANG-) helper for set/update thread name
+- Add [`promesa.exec/get-name`](../api/promesa/exec/#get-name) helper for retrieve thread name
+- Add [`promesa.util/try!`](../api/promesa/util/#try-BANG-) macro helper that wrap expression into a try/catch block and
   return the result or exception as value
-- Add [`promesa.util/ignoring`](./api/promesa/util/#ignoring) macro helpet that wrap expression into a try/catch block and
+- Add [`promesa.util/ignoring`](../api/promesa/util/#ignoring) macro helpet that wrap expression into a try/catch block and
   return the result or `nil` if exception is raised
-- Add [`promesa.exec.semaphore`](./api/promesa/exec/semaphore/) (only on JVM) namespace with helpers for working with
+- Add [`promesa.exec.semaphore`](../api/promesa/exec/semaphore/) (only on JVM) namespace with helpers for working with
   Semaphore instances
 - Add semaphore based bulkhead implementation
 - Fix GraalVM support thanks to @borkdude
@@ -93,7 +93,7 @@ Promise library exposes two styles of APIs:
 
 ## Version 10.0.594
 
-- Enable creation of virtual threads on [`promesa.exec/thread`](./api/promesa/exec/#thread)
+- Enable creation of virtual threads on [`promesa.exec/thread`](../api/promesa/exec/#thread)
   low-level macro.
 - Change internal vars naming for checking if the Virtual Threads
   ara available.
@@ -118,27 +118,27 @@ Promise library exposes two styles of APIs:
 ## Version 10.0.571
 
 - Revert deprecation of `then'` and `chain'`
-- Add **experimental** [`promesa.core/wait-all`](./api/promesa/core/#wait-all) helper
+- Add **experimental** [`promesa.core/wait-all`](../api/promesa/core/#wait-all) helper
 
 
 ## Version 10.0.570
 
-- Add [`promesa.exec.csp/mult*`](./api/promesa/exec/csp/#mult-STAR-) alternative multiplexer constructor
+- Add [`promesa.exec.csp/mult*`](../api/promesa/exec/csp/#mult-STAR-) alternative multiplexer constructor
   more similar to the `clojure.core.async/mult` one
-- Fix [`promesa.exec/run!`](./api/promesa/exec/#run-BANG-) and [`promesa.exec/submit!`](./api/promesa/exec/#submit-BANG-); make them
-  respect the [`promesa.exec/*default-executor*`](./api/promesa/exec/#-STAR-default-executor-STAR-) dynamic var value when
+- Fix [`promesa.exec/run!`](../api/promesa/exec/#run-BANG-) and [`promesa.exec/submit!`](../api/promesa/exec/#submit-BANG-); make them
+  respect the [`promesa.exec/*default-executor*`](../api/promesa/exec/#-STAR-default-executor-STAR-) dynamic var value when
   no explicit executor is provided
-- Improve internal implementation of [`promesa.core/loop`](./api/promesa/core/#loop) macro (making
+- Improve internal implementation of [`promesa.core/loop`](../api/promesa/core/#loop) macro (making
   it a little bit more efficient
-- Add general purpose [`promesa.core/await!`](./api/promesa/core/#await-BANG-) and [`promesa.core/await`](./api/promesa/core/#await)
+- Add general purpose [`promesa.core/await!`](../api/promesa/core/#await-BANG-) and [`promesa.core/await`](../api/promesa/core/#await)
   helpers that serves for blocking current thread waiting the
   termination/completion of some resource; (**EXPERIMENTAL**, **JVM
   only**, look at ref-docs for details). Implemented by default for
   `Thread`, `CountDownLatch`, `CompletionStage` and
   `CompletableFuture`.
-- Reimplement [`promesa.exec.csp/pipe`](./api/promesa/exec/csp/#pipe) using promise API; removing
+- Reimplement [`promesa.exec.csp/pipe`](../api/promesa/exec/csp/#pipe) using promise API; removing
   internal go-block and make it more friendly to non-vthread JVM.
-- Reimplement [`promesa.exec.csp/onto-chan!`](./api/promesa/exec/csp/#onto-chan-BANG-) using promise API;
+- Reimplement [`promesa.exec.csp/onto-chan!`](../api/promesa/exec/csp/#onto-chan-BANG-) using promise API;
   removing internal go-block and make it more friendly to non-vthread
   JVM.
 
@@ -154,33 +154,33 @@ BREAKING CHANGE ON EXPERIMENTAL CSP API:
 compatibility. If you are using only public API, you should not be
 affected.**
 
-- Deprecate undocumented [`promesa.core/chain'`](./api/promesa/core/#chain-SINGLEQUOTE-) function
+- Deprecate undocumented [`promesa.core/chain'`](../api/promesa/core/#chain-SINGLEQUOTE-) function
 - Deprecate undocumented `promesa.core/catch'` function
-- Deprecate [`promesa.core/error`](./api/promesa/core/#error) alias to `catch`
-- Improve efficiency in the [`promesa.core/any`](./api/promesa/core/#any) implementation
+- Deprecate [`promesa.core/error`](../api/promesa/core/#error) alias to `catch`
+- Improve efficiency in the [`promesa.core/any`](../api/promesa/core/#any) implementation
 - Remove undocumented `promesa.core/err` alias.
-- Add [[`promesa.core/hmap`](./api/promesa/core/#hmap)](./api/promesa/core/#hmap) and [`promesa.core/hcat`](./api/promesa/core/#hcat) functions (in the
-  same family as [`promesa.core/handle`](./api/promesa/core/#handle) but with arguments in inverse order and no
+- Add [[`promesa.core/hmap`](../api/promesa/core/#hmap)](../api/promesa/core/#hmap) and [`promesa.core/hcat`](../api/promesa/core/#hcat) functions (in the
+  same family as [`promesa.core/handle`](../api/promesa/core/#handle) but with arguments in inverse order and no
   automatic unwrapping)
-- Add [`promesa.core/fmap`](./api/promesa/core/#fmap) convenience alias for [`promesa.core/map`](./api/promesa/core/#map)
-- Add [`promesa.core/merr`](./api/promesa/core/#merr) (inverse ordered arguments and no automatic unwrapping
-  version of [`promesa.core/catch`](./api/promesa/core/#catch))
+- Add [`promesa.core/fmap`](../api/promesa/core/#fmap) convenience alias for [`promesa.core/map`](../api/promesa/core/#map)
+- Add [`promesa.core/merr`](../api/promesa/core/#merr) (inverse ordered arguments and no automatic unwrapping
+  version of [`promesa.core/catch`](../api/promesa/core/#catch))
 - Fix `promesa.exec.csp/!<` arguments (thanks to @alexandergunnarson)
-- Add [`promesa.exec.csp/go-chan`](./api/promesa/exec/csp/#go-chan) convenience macro (thanks to
+- Add [`promesa.exec.csp/go-chan`](../api/promesa/exec/csp/#go-chan) convenience macro (thanks to
   @alexandergunnarson for the suggestion)
-- Add [`promesa.exec/thread?`](./api/promesa/exec/#thread-QMARK-) function
+- Add [`promesa.exec/thread?`](../api/promesa/exec/#thread-QMARK-) function
 - Update documentation related to all new related functions
 
 
 ## Version 9.2.542
 
-- Add [`promesa.core/mcat`](./api/promesa/core/#mcat), a shorter alias for `mapcat`
-- Add [[`promesa.core/hmap`](./api/promesa/core/#hmap)](./api/promesa/core/#hmap), a shorter alias for `handle` with inverted
+- Add [`promesa.core/mcat`](../api/promesa/core/#mcat), a shorter alias for `mapcat`
+- Add [[`promesa.core/hmap`](../api/promesa/core/#hmap)](../api/promesa/core/#hmap), a shorter alias for `handle` with inverted
   arguments (for `->>`)
-- Add [`promesa.core/fnly`](./api/promesa/core/#fnly), a shorter alias for `finally` with inverted
+- Add [`promesa.core/fnly`](../api/promesa/core/#fnly), a shorter alias for `finally` with inverted
   arguments (for `->>`)
-- Add [`promesa.exec.bulkhead/bulkhead?`](./api/promesa/exec/bulkhead/#bulkhead-QMARK-) predicate.
-- Add arity 0 for [`promesa.exec/interrupt!`](./api/promesa/exec/#interrupt-BANG-) function (interrupts the
+- Add [`promesa.exec.bulkhead/bulkhead?`](../api/promesa/exec/bulkhead/#bulkhead-QMARK-) predicate.
+- Add arity 0 for [`promesa.exec/interrupt!`](../api/promesa/exec/#interrupt-BANG-) function (interrupts the
   current thread).
 
 
@@ -242,11 +242,11 @@ Other changes:
 - Replace previously introduced `ConcurrencyLimiter` (java impl) with
   `Bulkhead` (100% clojure impl; cljs not suported but contributions
   welcome to port it to cljs if someone consider it can be useful).
-- Fix [`promesa.core/wrap`](./api/promesa/core/#wrap); it now only wraps if the value is not a promise instance
-- Add [`promesa.exec/pmap`](./api/promesa/exec/#pmap); a simplified `clojure.core/pmap` analogous
+- Fix [`promesa.core/wrap`](../api/promesa/core/#wrap); it now only wraps if the value is not a promise instance
+- Add [`promesa.exec/pmap`](../api/promesa/exec/#pmap); a simplified `clojure.core/pmap` analogous
   function that allows use a user specified executor (thanks to the
   dynamic vars) (EXPERIMENTAL)
-- Add [`promesa.exec/with-executor`](./api/promesa/exec/#with-executor) helper macro for easily bind a new
+- Add [`promesa.exec/with-executor`](../api/promesa/exec/#with-executor) helper macro for easily bind a new
   value to the `*default-executor*` and optionally close it on lexical
   scope ending (EXPERIMENTAL)
 
@@ -340,7 +340,7 @@ Bug fixes:
 
 Date: 20220-10-06
 
-Changes [[[`promesa.core`](./api/promesa/core/)](./api/promesa/core/)](./api/promesa/core/) ns:
+Changes [[[`promesa.core`](../api/promesa/core/)](../api/promesa/core/)](../api/promesa/core/) ns:
 
 - Add `thread-call` helper.
 - Add `thread` macro (analogous to the `clojure.core.async/thread`)
@@ -350,7 +350,7 @@ Changes [[[`promesa.core`](./api/promesa/core/)](./api/promesa/core/)](./api/pro
 - Make the `future` and `thread` macros aware of var bindings.
 - Make the `create` promise factory catch all exceptions.
 
-Changes to [[[[`promesa.exec`](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/) ns:
+Changes to [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) ns:
 
 - Add `thread-per-task-executor` executor factory functon (JDK19 with Preview).
 - Add `vthread-per-task-executor` executor factory functon (JDK19 with Preview).
@@ -369,7 +369,7 @@ BREAKING CHANGES:
   signature is changed.
 - The `future` macro has changed to does not automatically unwrap
   returned promises. This is change is motivated for make it behave in
-  the same way as `clojure.core/future` as [`promesa.core/future`](./api/promesa/core/#future)
+  the same way as `clojure.core/future` as [`promesa.core/future`](../api/promesa/core/#future)
   expects to be a replacement for it.
 
 Enhancements:
@@ -419,7 +419,7 @@ Date: 2022-02-22
 - Add better builtin clj-kondo config (thanks to @wilkerlucio)
 - Make `promise?` to check for IPromise protocol instead of concrete
   types.
-- Add [`promesa.exec/with-dispatch`](./api/promesa/exec/#with-dispatch) macro.
+- Add [`promesa.exec/with-dispatch`](../api/promesa/exec/#with-dispatch) macro.
 
 
 ## Version 7.0.437
@@ -476,13 +476,13 @@ Date: 2020-10-01
 Relevant changes:
 
 - Add missing `-then` impl for `default` object (fixes issues of
-  [`promesa.core/then`](./api/promesa/core/#then) chain function with promises that does not
+  [`promesa.core/then`](../api/promesa/core/#then) chain function with promises that does not
   inherito from `js/Promise`).
 
 - Remove already deprecated for a while the `alet` alias to `let`
   macro (the migration should be a simple find-and-replace).
 
-- Add forkjoin-pool and factory helpers to [[[[`promesa.exec`](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/) ns.
+- Add forkjoin-pool and factory helpers to [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) ns.
 
 
 
@@ -511,9 +511,9 @@ Relevant changes:
   semantic than `then` function).
 - Add `catch'` variant for cases when you sure that funcion always
   return a plain value (and not promise).
-- Bug fix on [[`promesa.core/plet`](./api/promesa/core/#plet)](./api/promesa/core/#plet).
-- Wrap the body of [`promesa.core/let`](./api/promesa/core/#let) with [[`promesa.core/do!`](./api/promesa/core/#do-BANG-)](./api/promesa/core/#do-BANG-) macro.
-- Wrap the body of [[`promesa.core/plet`](./api/promesa/core/#plet)](./api/promesa/core/#plet) with [[`promesa.core/do!`](./api/promesa/core/#do-BANG-)](./api/promesa/core/#do-BANG-) macro.
+- Bug fix on [[`promesa.core/plet`](../api/promesa/core/#plet)](../api/promesa/core/#plet).
+- Wrap the body of [`promesa.core/let`](../api/promesa/core/#let) with [[`promesa.core/do!`](../api/promesa/core/#do-BANG-)](../api/promesa/core/#do-BANG-) macro.
+- Wrap the body of [[`promesa.core/plet`](../api/promesa/core/#plet)](../api/promesa/core/#plet) with [[`promesa.core/do!`](../api/promesa/core/#do-BANG-)](../api/promesa/core/#do-BANG-) macro.
 
 
 ## Version 4.0.2 ##
@@ -595,8 +595,8 @@ and macros that are not heavily used):
   always returns the same promise (like identity function).
 
 - Remove 0 arity from `promise` function (now is delegated to `deferred`)
-- Remove `schedule` function from [[[`promesa.core`](./api/promesa/core/)](./api/promesa/core/)](./api/promesa/core/) (replaced by `promesa.exec/schedule`).
-- Remove `extend-promise!` from [[[`promesa.core`](./api/promesa/core/)](./api/promesa/core/)](./api/promesa/core/) (still available in [`promesa.impl`](./api/promesa/impl/)).
+- Remove `schedule` function from [[[`promesa.core`](../api/promesa/core/)](../api/promesa/core/)](../api/promesa/core/) (replaced by `promesa.exec/schedule`).
+- Remove `extend-promise!` from [[[`promesa.core`](../api/promesa/core/)](../api/promesa/core/)](../api/promesa/core/) (still available in [`promesa.impl`](../api/promesa/impl/)).
 - Remove `set-default-promise!` helper (the user can do the same without the helper).
 - Remove `attempt` function (not useful).
 - Remove `branch` function (not useful).
@@ -625,10 +625,10 @@ New features and not breaking changes and fixes:
   operator.
 - Add `race` composition operator.
 - Add `run!` function (a promise aware `run!` variant).
-- Add [[[[`promesa.exec`](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/) namespace with Executors & Schedulers abstractions.
+- Add [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) namespace with Executors & Schedulers abstractions.
 - Add `future` macro (analogous to `clojure.core/future` that returns
   promise instance instead of Future, also works in cljs) that uses
-  [[[[`promesa.exec`](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/)](./api/promesa/exec/) behind the schenes.
+  [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) behind the schenes.
 - Improve `let` macro making it safe to synchronos exception that can
   be raised from the first evaluated expression. Now all exception
   raised inside `let` returs properly rejected promise.

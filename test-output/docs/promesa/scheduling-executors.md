@@ -19,11 +19,11 @@ Firstly, lets define **async task**: a function that is executed out
 of current flow using a different thread. Here, **promesa** library
 exposes mainly two functions:
 
-- [`promesa.exec/run!`](./api/promesa/exec/#run-BANG-): useful when you want run a function in a
+- [`promesa.exec/run!`](../api/promesa/exec/#run-BANG-): useful when you want run a function in a
   different thread and you don't care abour the return value; it
   returns a promise that will be fullfilled when the callback
   terminates.
-- [`promesa.exec/submit!`](./api/promesa/exec/#submit-BANG-) useful when you want run a function in a
+- [`promesa.exec/submit!`](../api/promesa/exec/#submit-BANG-) useful when you want run a function in a
   different thread and you need the return value; it returns a promise
   that will be fullfilled with the return value of the function.
 
@@ -48,7 +48,7 @@ Let see some examples:
 The both functions optionally accepts as first argument an executor
 instance that allows specify the executor where you want execute the
 specified function. If no executor is provided, the default one is
-used (binded on the [`promesa.exec/*default-executor*`](./api/promesa/exec/#-STAR-default-executor-STAR-) dynamic var).
+used (binded on the [`promesa.exec/*default-executor*`](../api/promesa/exec/#-STAR-default-executor-STAR-) dynamic var).
 
 Also, in both cases, the returned promise is cancellable, so if for
 some reason the function is still not execued, the cancellation will

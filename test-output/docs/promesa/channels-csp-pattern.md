@@ -16,7 +16,7 @@ CSP pattern.
 **NOTE**: Although the main focus is the use in JVM, where is all the potential; the
 channel implementation is also available on CLJS. There are no go macros on CLJS, but all
 the operators (including `alts`) can be used with alredy available promesa API and
-syntactic abstractions (such that [`promesa.core/loop`](./api/promesa/core/#loop) and [`promesa.core/recur`](./api/promesa/core/#recur)). Read the
+syntactic abstractions (such that [`promesa.core/loop`](../api/promesa/core/#loop) and [`promesa.core/recur`](../api/promesa/core/#recur)). Read the
 docstring for know if the operator/helper internally uses vthreads or not.
 
 
@@ -123,7 +123,7 @@ But if you need a channel, there are `go-chan` macro. The `go` +
 
 If you want perform multiple operations on the same or mutliple
 channels. In the same line as `clojure.core.async/alts!!`, this
-library exposes the [`promesa.exec.csp/alts!`](./api/promesa/exec/csp/#alts-BANG-) macro that has the same
+library exposes the [`promesa.exec.csp/alts!`](../api/promesa/exec/csp/#alts-BANG-) macro that has the same
 API:
 
 ```clojure

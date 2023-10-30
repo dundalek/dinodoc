@@ -49,7 +49,7 @@
         (mapcat (fn [[i item]]
                   (process-doc-tree-pure opts i item)))))
   ([opts i item]
-   (let [{:keys [root-path parent-path input-path edit-url-fn]} opts
+   (let [{:keys [root-path parent-path input-path edit-url-fn path-to-api-fn]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          root? (= root-path parent-path)
@@ -65,8 +65,7 @@
                                             :data (cond-> {:sidebar_position i
                                                            :custom_edit_url (edit-url-fn file)}
                                                     label (assoc :sidebar_label label))
-                                            :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
-                                                                  "/api")}]
+                                            :api-path-prefix (path-to-api-fn file-path)}]
               label [:spit
                      (str path "/_category_.json")
                      (json/generate-string {:position i  :label label})])]
@@ -102,6 +101,13 @@
                           (map #(str path "/" %)))
         cljdoc-path (str  doc-path "/cljdoc.edn")
         api-docs-dir (str outdir "/api")
+        path-to-api-fn (if (= (:api-mode root-opts) :global)
+                         (fn [file-path]
+                           (str (path-to-root (str/replace-first file-path root-outdir ""))
+                                "/api"))
+                         (fn [file-path]
+                           (str (path-to-root (str/replace-first file-path outdir ""))
+                                "/api")))
         [repo branch] (if (and repo branch)
                         [repo branch]
                         ;; potential optimization: could skip detection if `edit-url-fn` option is set
@@ -132,6 +138,7 @@
      :output-path outdir
      :source-paths source-paths
      :api-docs-dir api-docs-dir
+     :path-to-api-fn path-to-api-fn
      :github/repo repo
      :git/branch branch
      :edit-url-fn edit-url-fn}))
@@ -189,12 +196,13 @@ Options:
                 "{\"label\":\"API\"}"))))
 
     (doseq [input inputs]
-      (let [{:keys [path doc-tree output-path source-paths api-docs-dir github/repo git/branch edit-url-fn]} input
+      (let [{:keys [path doc-tree output-path source-paths api-docs-dir path-to-api-fn github/repo git/branch edit-url-fn]} input
             analysis (or global-analysis (run-analysis source-paths))
             doc-tree-opts {:root-path output-path
                            :parent-path output-path
                            :input-path path
-                           :edit-url-fn edit-url-fn}
+                           :edit-url-fn edit-url-fn
+                           :path-to-api-fn path-to-api-fn}
             doc-tree-ops (process-doc-tree-pure doc-tree-opts doc-tree)
             file-map (->> doc-tree-ops
                           (filter #(= (first %) :copy-with-frontmatter))
