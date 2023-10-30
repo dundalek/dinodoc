@@ -6,7 +6,7 @@
    [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
    [clojure.string :as str]
-   [dinodoc.impl :refer [doc-tree->file-map replace-links path-to-root slugify-path strip-docusaurus-path]]
+   [dinodoc.impl :refer [replace-links path-to-root strip-docusaurus-path]]
    [quickdoc.api :as qd]
    [quickdoc.impl :as impl]
    [dinodoc.impl.git :as git]

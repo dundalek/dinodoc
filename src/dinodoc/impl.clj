@@ -2,8 +2,7 @@
   {:no-doc true}
   (:require
    [clojure.string :as str]
-   [babashka.fs :as fs]
-   [slugify.core :refer [slugify]]))
+   [babashka.fs :as fs]))
 
 (def link-regex #"(\[[^\]]*\]\()([^\)]+)(\))")
 (def reference-link-regex #"(\[[^\]]+\]: +)([^\n)]+)")
@@ -38,28 +37,6 @@
     (-> content
         (str/replace link-regex replace-fn)
         (str/replace reference-link-regex replace-fn))))
-
-(defn doc-tree->file-map
-  ([doc-tree]
-   (doc-tree->file-map doc-tree {} ""))
-  ([doc-tree file-map parent-path]
-   (reduce (fn [m [label {:keys [file]} & xs]]
-             (let [path (when label (str parent-path label))]
-               (doc-tree->file-map xs
-                                   (cond-> m
-                                     file (assoc file path))
-                                   (str path "/"))))
-
-           file-map
-           doc-tree)))
-
-(defn slugify-path [path]
-  (let [[_ path extension] (or (re-matches #"(.*)(\.\p{Alnum}+)" path)
-                               [nil path ""])]
-    (str (->> (str/split path #"/")
-              (map slugify)
-              (str/join "/"))
-         extension)))
 
 (defn strip-docusaurus-path [path]
   (str/replace path "?" ""))
