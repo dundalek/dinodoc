@@ -49,7 +49,7 @@
         (mapcat (fn [[i item]]
                   (process-doc-tree-pure opts i item)))))
   ([opts i item]
-   (let [{:keys [root-path parent-path input-path edit-url-fn ns->vars]} opts
+   (let [{:keys [root-path parent-path input-path edit-url-fn]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          root? (= root-path parent-path)
@@ -65,23 +65,24 @@
                                             :data (cond-> {:sidebar_position i
                                                            :custom_edit_url (edit-url-fn file)}
                                                     label (assoc :sidebar_label label))
-                                            :ns->vars ns->vars
                                             :api-path-prefix (str (path-to-root (str/replace-first file-path root-path ""))
                                                                   "/api")}]
-              label (do
-                      [:spit (str path "/_category_.json")
-                       (json/generate-string {:position i  :label label})]))]
+              label [:spit
+                     (str path "/_category_.json")
+                     (json/generate-string {:position i  :label label})])]
      (concat (if op [op] [])
              (process-doc-tree-pure (assoc opts :parent-path path)
                                     children)))))
 
-(defn- process-doc-tree! [ops file-map]
+(defn- process-doc-tree! [ops {:keys [file-map ns->vars]}]
   (doseq [[op & args] ops]
     (case op
       :copy-with-frontmatter
       (let [[{:keys [target] :as opts}] args]
         (fs/create-dirs (fs/parent target))
-        (copy-with-frontmatter (assoc opts :file-map file-map)))
+        (copy-with-frontmatter (assoc opts
+                                      :file-map file-map
+                                      :ns->vars ns->vars)))
       :spit
       (let [[target content] args]
         (fs/create-dirs (fs/parent target))
@@ -193,16 +194,16 @@ Options:
             doc-tree-opts {:root-path output-path
                            :parent-path output-path
                            :input-path path
-                           :edit-url-fn edit-url-fn
-                           :ns->vars (make-ns->vars analysis)}
+                           :edit-url-fn edit-url-fn}
             doc-tree-ops (process-doc-tree-pure doc-tree-opts doc-tree)
-            new-file-map (->> doc-tree-ops
-                              (filter #(= (first %) :copy-with-frontmatter))
-                              (map (fn [[_ {:keys [file target]}]]
-                                     [file (str/replace-first target (str output-path "/") "")]))
-                              (into {}))]
+            file-map (->> doc-tree-ops
+                          (filter #(= (first %) :copy-with-frontmatter))
+                          (map (fn [[_ {:keys [file target]}]]
+                                 [file (str/replace-first target (str output-path "/") "")]))
+                          (into {}))]
 
-        (process-doc-tree! doc-tree-ops new-file-map)
+        (process-doc-tree! doc-tree-ops {:file-map file-map
+                                         :ns->vars (make-ns->vars analysis)})
 
         (when (not= api-mode :global)
           (println "Generating" path)
