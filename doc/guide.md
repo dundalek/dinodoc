@@ -2,10 +2,9 @@
 
 ### Input options
 
-[[dinodoc.api/generate]] can generate a single documentation site from multiple inputs passed as a collection of `:inputs`.
+Use [[dinodoc.api/generate]] to generate a single documentation site from multiple inputs passed as a collection of `:inputs`.
 
-An input represents a component, a module or a project which is a subdirectory that can include source code in `src/` and markdown articles in `doc/`.
-
+An input represents a component, a module or a project, which is a subdirectory that can include source code in `src/` and markdown articles in `doc/`.
 
 Input can be specified as a *path* (any coercible value such as string, Path or File instances) or a *map* with `:path` and other options.
 
@@ -43,10 +42,6 @@ Specifying common options globally:
 
 The [reitit](#) example demonstrates documentation for a single monorepo with multiple modules.
 
-1) The root path includes `doc/` directory with markdown articles.
-2) Inputs for modules are specified by concating the result of `fs/list-dir`. Since these use default convention they will be coerced to inputs.
-3) `:api-docs` is set to `:global` which will collect namespaces from all inputs into a single API hierarchy.
-
 ```clojure
 (require '[babashka.fs :as fs])
 
@@ -58,13 +53,11 @@ The [reitit](#) example demonstrates documentation for a single monorepo with mu
   :api-mode :global}) ;; (3)
 ```
 
+1) The root path includes `doc/` directory with markdown articles.
+2) Inputs for modules are specified by concating the result of `fs/list-dir`. Since these use default convention they will be coerced to inputs.
+3) `:api-docs` is set to `:global` which will collect namespaces from all inputs into a single API hierarchy.
+
 The [Polylith](#) example shows a monorepo where a separate API hierarchy is rendered for each component.
-
-1) Polylith repo contains `doc/` directory with markdown files, but it does not contain `cljdoc.edn` for curation so `doc-tree` is defined manually.
-2) Passing curated `doc-tree` to the input.
-3) Rendering all components in top-level would look crowded, so inputs passed as maps with customized `:outdir` option to add nesting under `Components` directory.
-
-In the future it might be useful to have an integration with Polylith that would automatically handle projects, bases and components.
 
 ```clojure
 (def doc-tree [["Polylith" {:file "doc/readme.md"}]]) ;; (1)
@@ -80,11 +73,15 @@ In the future it might be useful to have an integration with Polylith that would
   :output-path "docs"})
 ```
 
+1) Polylith repo contains `doc/` directory with markdown files, but it does not contain `cljdoc.edn` for curation so `doc-tree` is defined manually.
+2) Passing curated `doc-tree` to the input.
+3) Rendering all components in top-level would look crowded, so inputs passed as maps with customized `:outdir` option to add nesting under `Components` directory.
+
+In the future it might be useful to have an integration with Polylith that would automatically handle projects, bases and components.
+
 ### Image assets
 
 Currently Dinodoc copies over only markdown files, so any other assets like images need to be copied manually, for example using [babashka.fs](https://github.com/babashka/fs).
-
-In the future it would probably be useful if Dinodoc detected referenced image assets and copied them over automatically.
 
 ```clojure
 (require '[babashka.fs :as fs])
@@ -94,14 +91,35 @@ In the future it would probably be useful if Dinodoc detected referenced image a
 (fs/copy-tree "polylith/images" "docs/images")
 ```
 
+In the future it would probably be useful if Dinodoc detected referenced image assets and copied them over automatically.
+
 ### Curating documentation articles
 
+Order and nesting of articles in the sidebar can be curated 
+Articles can be curated by specifying a tree 
+It is done by reading key `:cljdoc.doc/tree` in `doc/cljdoc.edn` if it exists.
+Alternatively tou can specify it as `doc-tree` option for an `input`.
+
+
+Curating articles 
+important and common first
+more detailed and in depth later
+
 TODO
+order and nesting in the sidebar
 
 To curate articles support for `:cljdoc.doc/tree` `doc/cljdoc.edn`
-`doc-tree` to input
 
 [cljdoc](https://github.com/cljdoc/cljdoc/blob/master/doc/userguide/for-library-authors.adoc#configuring-articles)
+
+flat files
+  if the hierarchy was represented in file system hierarchy, then one would need to update links to other articles
+  by keeping flat files order and hierarchy can be reorganized without the need to update article links
+  order - importance or recommended reading order
+
+
+Additional feature of Dinodoc is that articles that are not referenced in doc tree are appended at the end.
+
 
 On a team it is easy 
 adding remaining files

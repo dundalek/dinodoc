@@ -1,11 +1,11 @@
 # Dinodoc
 
 Dinodoc is a documentation tool for Clojure that generates API documentation from source code with linked markdown articles.
-It is designed to generate documentation from multiple sources.
+It aims to enable creating a unified documentation hub within an organization.
 
+Dinodoc is designed to generate documentation from multiple sources.
 It supports documenting multiple projects in a monorepo or across repos,
 and projects written in other languages besides Clojure.
-This enables to create a unified documentation hub within an organization.
 
 ## Features
 
@@ -14,22 +14,23 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 - Modern look with Light/Dark theme
 - Include API documentation for non-Clojure languages like [TypeScript](https://github.com/tgreyuk/typedoc-plugin-markdown/tree/master/packages/docusaurus-plugin-typedoc)
 - Document HTTP APIs of services with [OpenAPI](https://github.com/rohit-gohri/redocusaurus)
-- Additional features like Search, Diagrams, Analytics, Blogging
+- Additional features like Search, Diagrams, Analytics, Blog
 - Large ecosystem of [community plugins](https://docusaurus.io/community/resources)
+- Complementary tools like [CMS intergration](https://github.com/tinacms/tinasaurus) to make writing docs easier for non-developers
 
 
 ## Examples
 
-- [Promesa](/doc.clj) ([view](#))
+- [Promesa](/doc.clj) ([view](/examples/promesa/))
   - single project with curated doc pages and API docs
   - compare with [codox](https://funcool.github.io/promesa/latest/) and [cljdoc](https://cljdoc.org/d/funcool/promesa/11.0.678/)
-- [Reitit](#) ([view](#))
+- [Reitit](#) ([view](/examples/reitit/))
   - monorepo with multiple modules
   - API docs combined into a single namespace hierarchy
-- [Polylith](#) ([view](#))
+- [Polylith](#) ([view](/examples/polylith/))
    - monorepo with components
    - API docs rendered separately for each component
-- [Ring](#) ([view](#))
+- [Ring](#) ([view](/examples/ring/))
   - mix of monorepo and multiple repos
   - modules in a main monorepo and additional modules in separate repositories
   - API docs rendered separately under each module
@@ -37,7 +38,11 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 ## Status
 
 Alpha, there are issues to iron out and improvements to be made.
-figure out good defaults to work minimal configuration and figure out what configuration is needed to cover custom
+The main points at this stage are:
+
+- Figure out the useful feature set.
+- Possibly try out some experimental features with good leverage based on Living Documentation principles.
+- Settle on good defaults that cover most common uses and figure out minimal required configuration options needed for customization.
 
 ## Usage
 
