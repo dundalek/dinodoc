@@ -75,7 +75,6 @@ The main points at this stage are:
 ## Documentation
 
 - [Guide](doc/guide.md) describes options and configuration in more detail.
-- [Design](doc/design.md) discusses design principles and considerations.
 - [API Reference](#)
 
 ## Credits

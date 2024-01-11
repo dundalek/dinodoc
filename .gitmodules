@@ -4,3 +4,54 @@
 [submodule "test-projects/promesa"]
 	path = test-projects/promesa
 	url = https://github.com/funcool/promesa
+[submodule "examples/ring/projects/ring"]
+	path = examples/ring/projects/ring
+	url = https://github.com/ring-clojure/ring
+[submodule "examples/ring/projects/ring-accept"]
+	path = examples/ring/projects/ring-accept
+	url = https://github.com/ring-clojure/ring-accept
+[submodule "examples/ring/projects/ring-anti-forgery"]
+	path = examples/ring/projects/ring-anti-forgery
+	url = https://github.com/ring-clojure/ring-anti-forgery
+[submodule "examples/ring/projects/ring-codec"]
+	path = examples/ring/projects/ring-codec
+	url = https://github.com/ring-clojure/ring-codec
+[submodule "examples/ring/projects/ring-cps"]
+	path = examples/ring/projects/ring-cps
+	url = https://github.com/ring-clojure/ring-cps
+[submodule "examples/ring/projects/ring-defaults"]
+	path = examples/ring/projects/ring-defaults
+	url = https://github.com/ring-clojure/ring-defaults
+[submodule "examples/ring/projects/ring-headers"]
+	path = examples/ring/projects/ring-headers
+	url = https://github.com/ring-clojure/ring-headers
+[submodule "examples/ring/projects/ring-json"]
+	path = examples/ring/projects/ring-json
+	url = https://github.com/ring-clojure/ring-json
+[submodule "examples/ring/projects/ring-mock"]
+	path = examples/ring/projects/ring-mock
+	url = https://github.com/ring-clojure/ring-mock
+[submodule "examples/ring/projects/ring-session-timeout"]
+	path = examples/ring/projects/ring-session-timeout
+	url = https://github.com/ring-clojure/ring-session-timeout
+[submodule "examples/ring/projects/ring-spec"]
+	path = examples/ring/projects/ring-spec
+	url = https://github.com/ring-clojure/ring-spec
+[submodule "examples/ring/projects/ring-ssl"]
+	path = examples/ring/projects/ring-ssl
+	url = https://github.com/ring-clojure/ring-ssl
+[submodule "examples/ring/projects/ring-websocket-async"]
+	path = examples/ring/projects/ring-websocket-async
+	url = https://github.com/ring-clojure/ring-websocket-async
+[submodule "examples/ring/wiki"]
+	path = examples/ring/wiki
+	url = https://github.com/ring-clojure/ring.wiki.git
+[submodule "examples/polylith/polylith"]
+	path = examples/polylith/polylith
+	url = https://github.com/polyfy/polylith
+[submodule "examples/promesa/promesa"]
+	path = examples/promesa/promesa
+	url = https://github.com/funcool/promesa
+[submodule "examples/reitit/reitit"]
+	path = examples/reitit/reitit
+	url = https://github.com/metosin/reitit

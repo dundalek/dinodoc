@@ -8,11 +8,15 @@
         babashka/fs {:mvn/version "0.4.19"}}
  :tools/usage {:ns-default quickdoc.api}
 
- :aliases {:test
-           {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
-            :main-opts ["-m" "kaocha.runner"]}
+ :aliases
+ {:test
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
+   :main-opts ["-m" "kaocha.runner"]}
 
-           :test-coverage
-           {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}
-                         lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}}
-            :main-opts ["-m" "kaocha.runner" "--plugin" "cloverage"]}}}
+  :test-coverage
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}
+                lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}}
+   :main-opts ["-m" "kaocha.runner" "--plugin" "cloverage"]}
+
+  :doc
+  {:main-opts ["doc.clj"]}}}
