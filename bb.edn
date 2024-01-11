@@ -1,10 +1,12 @@
-{:paths ["src" "bb"]
- :tasks {quickdoc {:requires ([quickdoc.api :as api])
-                   :task (api/quickdoc {:git/branch "main"
-                                        :github/repo "https://github.com/borkdude/quickdoc"
-                                        :toc true})}
-         test:bb {:extra-paths ["test"]
-                  :task (exec 'runner/run-tests)}
-         test:jvm {:task (clojure "-Sdeps" '{:paths ["src" "test"]} "-X" 'runner/run-tests)}
-
-         test-projects {:task (clojure "-M" "script/test_projects.clj")}}}
+{:tasks {test {:task (clojure "-M:test")}
+         test:watch {:task (clojure "-M:test" "--watch")}
+         test:coverage {:task (clojure "-M:test-coverage")}
+         website {:depends [website:examples website:build]}
+         website:examples {:extra-paths ["script"]
+                           :requires ([build-examples])
+                           :task (build-examples/-main)}
+         website:docs {:extra-paths ["script"]
+                       :requires ([build-examples])
+                       :task (build-examples/build-dinodoc-docs)}
+         website:build {:task (shell {:dir "website"} "bun run build")}
+         website:start {:task (shell {:dir "website"} "bun start")}}}
