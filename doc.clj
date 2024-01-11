@@ -5,7 +5,7 @@
 (dinodoc/generate
  {:inputs ["."]
   :output-path "docs"
-  :git/branch "master"
+  :git/branch "main"
   :github/repo "https://github.com/dundalek/dinodoc"})
 
 (shutdown-agents)

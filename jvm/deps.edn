@@ -1,2 +1,0 @@
-{:deps {io.github.borkdude/quickdoc-sources {:local/root ".."}}
- :tools/usage {:ns-default quickdoc.api}}
