@@ -1,7 +1,7 @@
-(ns dinodoc.impl-test
+(ns dinodoc.impl.core-test
   (:require
-   [clojure.test :refer [deftest is testing]]
-   [dinodoc.impl :as impl]))
+   [clojure.test :refer [deftest is]]
+   [dinodoc.impl.core :as impl]))
 
 (deftest path-to-root-test
   (is (= "." (impl/path-to-root "/controllers.md")))

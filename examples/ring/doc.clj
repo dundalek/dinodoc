@@ -2,7 +2,7 @@
   (:require
    [babashka.fs :as fs]
    [clojure.string :as str]
-   [dinodoc.core :as dinodoc]
+   [dinodoc.api :as dinodoc]
    [quickdoc.api]))
 
 (def doc-tree [["Ring" {:file "wiki/Home.md"}]])

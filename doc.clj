@@ -1,6 +1,6 @@
 (ns doc
   (:require
-   [dinodoc.core :as dinodoc]))
+   [dinodoc.api :as dinodoc]))
 
 (dinodoc/generate
  {:inputs ["."]

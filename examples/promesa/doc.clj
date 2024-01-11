@@ -2,7 +2,7 @@
   (:require
    [babashka.fs :as fs]
    [clojure.string :as str]
-   [dinodoc.core :as dinodoc]))
+   [dinodoc.api :as dinodoc]))
 
 (dinodoc/generate
  {:inputs [{:path "promesa"

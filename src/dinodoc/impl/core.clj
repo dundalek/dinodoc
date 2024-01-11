@@ -1,4 +1,4 @@
-(ns dinodoc.impl
+(ns dinodoc.impl.core
   {:no-doc true}
   (:require
    [clojure.string :as str]

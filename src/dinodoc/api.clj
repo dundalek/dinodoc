@@ -1,8 +1,8 @@
-(ns dinodoc.core
+(ns dinodoc.api
   (:require
    [babashka.fs :as fs]
    [clojure.string :as str]
-   [dinodoc.impl :as impl]
+   [dinodoc.impl.core :as impl]
    [quickdoc.api :as qd]))
 
 (defn generate

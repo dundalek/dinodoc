@@ -3,7 +3,7 @@
    [clojure.java.shell :refer [sh]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is testing]]
-   [dinodoc.core :as dinodoc]
+   [dinodoc.api :as dinodoc]
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]))
 
 (deftest generate-approval-test

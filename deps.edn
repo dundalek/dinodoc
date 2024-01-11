@@ -6,7 +6,8 @@
         clj-commons/clj-yaml {:mvn/version "1.0.27"}
         slugify/slugify {:mvn/version "0.0.1"}
         babashka/fs {:mvn/version "0.4.19"}}
- :tools/usage {:ns-default quickdoc.api}
+
+ :tools/usage {:ns-default dinodoc.api}
 
  :aliases
  {:test
