@@ -3,7 +3,7 @@
    [babashka.fs :as fs]
    [clojure.string :as str]
    [dinodoc.impl.core :as impl]
-   [quickdoc.api :as qd]))
+   [dinodoc.impl.quickdoc.api :as qd]))
 
 (defn generate
   "Generates documentation for given inputs. Input options can be also specified as top-level keys that will be shared by all inputs.

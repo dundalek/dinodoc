@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [clojure.test :as t :refer [deftest is testing]]
-   [quickdoc.impl :as impl :refer [var-source var-summary]]))
+   [dinodoc.impl.quickdoc.impl :as impl :refer [var-source var-summary]]))
 
 (deftest var-summary-test
   (is (= nil (var-summary {})))

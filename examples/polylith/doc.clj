@@ -2,7 +2,6 @@
   (:require
    [babashka.fs :as fs]
    [clojure.string :as str]
-   [quickdoc.api]
    [dinodoc.api :as dinodoc]))
 
 (def doc-tree [["Polylith" {:file "readme.md"}]])

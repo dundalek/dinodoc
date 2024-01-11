@@ -7,7 +7,7 @@
    [clj-kondo.core :as clj-kondo]
    [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
-   [quickdoc.impl :as impl]
+   [dinodoc.impl.quickdoc.impl :as impl]
    [dinodoc.impl.git :as git]
    [slugify.core :refer [slugify]]))
 

@@ -1,4 +1,4 @@
-(ns quickdoc.impl
+(ns dinodoc.impl.quickdoc.impl
   {:no-doc true}
   (:require
    [clojure.edn :as edn]

@@ -2,7 +2,7 @@
   (:require
    [clojure.string :as str]
    [clojure.test :as t :refer [deftest is testing]]
-   [quickdoc.api :as api]))
+   [dinodoc.impl.quickdoc.api :as api]))
 
 (deftest source-link-test
   (testing "source link template"
