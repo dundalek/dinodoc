@@ -9,17 +9,18 @@
   "Generates documentation for given inputs. Input options can be also specified as top-level keys that will be shared by all inputs.
 
 Options:
-  * `:output-path` - Directory where to output the documentation (required)
-  * `:api-mode` - Set to `:global` to render API docs for inputs combined in a single namespace hierarchy (default: separate for each input)
-  * `:inputs` - List of strings/paths/files or maps of:
-    * `:path`
-    * `:output-path` - Directory where to output documentation of the input relative to top level `:output-path` (default: last segment of `:path`)
-    * `:source-paths` - Directories with source files for API docs, relative to `:path` (default: `[\"src\"]`)
-    * `:doc-path` - Directory with markdown articles, relative to `:path` (default `\"doc\"`)
-    * `:doc-tree` - Tree of articles in the format of `:cljdoc.doc/tree` (default: tries to read `:doc-path`/`cljdoc.edn`)
-    * `:github/repo` - Link to Github repo used for generating  \"Edit this page\" links, for example `https://github.com/org/repo` (string)
-    * `:git/branch` - Default git branch, used for \"Edit this page\" links (string)
-    * `:edit-url-fn` - Function that gets a `filename` parameter and returns a custom edit url, signature: `(fn [filename])`"
+
+* `:output-path` - Directory where to output the documentation (required)
+* `:api-mode` - Set to `:global` to render API docs for inputs combined in a single namespace hierarchy (default: separate for each input)
+* `:inputs` - List of strings/paths/files or maps of:
+  * `:path`
+  * `:output-path` - Directory where to output documentation of the input relative to top level `:output-path` (default: last segment of `:path`)
+  * `:source-paths` - Directories with source files for API docs, relative to `:path` (default: `[\"src\"]`)
+  * `:doc-path` - Directory with markdown articles, relative to `:path` (default `\"doc\"`)
+  * `:doc-tree` - Tree of articles in the format of `:cljdoc.doc/tree` (default: tries to read `:doc-path`/`cljdoc.edn`)
+  * `:github/repo` - Link to Github repo used for generating  \"Edit this page\" links, for example `https://github.com/org/repo` (string)
+  * `:git/branch` - Default git branch, used for \"Edit this page\" links (string)
+  * `:edit-url-fn` - Function that gets a `filename` parameter and returns a custom edit url, signature: `(fn [filename])`"
   [opts]
   (let [{:keys [inputs api-mode] root-outdir :output-path :as root-opts} opts
         inputs (->> (if (seq inputs) inputs ["."])
