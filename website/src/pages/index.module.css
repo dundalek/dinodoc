@@ -10,9 +10,18 @@
   overflow: hidden;
 }
 
+.heroLine {
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 996px) {
   .heroBanner {
     padding: 2rem;
+  }
+
+  .heroLine {
+    flex-direction: column;
   }
 }
 
@@ -22,3 +31,6 @@
   justify-content: center;
   gap: 1rem;
 }
+
+
+
