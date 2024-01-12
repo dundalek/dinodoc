@@ -9,4 +9,6 @@
                        :requires ([build-examples])
                        :task (build-examples/build-dinodoc-docs)}
          website:build {:task (shell {:dir "website"} "bun run build")}
-         website:start {:task (shell {:dir "website"} "bun start")}}}
+         website:start {:task (shell {:dir "website"} "bun start")}
+         deploy {:depends [website]
+                 :task (shell "bunx wrangler pages deploy website/build")}}}
