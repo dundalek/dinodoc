@@ -1,14 +1,20 @@
-{:tasks {test {:task (clojure "-M:test")}
+{:paths ["script"]
+ :tasks {:requires [[build-examples]]
+
+         test {:task (clojure "-M:test")}
          test:watch {:task (clojure "-M:test" "--watch")}
          test:coverage {:task (clojure "-M:test-coverage")}
-         website {:depends [website:examples website:build]}
-         website:examples {:extra-paths ["script"]
-                           :requires ([build-examples])
-                           :task (build-examples/-main)}
-         website:docs {:extra-paths ["script"]
-                       :requires ([build-examples])
-                       :task (build-examples/build-dinodoc-docs)}
-         website:build {:task (shell {:dir "website"} "bun run build")}
+
+         website {:depends [website:content website:build]}
          website:start {:task (shell {:dir "website"} "bun start")}
+         website:build {:task (shell {:dir "website"} "bun run build")}
+         website:docs {:task (build-examples/build-dinodoc-docs)}
+         website:content {:depends [website:docs example:polylith example:promesa example:reitit example:ring]}
+
+         example:polylith {:task (build-examples/build-example-docs "polylith")}
+         example:promesa {:task (build-examples/build-example-docs "promesa")}
+         example:reitit {:task (build-examples/build-example-docs "reitit")}
+         example:ring {:task (build-examples/build-example-docs "ring")}
+
          deploy {:depends [website]
                  :task (shell "bunx wrangler pages deploy website/build")}}}
