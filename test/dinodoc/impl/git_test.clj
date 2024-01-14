@@ -5,7 +5,7 @@
 
 (deftest detect-repo-info
   (is (= {:branch "main"
-          :url "https://github.com/borkdude/quickdoc"}
+          :url "https://github.com/dundalek/dinodoc"}
          ;; mocking current branch so that test does not fail when being switched to other branch during development
          (with-redefs [git/current-branch (fn [_] "main")]
            (git/detect-repo-info ".")))))
