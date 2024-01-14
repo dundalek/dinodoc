@@ -22,9 +22,13 @@
                         :output-path (str "ring/" (fs/file-name path))})))
            (fs/glob "." "projects/*"))})
 
+(defn strip-build-status [content]
+  (str/replace content #"\[!\[Build Status\]\([^\n]*" ""))
+
 ;; Strip out badge from the title which shows in the sidebar
-(fs/update-file "docs/ring-defaults/index.md"
-                str/replace #"# Ring-Defaults[^\n]*" "# Ring-Defaults")
+(fs/update-file "docs/ring-defaults/index.md" strip-build-status)
+(fs/update-file "docs/ring/index.md" strip-build-status)
+(fs/update-file "docs/ring-websocket-async/index.md" strip-build-status)
 ;; Fix unquouted HTML tags that interfere with docusaurus MDX renderer
 (fs/update-file "docs/ring-headers/api/ring/middleware/x-headers/index.md"
                 str/replace #"<frame>, <iframe> or <object>" "`<frame>`, `<iframe>` or `<object>`")
