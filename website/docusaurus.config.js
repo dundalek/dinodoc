@@ -50,6 +50,17 @@ const config = {
     ],
   ],
 
+  plugins: [
+    // Example including documentation for TypeScript project
+    [
+      'docusaurus-plugin-typedoc', {
+        entryPoints: ['../examples/ts/src/index.ts'],
+        out: 'examples/ts'
+        // tsconfig: '../tsconfig.json',
+      }
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({

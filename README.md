@@ -33,6 +33,9 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
   - mix of monorepo and multiple repos
   - modules in a main monorepo and additional modules in separate repositories
   - API docs rendered separately under each module
+- [TypeScript](https://dinodoc.pages.dev/examples/ts/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/ts))
+  - including documentation for projects written in other languages within a single site
+  - for example TypeScript using [docusaurus-plugin-typedoc](https://github.com/tgreyuk/typedoc-plugin-markdown/tree/master/packages/docusaurus-plugin-typedoc)
 
 ## Usage
 
