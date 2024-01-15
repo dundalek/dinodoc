@@ -20,28 +20,19 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 
 ## Examples
 
-- [Promesa](/examples/promesa/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/promesa/doc.clj))
+- [Promesa](https://dinodoc.pages.dev/examples/promesa/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/promesa/doc.clj))
   - single project with curated doc pages and API docs
   - compare with [codox](https://funcool.github.io/promesa/latest/) and [cljdoc](https://cljdoc.org/d/funcool/promesa/11.0.678/)
-- [Reitit](/examples/reitit/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/reitit/doc.clj))
+- [Reitit](https://dinodoc.pages.dev/examples/reitit/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/reitit/doc.clj))
   - monorepo with multiple modules
   - API docs combined into a single namespace hierarchy
-- [Polylith](/examples/polylith/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/polylith/doc.clj))
+- [Polylith](https://dinodoc.pages.dev/examples/polylith/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/polylith/doc.clj))
    - monorepo with components
    - API docs rendered separately for each component
-- [Ring](/examples/ring/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/ring/doc.clj))
+- [Ring](https://dinodoc.pages.dev/examples/ring/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/ring/doc.clj))
   - mix of monorepo and multiple repos
   - modules in a main monorepo and additional modules in separate repositories
   - API docs rendered separately under each module
-
-## Status
-
-Alpha, there are issues to iron out and improvements to be made.
-The main points at this stage are:
-
-- Figure out the useful feature set.
-- Possibly try out some experimental features with good leverage based on Living Documentation principles.
-- Settle on good defaults that cover most common uses and figure out minimal required configuration options needed for customization.
 
 ## Usage
 
@@ -73,8 +64,17 @@ The main points at this stage are:
 
 ## Documentation
 
-- [Guide](doc/guide.md) describes options and configuration in more detail.
-- [API Reference](#)
+- [Guide](https://dinodoc.pages.dev/docs/guide) describes options and configuration in more detail.
+- [API Reference](https://dinodoc.pages.dev/docs/api/dinodoc/api/)
+
+## Status
+
+Alpha, there are issues to iron out and improvements to be made.
+The main points at this stage are:
+
+- Figure out the useful feature set.
+- Possibly try out some experimental features with good leverage based on Living Documentation principles.
+- Settle on good defaults that cover most common uses and figure out minimal required configuration options needed for customization.
 
 ## Credits
 
