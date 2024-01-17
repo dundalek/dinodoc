@@ -46,7 +46,7 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 2. Add alias with dependencies to `deps.edn`:
    ```clojure
    {:aliases
-    {:doc {:extra-deps {io.github.dundalek/dinodoc {:git/sha "..."}
+    {:doc {:extra-deps {io.github.dundalek/dinodoc {:git/tag "v0.1.0" :git/sha "abb8482"}
            :main-opts ["doc.clj"]}}}
    ```
 3. Create the script to generate docs and save as `doc.clj`:  
