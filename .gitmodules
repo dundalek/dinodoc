@@ -55,3 +55,6 @@
 [submodule "examples/reitit/reitit"]
 	path = examples/reitit/reitit
 	url = https://github.com/metosin/reitit
+[submodule "examples/structurizr/examples"]
+	path = examples/structurizr/examples
+	url = https://github.com/structurizr/examples

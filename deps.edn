@@ -5,7 +5,13 @@
         cheshire/cheshire {:mvn/version "5.12.0"}
         clj-commons/clj-yaml {:mvn/version "1.0.27"}
         slugify/slugify {:mvn/version "0.0.1"}
-        babashka/fs {:mvn/version "0.4.19"}}
+        babashka/fs {:mvn/version "0.4.19"}
+
+        ;; For now just including structurizr dep in root which can be wasteful when not using it.
+        ;; In the future should likely be a separate artifact published in
+        ;; clojars and then have something like dinodoc-all that would depend
+        ;; on every component for convenience.
+        dinodoc/structurizr {:local/root "components/structurizr"}}
 
  :tools/usage {:ns-default dinodoc.api}
 
