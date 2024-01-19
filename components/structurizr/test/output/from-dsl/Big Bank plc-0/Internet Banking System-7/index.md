@@ -198,8 +198,8 @@ graph TB
     end
 
     75-. "<div>Delivers to the customer's<br />web browser</div><div style='font-size: 70%'></div>" .->71
-    71-. "<div>Makes API calls to</div><div style='font-size: 70%'>[JSON/HTTPS]</div>" .->79
     68-. "<div>Makes API calls to</div><div style='font-size: 70%'>[JSON/HTTPS]</div>" .->79
+    71-. "<div>Makes API calls to</div><div style='font-size: 70%'>[JSON/HTTPS]</div>" .->79
     79-. "<div>Reads from and writes to</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->84
     79-. "<div>Reads from and writes to</div><div style='font-size: 70%'>[SQL/TCP]</div>" .->88
     79-. "<div>Makes API calls to</div><div style='font-size: 70%'>[XML/HTTPS]</div>" .->91

@@ -78,5 +78,5 @@ Options:
 
 (comment
   (generate
-   {:inputs ["test-resources/fixlinks-sample"]
+   {:inputs ["test/resources/fixlinks-sample"]
     :output-path "tmp"}))

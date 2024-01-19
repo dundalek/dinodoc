@@ -15,10 +15,10 @@
               :github/repo "https://github.com/weavejester/codox"}
              {:path "test-projects/samples"
               :github/repo "https://github.com/dundalek/dinodoc"}]
-    :output-path "test-output/docs"
+    :output-path "test/output/docs"
     :api-mode :global
     :git/branch "master"})
-  (approval/is-same? "test-output"))
+  (approval/is-same? "test/output"))
 
 (deftest generate-foo
   (with-temp-dir

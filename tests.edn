@@ -2,4 +2,4 @@
  {:tests
   [{:id :unit
     :source-paths ["src" "components/structurizr/src"]
-    :test-paths ["test" "components/structurizr/test/src"]}]}
+    :test-paths ["test/src" "components/structurizr/test/src"]}]}
