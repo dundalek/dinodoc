@@ -1,8 +1,8 @@
-[submodule "test-projects/codox"]
-	path = test-projects/codox
+[submodule "test/projects/codox"]
+	path = test/projects/codox
 	url = https://github.com/weavejester/codox
-[submodule "test-projects/promesa"]
-	path = test-projects/promesa
+[submodule "test/projects/promesa"]
+	path = test/projects/promesa
 	url = https://github.com/funcool/promesa
 [submodule "examples/ring/projects/ring"]
 	path = examples/ring/projects/ring

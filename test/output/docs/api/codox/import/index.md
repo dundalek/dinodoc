@@ -15,4 +15,4 @@ custom_edit_url:
 (foop & args)
 ```
 
-<p><sub><a href="/blob/master/test-projects/codox/example/src/clojure/codox/import.clj#L4-L6">Source</a></sub></p>
+<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/import.clj#L4-L6">Source</a></sub></p>

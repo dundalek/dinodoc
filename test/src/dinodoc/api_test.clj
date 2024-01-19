@@ -9,11 +9,11 @@
 (deftest generate-approval-test
   ;; Specifying different repos for different inputs in global mode is broken, need to fix later
   (dinodoc/generate
-   {:inputs [{:path "test-projects/promesa"
+   {:inputs [{:path "test/projects/promesa"
               :github/repo "https://github.com/funcool/promesa"}
-             {:path "test-projects/codox/example"
+             {:path "test/projects/codox/example"
               :github/repo "https://github.com/weavejester/codox"}
-             {:path "test-projects/samples"
+             {:path "test/projects/samples"
               :github/repo "https://github.com/dundalek/dinodoc"}]
     :output-path "test/output/docs"
     :api-mode :global

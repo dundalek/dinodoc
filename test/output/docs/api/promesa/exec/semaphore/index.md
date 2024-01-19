@@ -17,7 +17,7 @@ Concurrency limiter: Semaphore
 (acquire! sem & {:keys [permits timeout blocking], :or {blocking true, permits 1}})
 ```
 
-<p><sub><a href="/blob/master/test-projects/promesa/src/promesa/exec/semaphore.clj#L37-L44">Source</a></sub></p>
+<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/exec/semaphore.clj#L37-L44">Source</a></sub></p>
 
 ### create {#create}
 ``` clojure
@@ -26,7 +26,7 @@ Concurrency limiter: Semaphore
 
 
 Creates a Semaphore instance.
-<p><sub><a href="/blob/master/test-projects/promesa/src/promesa/exec/semaphore.clj#L51-L55">Source</a></sub></p>
+<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/exec/semaphore.clj#L51-L55">Source</a></sub></p>
 
 ### release\! {#release-BANG-}
 ``` clojure
@@ -34,4 +34,4 @@ Creates a Semaphore instance.
 (release! sem & {:keys [permits]})
 ```
 
-<p><sub><a href="/blob/master/test-projects/promesa/src/promesa/exec/semaphore.clj#L46-L49">Source</a></sub></p>
+<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/exec/semaphore.clj#L46-L49">Source</a></sub></p>
