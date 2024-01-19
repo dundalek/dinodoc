@@ -1,10 +1,10 @@
 (ns dinodoc.api-test
   (:require
-   [clojure.java.shell :refer [sh]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
-   [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]))
+   [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
+   [dinodoc.approval-helpers :as approval]))
 
 (deftest generate-approval-test
   ;; Specifying different repos for different inputs in global mode is broken, need to fix later
@@ -18,12 +18,7 @@
     :output-path "test-output/docs"
     :api-mode :global
     :git/branch "master"})
-  ;; We compare if output is the same as committed state, git status returns empty output if there are no changes.
-  ;; If implementation changes and expected state needs to be updated, commit the changes after inspecting the diff.
-  (is (= {:exit 0
-          :err ""
-          :out ""}
-         (sh "git" "status" "--porcelain" "test-output"))))
+  (approval/is-same? "test-output"))
 
 (deftest generate-foo
   (with-temp-dir
