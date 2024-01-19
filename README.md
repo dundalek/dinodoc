@@ -36,6 +36,8 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 - [TypeScript](https://dinodoc.pages.dev/examples/ts/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/ts))
   - including documentation for projects written in other languages within a single site
   - for example TypeScript using [docusaurus-plugin-typedoc](https://github.com/tgreyuk/typedoc-plugin-markdown/tree/master/packages/docusaurus-plugin-typedoc)
+- [Structurizr](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
+  - architecture documentation with diagrams based on the [C4 model](https://c4model.com/)
 
 ## Usage
 
