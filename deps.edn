@@ -11,13 +11,16 @@
         ;; In the future should likely be a separate artifact published in
         ;; clojars and then have something like dinodoc-all that would depend
         ;; on every component for convenience.
-        dinodoc/structurizr {:local/root "components/structurizr"}}
+        dinodoc/structurizr {:local/root "components/structurizr"}
+        dinodoc/statecharts {:local/root "components/statecharts"}}
 
  :tools/usage {:ns-default dinodoc.api}
 
  :aliases
  {:test
-  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}
+                ;; for statecharts tests
+                examples/statecharts {:local/root "examples/statecharts"}}
    :main-opts ["-m" "kaocha.runner"]}
 
   :test-coverage

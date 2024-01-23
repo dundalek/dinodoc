@@ -1,0 +1,6 @@
+{:deps {clj-statecharts/clj-statecharts {:mvn/version "0.1.7"}}
+
+ :aliases
+ {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../../"}
+                     babashka/fs {:mvn/version "0.4.19"}}
+        :main-opts ["doc.clj"]}}}

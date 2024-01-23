@@ -16,6 +16,7 @@
          example:reitit {:task (build-examples/build-example-docs "reitit")}
          example:ring {:task (build-examples/build-example-docs "ring")}
          example:structurizr {:task (build-examples/build-example-docs "structurizr")}
+         example:statecharts {:task (build-examples/build-example-docs "statecharts")}
 
          deploy {:depends [website]
                  :task (shell "bunx wrangler pages deploy website/build")}}}

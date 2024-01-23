@@ -1,5 +1,10 @@
 #kaocha/v1
  {:tests
   [{:id :unit
-    :source-paths ["src" "components/structurizr/src"]
-    :test-paths ["test/src" "components/structurizr/test/src"]}]}
+    :source-paths ["src"
+                   "components/structurizr/src"
+                   "components/statecharts/src"
+                   "examples/statecharts/src"]
+    :test-paths ["test/src"
+                 "components/structurizr/test/src"
+                 "components/statecharts/test/src"]}]}

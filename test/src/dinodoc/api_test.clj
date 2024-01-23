@@ -18,7 +18,7 @@
     :output-path "test/output/docs"
     :api-mode :global
     :git/branch "master"})
-  (approval/is-same? "test/output"))
+  (approval/is-same? "test/output/docs"))
 
 (deftest generate-foo
   (with-temp-dir
