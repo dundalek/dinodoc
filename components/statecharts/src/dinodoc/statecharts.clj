@@ -1,7 +1,7 @@
 (ns dinodoc.statecharts
   (:require
-   [dinodoc.impl.quickdoc.impl :as impl]
-   [dinodoc.impl.git :as git]))
+   [dinodoc.impl.git :as git]
+   [dinodoc.impl.quickdoc.impl :as impl]))
 
 (defn with-code-block [f]
   (println "```mermaid")
@@ -14,18 +14,31 @@
     (name state)
     state))
 
+(defn- render-states [name machine]
+  (println "state" (render-state-name name) "{")
+  (if (= (:type machine) :parallel)
+    ;; Alternative to render parallel regions would be to separate transitions with `--`:
+    ;; https://mermaid.js.org/syntax/stateDiagram.html#concurrency
+    ;; But given clj-statecharts defines regions in a map, we will always have
+    ;; a key for regions so they can rendered as nested states.
+    (doseq [[name states] (:regions machine)]
+      (render-states name states))
+    (do
+      (when-some [initial (:initial machine)]
+        (println "[*] -->" (render-state-name initial)))
+      (doseq [[source-state target-machine] (:states machine)]
+        (doseq [[event transitions] (:on target-machine)]
+          (doseq [{:keys [target actions]} transitions]
+            (println (render-state-name source-state) "-->"
+                     (render-state-name target) ":"
+                     (render-state-name event))))
+        (when (seq (:states target-machine))
+          (render-states source-state target-machine)))))
+  (println "}"))
+
 (defn render-machine-diagram [machine]
   (println "stateDiagram-v2")
-  (println "state" (render-state-name (:id machine)) "{")
-  (when-some [initial (:initial machine)]
-    (println "[*] -->" (render-state-name initial)))
-  (doseq [[source-state {:keys [on]}] (:states machine)]
-    (doseq [[event transitions] on]
-      (doseq [{:keys [target actions]} transitions]
-        (println (render-state-name source-state) "-->"
-                 (render-state-name target) ":"
-                 (render-state-name event)))))
-  (println "}"))
+  (render-states (:id machine) machine))
 
 (defn render-machine-block [machine]
   (with-code-block #(render-machine-diagram machine)))

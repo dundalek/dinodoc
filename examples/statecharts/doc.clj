@@ -9,11 +9,15 @@
 
 (with-open [writer (io/writer "docs/index.md")]
   (binding [*out* writer]
-    (println "---")
-    (println "title: Statecharts")
-    (println "---")
-    (statecharts/render-machine-var
-     (requiring-resolve 'example.statecharts/machine)
-     {:filename-add-prefix "examples/statecharts/src/"})))
+    (let [prefix "examples/statecharts/src/"]
+      (println "---")
+      (println "title: Statecharts")
+      (println "---")
+      (statecharts/render-machine-var
+       (requiring-resolve 'example.statecharts/machine)
+       {:filename-add-prefix prefix})
+      (statecharts/render-machine-var
+       (requiring-resolve 'example.statecharts/regions)
+       {:filename-add-prefix prefix}))))
 
 (shutdown-agents)
