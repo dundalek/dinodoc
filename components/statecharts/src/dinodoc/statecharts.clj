@@ -1,5 +1,6 @@
 (ns dinodoc.statecharts
   (:require
+   [clojure.string :as str]
    [dinodoc.impl.git :as git]
    [dinodoc.impl.quickdoc.impl :as impl]))
 
@@ -8,11 +9,18 @@
   (f)
   (println "```"))
 
-(defn render-state-name [state]
+(defn render-event-name [state]
   ;; will need to add some string escaping
   (if (keyword? state)
     (name state)
     state))
+
+(defn render-state-name [state]
+  ;; will need to add some string escaping
+  (-> (if (keyword? state)
+        (name state)
+        state)
+      (str/replace #"-" "_")))
 
 (defn- render-states [name machine]
   (println "state" (render-state-name name) "{")
@@ -31,7 +39,7 @@
           (doseq [{:keys [target actions]} transitions]
             (println (render-state-name source-state) "-->"
                      (render-state-name target) ":"
-                     (render-state-name event))))
+                     (render-event-name event))))
         (when (seq (:states target-machine))
           (render-states source-state target-machine)))))
   (println "}"))

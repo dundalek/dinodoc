@@ -12,5 +12,6 @@
       (with-open [writer (io/writer approval-file)]
         (binding [*out* writer]
           (statecharts/render-machine-var (requiring-resolve 'example.statecharts/machine))
-          (statecharts/render-machine-var (requiring-resolve 'example.statecharts/regions)))))
+          (statecharts/render-machine-var (requiring-resolve 'example.statecharts/regions))
+          (statecharts/render-machine-var (requiring-resolve 'example.statecharts/dog-walk)))))
     (approval/is-same? approval-file)))

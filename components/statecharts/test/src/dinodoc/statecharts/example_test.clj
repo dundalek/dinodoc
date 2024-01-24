@@ -24,3 +24,25 @@
       (is (= {:_state {:bc :C :de :D}} (fsm/send service :flick))))
     (testing "final after-1s event transitions the :bc region back to initial state"
       (is (= initial-state (fsm/send service :after-1s))))))
+
+(deftest dog-walk-example
+  (testing "go home when walking"
+    (let [service (fsm/service example/dog-walk)]
+      (is (= {:_state :waiting} (fsm/start service)))
+      (is (= {:_state [:on-a-walk :walking]} (fsm/send service :leave-home)))
+      (is (= {:_state :walk-complete} (fsm/send service :arrive-home)))))
+
+  (testing "go home when running"
+    (let [service (fsm/service example/dog-walk)]
+      (is (= {:_state :waiting} (fsm/start service)))
+      (is (= {:_state [:on-a-walk :walking]} (fsm/send service :leave-home)))
+      (is (= {:_state [:on-a-walk :running]} (fsm/send service :speed-up)))
+      (is (= {:_state :walk-complete} (fsm/send service :arrive-home)))))
+
+  (testing "go home after walking-running-walking"
+    (let [service (fsm/service example/dog-walk)]
+      (is (= {:_state :waiting} (fsm/start service)))
+      (is (= {:_state [:on-a-walk :walking]} (fsm/send service :leave-home)))
+      (is (= {:_state [:on-a-walk :running]} (fsm/send service :speed-up)))
+      (is (= {:_state [:on-a-walk :walking]} (fsm/send service :slow-down)))
+      (is (= {:_state :walk-complete} (fsm/send service :arrive-home))))))

@@ -32,3 +32,21 @@ E --> D : flick
 ```
 
 [source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L25-L25)
+
+## dog-walk
+
+```mermaid
+stateDiagram-v2
+state dog_walk {
+[*] --> waiting
+waiting --> on_a_walk : leave-home
+on_a_walk --> walk_complete : arrive-home
+state on_a_walk {
+[*] --> walking
+walking --> running : speed-up
+running --> walking : slow-down
+}
+}
+```
+
+[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L38-L38)
