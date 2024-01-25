@@ -4,18 +4,18 @@
    [dinodoc.impl.git :as git]
    [dinodoc.impl.quickdoc.impl :as impl]))
 
-(defn with-code-block [f]
+(defn- with-code-block [f]
   (println "```mermaid")
   (f)
   (println "```"))
 
-(defn render-event-name [state]
+(defn- render-event-name [state]
   ;; will need to add some string escaping
   (if (keyword? state)
     (name state)
     state))
 
-(defn render-state-name [state]
+(defn- render-state-name [state]
   ;; will need to add some string escaping
   (-> (if (keyword? state)
         (name state)
@@ -46,14 +46,20 @@
           (render-states source-state target-machine)))))
   (println "}"))
 
-(defn render-machine-diagram [machine]
+(defn render-machine-diagram
+  "Render given machine as a mermaid state diagram to standard output."
+  [machine]
   (println "stateDiagram-v2")
   (render-states (:id machine) machine))
 
-(defn render-machine-block [machine]
+(defn render-machine-block
+  "Render given machine as a mermaid state diagram wrapped in a markdown fenced code block to standard output."
+  [machine]
   (with-code-block #(render-machine-diagram machine)))
 
 (defn render-machine-var
+  "Render a var bound to a machine to standard output.
+  Using a var has the benefit of being able to include link to the source file including the line location."
   ([machine-var] (render-machine-var machine-var {}))
   ([machine-var {:keys [filename-add-prefix]}]
    (let [{:keys [name file line doc]} (meta machine-var)

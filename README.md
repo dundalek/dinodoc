@@ -23,6 +23,17 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 - [Promesa](https://dinodoc.pages.dev/examples/promesa/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/promesa/doc.clj))
   - single project with curated doc pages and API docs
   - compare with [codox](https://funcool.github.io/promesa/latest/) and [cljdoc](https://cljdoc.org/d/funcool/promesa/11.0.678/)
+- [TypeScript](https://dinodoc.pages.dev/examples/ts/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/ts))
+  - including documentation for projects written in other languages within a single site
+  - for example TypeScript using [docusaurus-plugin-typedoc](https://github.com/tgreyuk/typedoc-plugin-markdown/tree/master/packages/docusaurus-plugin-typedoc)
+
+Diagrams:
+- [Structurizr](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
+  - architecture documentation with diagrams based on the [C4 model](https://c4model.com/)
+- [Statecharts](https://dinodoc.pages.dev/examples/statecharts/) ([docs](https://dinodoc.pages.dev/docs/statecharts/))
+  - state machines and [statecharts](https://statecharts.dev/) extracted from source rendered as diagrams
+
+Combining mono and multi repos:
 - [Reitit](https://dinodoc.pages.dev/examples/reitit/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/reitit/doc.clj))
   - monorepo with multiple modules
   - API docs combined into a single namespace hierarchy
@@ -33,11 +44,6 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
   - mix of monorepo and multiple repos
   - modules in a main monorepo and additional modules in separate repositories
   - API docs rendered separately under each module
-- [TypeScript](https://dinodoc.pages.dev/examples/ts/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/ts))
-  - including documentation for projects written in other languages within a single site
-  - for example TypeScript using [docusaurus-plugin-typedoc](https://github.com/tgreyuk/typedoc-plugin-markdown/tree/master/packages/docusaurus-plugin-typedoc)
-- [Structurizr](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
-  - architecture documentation with diagrams based on the [C4 model](https://c4model.com/)
 
 ## Usage
 

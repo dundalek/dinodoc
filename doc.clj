@@ -6,7 +6,8 @@
 
 (dinodoc/generate
  {:inputs ["."
-           {:path "components/structurizr"}]
+           {:path "components/structurizr"}
+           {:path "components/statecharts"}]
   :output-path "docs"
   :git/branch "main"
   :github/repo "https://github.com/dundalek/dinodoc"})
@@ -17,5 +18,11 @@
 ;; experience because external links would get opened in a new browser tab.
 (fs/update-file "docs/index.md" str/replace #"https://dinodoc.pages.dev" "")
 (fs/update-file "docs/structurizr/index.md" str/replace #"https://dinodoc.pages.dev" "../..")
+(fs/update-file "docs/statecharts/index.md" str/replace #"https://dinodoc.pages.dev" "../..")
+
+;; Remove explicit position to make sure component docs are after regulare doc pages like Guide
+;; Should figure out a better way how to specify order for nested inputs.
+(fs/update-file "docs/structurizr/index.md" str/replace "sidebar_position: 0," "sidebar_position: 2,")
+(fs/update-file "docs/statecharts/index.md" str/replace "sidebar_position: 0," "sidebar_position: 3,")
 
 (shutdown-agents)
