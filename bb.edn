@@ -9,7 +9,7 @@
          website:start {:task (shell {:dir "website"} "bun start")}
          website:build {:task (shell {:dir "website"} "bun run build")}
          website:docs {:task (build-examples/build-dinodoc-docs)}
-         website:content {:depends [website:docs example:polylith example:promesa example:reitit example:ring]}
+         website:content {:depends [website:docs example:polylith example:promesa example:reitit example:ring example:structurizr example:statecharts]}
 
          example:polylith {:task (build-examples/build-example-docs "polylith")}
          example:promesa {:task (build-examples/build-example-docs "promesa")}
