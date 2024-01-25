@@ -3,7 +3,7 @@
 
          test {:task (clojure "-M:test")}
          test:watch {:task (clojure "-M:test" "--watch")}
-         test:coverage {:task (clojure "-M:test-coverage")}
+         test:coverage {:task (clojure "-M:test:coverage")}
 
          website {:depends [website:content website:build]}
          website:start {:task (shell {:dir "website"} "bun start")}
