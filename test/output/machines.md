@@ -1,6 +1,9 @@
 
 ## machine
 
+An example of a simple lights machine.  
+Based on https://lucywang000.github.io/clj-statecharts/docs/actions/#a-full-example
+
 ```mermaid
 stateDiagram-v2
 state lights {
@@ -11,9 +14,12 @@ red --> green : timer
 }
 ```
 
-[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L9-L9)
+[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L8-L8)
 
 ## regions
+
+Example of parallel regions.  
+Based on https://statecharts.dev/what-is-a-statechart.html#a-state-can-have-many-regions
 
 ```mermaid
 stateDiagram-v2
@@ -31,9 +37,12 @@ E --> D : flick
 }
 ```
 
-[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L25-L25)
+[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L41-L41)
 
 ## dog-walk
+
+Demonstrating nested states.  
+Based on https://stately.ai/docs/state-machines-and-statecharts#parent-states
 
 ```mermaid
 stateDiagram-v2
@@ -49,4 +58,4 @@ running --> walking : slow-down
 }
 ```
 
-[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L38-L38)
+[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L26-L26)

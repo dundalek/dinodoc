@@ -17,10 +17,10 @@
        (requiring-resolve 'example.statecharts/machine)
        {:filename-add-prefix prefix})
       (statecharts/render-machine-var
-       (requiring-resolve 'example.statecharts/regions)
+       (requiring-resolve 'example.statecharts/dog-walk)
        {:filename-add-prefix prefix})
       (statecharts/render-machine-var
-       (requiring-resolve 'example.statecharts/dog-walk)
+       (requiring-resolve 'example.statecharts/regions)
        {:filename-add-prefix prefix}))))
 
 (shutdown-agents)

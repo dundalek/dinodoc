@@ -36,6 +36,8 @@
         (println "[*] -->" (render-state-name initial)))
       (doseq [[source-state target-machine] (:states machine)]
         (doseq [[event transitions] (:on target-machine)]
+          (assert (sequential? transitions)
+                  "Expecting a sequence of transitions, did you perhaps forget to wrap the machine in (fsm/machine)?")
           (doseq [{:keys [target actions]} transitions]
             (println (render-state-name source-state) "-->"
                      (render-state-name target) ":"
@@ -54,7 +56,7 @@
 (defn render-machine-var
   ([machine-var] (render-machine-var machine-var {}))
   ([machine-var {:keys [filename-add-prefix]}]
-   (let [{:keys [name file line]} (meta machine-var)
+   (let [{:keys [name file line doc]} (meta machine-var)
          machine @machine-var
          ;; consider ability to allow passing repo info to avoid running detection for each diagram
          {:keys [url branch]} (git/detect-repo-info ".")
@@ -65,6 +67,9 @@
                       :filename-add-prefix filename-add-prefix})]
      (println)
      (println "##" name)
+     (when doc
+       (println)
+       (println doc))
      (println)
      (render-machine-block machine)
      (println)
