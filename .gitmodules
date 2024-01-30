@@ -58,3 +58,9 @@
 [submodule "examples/structurizr/examples"]
 	path = examples/structurizr/examples
 	url = https://github.com/structurizr/examples
+[submodule "examples/openapi/petstore"]
+	path = examples/openapi/petstore
+	url = https://github.com/swagger-api/swagger-petstore
+[submodule "examples/openapi/museum"]
+	path = examples/openapi/museum
+	url = https://github.com/Redocly/museum-openapi-example

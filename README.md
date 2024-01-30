@@ -20,12 +20,15 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 
 ## Examples
 
-- [Promesa](https://dinodoc.pages.dev/examples/promesa/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/promesa/doc.clj))
-  - single project with curated doc pages and API docs
+- [Clojure](https://dinodoc.pages.dev/examples/promesa/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/promesa/doc.clj))
+  - single project (Promesa) with curated doc pages and API docs
   - compare with [codox](https://funcool.github.io/promesa/latest/) and [cljdoc](https://cljdoc.org/d/funcool/promesa/11.0.678/)
 - [TypeScript](https://dinodoc.pages.dev/examples/ts/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/ts))
   - including documentation for projects written in other languages within a single site
   - for example TypeScript using [docusaurus-plugin-typedoc](https://github.com/tgreyuk/typedoc-plugin-markdown/tree/master/packages/docusaurus-plugin-typedoc)
+- [HTTP API](https://dinodoc.pages.dev/examples/openapi/petstore/add-pet) ([docs](https://dinodoc.pages.dev/docs/openapi/))
+  - render documentation using [OpenAPI](https://www.openapis.org/) spec
+  - extract and render API spec from code when using [Reitit](https://github.com/metosin/reitit) routes
 
 Diagrams:
 - [Structurizr](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))

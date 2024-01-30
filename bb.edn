@@ -9,7 +9,16 @@
          website:start {:task (shell {:dir "website"} "bun start")}
          website:build {:task (shell {:dir "website"} "bun run build")}
          website:docs {:task (build-examples/build-dinodoc-docs)}
-         website:content {:depends [website:docs example:polylith example:promesa example:reitit example:ring example:structurizr example:statecharts]}
+         website:content
+         {:depends
+          [website:docs
+           example:polylith
+           example:promesa
+           example:reitit
+           example:ring
+           example:structurizr
+           example:statecharts
+           example:openapi]}
 
          example:polylith {:task (build-examples/build-example-docs "polylith")}
          example:promesa {:task (build-examples/build-example-docs "promesa")}
@@ -17,6 +26,10 @@
          example:ring {:task (build-examples/build-example-docs "ring")}
          example:structurizr {:task (build-examples/build-example-docs "structurizr")}
          example:statecharts {:task (build-examples/build-example-docs "statecharts")}
+
+         example:openapi:reitit {:task (shell {:dir "examples/openapi"} "clojure -M:doc")}
+         example:openapi {:depends [example:openapi:reitit]
+                          :task (shell {:dir "website"} "bun run docusaurus gen-api-docs all")}
 
          deploy {:depends [website]
                  :task (shell "bunx wrangler pages deploy website/build")}}}

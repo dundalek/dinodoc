@@ -1,0 +1,9 @@
+{:aliases
+ {:doc {:extra-deps {;; for the reitit example
+                     metosin/jsonista {:mvn/version "0.2.6"}
+                     metosin/reitit {:mvn/version "0.7.0-alpha7"}
+                     metosin/ring-swagger-ui {:mvn/version "5.9.0"}
+                     ring/ring-jetty-adapter {:mvn/version "1.7.1"}}
+        ;; need to use external path, can't use :loca/root because the example does not have deps.edn
+        :extra-paths ["../reitit/reitit/examples/openapi/src"]
+        :main-opts ["doc.clj"]}}}

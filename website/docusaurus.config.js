@@ -11,7 +11,7 @@ const config = {
   // favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-test-site.com',
+  url: 'https://dinodoc.pages.dev',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -83,14 +83,14 @@ const config = {
         docsPluginId: 'classic',
         config: {
           petstore: {
-            specPath: '../examples/openapi/petstore.yaml',
+            specPath: '../examples/openapi/petstore/src/main/resources/openapi.yaml',
             outputDir: 'docs/examples/openapi/petstore',
             sidebarOptions: {
               groupPathsBy: 'tag',
             },
           },
           museum: {
-            specPath: '../examples/openapi/museum.yaml',
+            specPath: '../examples/openapi/museum/openapi.yaml',
             outputDir: 'docs/examples/openapi/museum',
             sidebarOptions: {
               groupPathsBy: 'tag',
@@ -126,7 +126,18 @@ const config = {
             position: 'left',
             label: 'Docs',
           },
-          { to: '/docs/#examples', label: 'Examples', position: 'left' },
+          {
+            label: 'Examples', position: 'left',
+            // Nested items are displayed in a dropdown menu.
+            items: [
+              { to: '/examples/promesa/', label: 'Clojure API' },
+              { to: '/examples/ts/', label: 'TypeScript API' },
+              { to: '/examples/openapi/petstore/add-pet', label: 'HTTP API' },
+              { to: '/examples/structurizr/Big%20Bank%20plc-0/', label: 'Architecture Docs' },
+              { to: '/examples/statecharts/', label: 'Statechart Diagrams' },
+              { to: '/docs/#examples', label: 'Other' },
+            ]
+          },
           {
             href: 'https://github.com/dundalek/dinodoc',
             label: 'GitHub',
