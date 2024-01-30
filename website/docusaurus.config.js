@@ -42,9 +42,17 @@ const config = {
           routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           // `editUrl` option is not needed as it will be set in metadata for each file
+
+          // These overrides are needed for the openapi docs plugin to render properly
+          docLayoutComponent: '@theme/DocPage',
+          docItemComponent: '@theme/ApiItem',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: [
+            require.resolve('./src/css/custom.css'),
+            // Extra css needed to show labels for HTTP methods in sidebar
+            require.resolve('./src/css/docusaurus-openapi-docs.css'),
+          ],
         },
       }),
     ],
@@ -53,7 +61,11 @@ const config = {
   markdown: {
     mermaid: true,
   },
-  themes: ['@docusaurus/theme-mermaid'],
+
+  themes: [
+    '@docusaurus/theme-mermaid',
+    'docusaurus-theme-openapi-docs',
+  ],
 
   plugins: [
     // Example including documentation for TypeScript project
@@ -63,6 +75,36 @@ const config = {
         out: 'examples/ts'
         // tsconfig: '../tsconfig.json',
       }
+    ],
+    // Example rendering OpenAPI HTTP documentation
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        docsPluginId: 'classic',
+        config: {
+          petstore: {
+            specPath: '../examples/openapi/petstore.yaml',
+            outputDir: 'docs/examples/openapi/petstore',
+            sidebarOptions: {
+              groupPathsBy: 'tag',
+            },
+          },
+          museum: {
+            specPath: '../examples/openapi/museum.yaml',
+            outputDir: 'docs/examples/openapi/museum',
+            sidebarOptions: {
+              groupPathsBy: 'tag',
+            },
+          },
+          reitit: {
+            specPath: '../examples/openapi/reitit.json',
+            outputDir: 'docs/examples/openapi/reitit',
+            sidebarOptions: {
+              groupPathsBy: 'tag',
+            },
+          },
+        },
+      },
     ],
   ],
 
