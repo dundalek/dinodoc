@@ -18,7 +18,8 @@
            example:ring
            example:structurizr
            example:statecharts
-           example:openapi]}
+           example:openapi
+           example:dbschema]}
 
          example:polylith {:task (build-examples/build-example-docs "polylith")}
          example:promesa {:task (build-examples/build-example-docs "promesa")}

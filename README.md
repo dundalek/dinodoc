@@ -33,7 +33,7 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 Diagrams:
 - [Structurizr](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
   - architecture documentation with diagrams based on the [C4 model](https://c4model.com/)
-- [DB Schema](https://dinodoc.pages.dev/examples/dbschema/) ([docs](https://dinodoc.pages.dev/docs/dbschema/))
+- [DB Schema](https://dinodoc.pages.dev/examples/dbschema/chinook/) ([docs](https://dinodoc.pages.dev/docs/dbschema/))
   - document tables and visualize schema of relational databases
 - [Statecharts](https://dinodoc.pages.dev/examples/statecharts/) ([docs](https://dinodoc.pages.dev/docs/statecharts/))
   - state machines and [statecharts](https://statecharts.dev/) extracted from source rendered as diagrams

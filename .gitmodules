@@ -64,3 +64,9 @@
 [submodule "examples/openapi/museum"]
 	path = examples/openapi/museum
 	url = https://github.com/Redocly/museum-openapi-example
+[submodule "examples/dbschema/chinook"]
+	path = examples/dbschema/chinook
+	url = https://github.com/lerocha/chinook-database
+[submodule "examples/dbschema/pagila"]
+	path = examples/dbschema/pagila
+	url = https://github.com/devrimgunduz/pagila
