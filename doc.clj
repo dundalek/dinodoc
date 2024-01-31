@@ -22,6 +22,7 @@
 (fs/update-file "docs/structurizr/index.md" str/replace #"https://dinodoc.pages.dev" "../..")
 (fs/update-file "docs/statecharts/index.md" str/replace #"https://dinodoc.pages.dev" "../..")
 (fs/update-file "docs/openapi/index.md" str/replace #"https://dinodoc.pages.dev" "../..")
+(fs/update-file "docs/dbschema/index.md" str/replace #"https://dinodoc.pages.dev" "../..")
 
 ;; Remove explicit position to make sure component docs are after regulare doc pages like Guide
 ;; Should figure out a better way how to specify order for nested inputs.

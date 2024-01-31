@@ -2,9 +2,11 @@
 
 ## [main](https://github.com/dundalek/dinodoc/compare/v0.1.0...main) (unreleased)
 
-- Added Structurizr Architecture docs rendering
-- Added HTTP API documentation using OpenAPI
-- Added Statecharts diagram rendering
+New features and examples:
+- Structurizr Architecture docs rendering
+- HTTP API documentation using OpenAPI
+- DB schema documentation
+- Statecharts diagram rendering
 
 ## 0.1.0 (2024-01-16)
 

@@ -15,7 +15,7 @@ Follow the plugin [installation and configuraiton](https://github.com/PaloAltoNe
 [Reitit](https://github.com/metosin/reitit) router library has [OpenAPI support](https://github.com/metosin/reitit/blob/master/doc/ring/openapi.md) and is able to generate spec which can be rendered as documentation.
 
 Example:
-- [Reitit](https://dinodoc.pages.dev/examples/openapi/reitit) - based routes in [code](https://github.com/metosin/reitit/blob/7e00de835d33460c2e4b19c6aca4df452f869528/examples/openapi/src/example/server.clj#L31-L110) and extracted with a [script](https://github.com/dundalek/dinodoc/blob/main/examples/statecharts/doc.clj).
+- [Reitit](https://dinodoc.pages.dev/examples/openapi/reitit) - based routes in [code](https://github.com/metosin/reitit/blob/7e00de835d33460c2e4b19c6aca4df452f869528/examples/openapi/src/example/server.clj#L31-L110) and extracted with a [script](https://github.com/dundalek/dinodoc/blob/main/examples/openapi/doc.clj).
 
 **⚠️ Warning**: Using `requiring-resolve` to access route data will result in code being evaluated, therefore it only needs to be run on trusted sources!
 
