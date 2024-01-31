@@ -8,7 +8,8 @@
  {:inputs ["."
            {:path "components/structurizr"}
            {:path "components/statecharts"}
-           {:path "examples/openapi"}]
+           {:path "examples/openapi"}
+           {:path "examples/dbschema"}]
   :output-path "docs"
   :git/branch "main"
   :github/repo "https://github.com/dundalek/dinodoc"})
@@ -25,7 +26,8 @@
 ;; Remove explicit position to make sure component docs are after regulare doc pages like Guide
 ;; Should figure out a better way how to specify order for nested inputs.
 (fs/update-file "docs/structurizr/index.md" str/replace "sidebar_position: 0," "sidebar_position: 2,")
-(fs/update-file "docs/statecharts/index.md" str/replace "sidebar_position: 0," "sidebar_position: 3,")
-(fs/update-file "docs/openapi/index.md" str/replace "sidebar_position: 0," "sidebar_position: 4,")
+(fs/update-file "docs/openapi/index.md" str/replace "sidebar_position: 0," "sidebar_position: 3,")
+(fs/update-file "docs/dbschema/index.md" str/replace "sidebar_position: 0," "sidebar_position: 4,")
+(fs/update-file "docs/statecharts/index.md" str/replace "sidebar_position: 0," "sidebar_position: 5,")
 
 (shutdown-agents)

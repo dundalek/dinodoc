@@ -26,6 +26,7 @@
          example:ring {:task (build-examples/build-example-docs "ring")}
          example:structurizr {:task (build-examples/build-example-docs "structurizr")}
          example:statecharts {:task (build-examples/build-example-docs "statecharts")}
+         example:dbschema {:task (build-examples/build-example-docs "dbschema")}
 
          example:openapi:reitit {:task (shell {:dir "examples/openapi"} "clojure -M:doc")}
          example:openapi {:depends [example:openapi:reitit]
