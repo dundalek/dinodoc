@@ -34,4 +34,4 @@
                           :task (shell {:dir "website"} "bun run docusaurus gen-api-docs all")}
 
          deploy {:depends [website]
-                 :task (shell "bunx wrangler pages deploy website/build")}}}
+                 :task (shell "bunx wrangler pages deploy --project-name dinodoc website/build")}}}
