@@ -10,6 +10,7 @@
            {:path "components/statecharts"}
            {:path "examples/openapi"}
            {:path "examples/dbschema"}]
+  :api-mode :global
   :output-path "docs"
   :git/branch "main"
   :github/repo "https://github.com/dundalek/dinodoc"})
