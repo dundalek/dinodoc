@@ -8,6 +8,9 @@ New features and examples:
 - DB schema documentation
 - Statecharts diagram rendering
 
+Fixes:
+- Fixed links to API docs in global hierarchy mode
+
 ## 0.1.0 (2024-01-16)
 
 Initial release

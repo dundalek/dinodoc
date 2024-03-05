@@ -443,3 +443,28 @@
           (is (str/includes?
                (get-in data ["abc" "nested" "b.md"])
                "ipsum [[example.main/bar]] dolor")))))))
+
+(deftest links-to-api-modes
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "src/example/main.clj" "(ns example.main)\n(defn foo [])")
+      (fspit "README.md" "# This is readme")
+      (fspit "doc/a.md" "lorem [[example.main/foo]] ipsum")
+      (let [opts {:inputs [{:path dir
+                            :output-path "."}]
+                  :github/repo "repo"
+                  :git/branch "main"}]
+        (doseq [[label opts]
+                [["default-mode" opts]
+                 ["global-mode" (assoc opts :api-mode :global)]]]
+          (let [output-path (str dir "/" label)
+                _ (dinodoc/generate (assoc opts :output-path output-path))
+                data (fsdata output-path)]
+            (testing label
+              (is (str/includes?
+                   (get-in data ["a.md"])
+                   "lorem [`example.main/foo`](./api/example/main/#foo) ipsum"))
+              (is (str/includes?
+                   (get-in data ["api" "example" "main" "index.md"])
+                   "### foo {#foo}")))))))))
+

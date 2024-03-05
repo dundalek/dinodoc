@@ -124,14 +124,14 @@
         (spit target content)))))
 
 (defn normalize-input [input root-opts]
-  (let [root-outdir (:output-path root-opts)
+  (let [root-outdir (str (fs/normalize (:output-path root-opts)))
         merged-options (merge (select-keys root-opts [:source-paths :doc-path :edit-url-fn :github/repo :git/branch])
                               (if (map? input) input {:path input}))
         {:keys [github/repo git/branch edit-url-fn source-paths
                 path doc-path doc-tree output-path]} merged-options
         path (or (some-> path str) ".")
         outdir (or output-path (fs/file-name path))
-        outdir (str root-outdir "/" outdir)
+        outdir (str (fs/normalize (str root-outdir "/" outdir)))
         doc-path (str path "/" (or doc-path "doc"))
         source-paths (->> (or source-paths ["src"])
                           (map #(str path "/" %)))
