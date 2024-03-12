@@ -159,7 +159,7 @@ affected.**
 - Deprecate [`promesa.core/error`](../api/promesa/core/#error) alias to `catch`
 - Improve efficiency in the [`promesa.core/any`](../api/promesa/core/#any) implementation
 - Remove undocumented `promesa.core/err` alias.
-- Add [[`promesa.core/hmap`](../api/promesa/core/#hmap)](../api/promesa/core/#hmap) and [`promesa.core/hcat`](../api/promesa/core/#hcat) functions (in the
+- Add [`promesa.core/hmap`](../api/promesa/core/#hmap) and [`promesa.core/hcat`](../api/promesa/core/#hcat) functions (in the
   same family as [`promesa.core/handle`](../api/promesa/core/#handle) but with arguments in inverse order and no
   automatic unwrapping)
 - Add [`promesa.core/fmap`](../api/promesa/core/#fmap) convenience alias for [`promesa.core/map`](../api/promesa/core/#map)
@@ -175,7 +175,7 @@ affected.**
 ## Version 9.2.542
 
 - Add [`promesa.core/mcat`](../api/promesa/core/#mcat), a shorter alias for `mapcat`
-- Add [[`promesa.core/hmap`](../api/promesa/core/#hmap)](../api/promesa/core/#hmap), a shorter alias for `handle` with inverted
+- Add [`promesa.core/hmap`](../api/promesa/core/#hmap), a shorter alias for `handle` with inverted
   arguments (for `->>`)
 - Add [`promesa.core/fnly`](../api/promesa/core/#fnly), a shorter alias for `finally` with inverted
   arguments (for `->>`)
@@ -340,7 +340,7 @@ Bug fixes:
 
 Date: 20220-10-06
 
-Changes [[[`promesa.core`](../api/promesa/core/)](../api/promesa/core/)](../api/promesa/core/) ns:
+Changes [`promesa.core`](../api/promesa/core/) ns:
 
 - Add `thread-call` helper.
 - Add `thread` macro (analogous to the `clojure.core.async/thread`)
@@ -350,7 +350,7 @@ Changes [[[`promesa.core`](../api/promesa/core/)](../api/promesa/core/)](../api/
 - Make the `future` and `thread` macros aware of var bindings.
 - Make the `create` promise factory catch all exceptions.
 
-Changes to [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) ns:
+Changes to [`promesa.exec`](../api/promesa/exec/) ns:
 
 - Add `thread-per-task-executor` executor factory functon (JDK19 with Preview).
 - Add `vthread-per-task-executor` executor factory functon (JDK19 with Preview).
@@ -482,7 +482,7 @@ Relevant changes:
 - Remove already deprecated for a while the `alet` alias to `let`
   macro (the migration should be a simple find-and-replace).
 
-- Add forkjoin-pool and factory helpers to [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) ns.
+- Add forkjoin-pool and factory helpers to [`promesa.exec`](../api/promesa/exec/) ns.
 
 
 
@@ -511,9 +511,9 @@ Relevant changes:
   semantic than `then` function).
 - Add `catch'` variant for cases when you sure that funcion always
   return a plain value (and not promise).
-- Bug fix on [[`promesa.core/plet`](../api/promesa/core/#plet)](../api/promesa/core/#plet).
-- Wrap the body of [`promesa.core/let`](../api/promesa/core/#let) with [[`promesa.core/do!`](../api/promesa/core/#do-BANG-)](../api/promesa/core/#do-BANG-) macro.
-- Wrap the body of [[`promesa.core/plet`](../api/promesa/core/#plet)](../api/promesa/core/#plet) with [[`promesa.core/do!`](../api/promesa/core/#do-BANG-)](../api/promesa/core/#do-BANG-) macro.
+- Bug fix on [`promesa.core/plet`](../api/promesa/core/#plet).
+- Wrap the body of [`promesa.core/let`](../api/promesa/core/#let) with [`promesa.core/do!`](../api/promesa/core/#do-BANG-) macro.
+- Wrap the body of [`promesa.core/plet`](../api/promesa/core/#plet) with [`promesa.core/do!`](../api/promesa/core/#do-BANG-) macro.
 
 
 ## Version 4.0.2 ##
@@ -595,8 +595,8 @@ and macros that are not heavily used):
   always returns the same promise (like identity function).
 
 - Remove 0 arity from `promise` function (now is delegated to `deferred`)
-- Remove `schedule` function from [[[`promesa.core`](../api/promesa/core/)](../api/promesa/core/)](../api/promesa/core/) (replaced by `promesa.exec/schedule`).
-- Remove `extend-promise!` from [[[`promesa.core`](../api/promesa/core/)](../api/promesa/core/)](../api/promesa/core/) (still available in [`promesa.impl`](../api/promesa/impl/)).
+- Remove `schedule` function from [`promesa.core`](../api/promesa/core/) (replaced by `promesa.exec/schedule`).
+- Remove `extend-promise!` from [`promesa.core`](../api/promesa/core/) (still available in [`promesa.impl`](../api/promesa/impl/)).
 - Remove `set-default-promise!` helper (the user can do the same without the helper).
 - Remove `attempt` function (not useful).
 - Remove `branch` function (not useful).
@@ -625,10 +625,10 @@ New features and not breaking changes and fixes:
   operator.
 - Add `race` composition operator.
 - Add `run!` function (a promise aware `run!` variant).
-- Add [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) namespace with Executors & Schedulers abstractions.
+- Add [`promesa.exec`](../api/promesa/exec/) namespace with Executors & Schedulers abstractions.
 - Add `future` macro (analogous to `clojure.core/future` that returns
   promise instance instead of Future, also works in cljs) that uses
-  [[[[`promesa.exec`](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/)](../api/promesa/exec/) behind the schenes.
+  [`promesa.exec`](../api/promesa/exec/) behind the schenes.
 - Improve `let` macro making it safe to synchronos exception that can
   be raised from the first evaluated expression. Now all exception
   raised inside `let` returs properly rejected promise.

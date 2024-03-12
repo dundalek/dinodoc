@@ -72,7 +72,7 @@
   [])
 
 (defn links-backticks-multiple-occurences
-  "Same link referenced multiple times will get messed up: `foo` and `foo`"
+  "Same link referenced multiple times will not get messed up: `foo` and `foo`"
   [])
 
 (defn links-wikilinks

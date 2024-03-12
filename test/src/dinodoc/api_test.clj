@@ -6,6 +6,9 @@
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
    [dinodoc.approval-helpers :as approval]))
 
+(defn- naively-strip-front-matter [s]
+  (str/replace s #"(?s).*---\n\n" ""))
+
 (deftest generate-approval-test
   ;; Specifying different repos for different inputs in global mode is broken, need to fix later
   (dinodoc/generate
@@ -468,3 +471,16 @@
                    (get-in data ["api" "example" "main" "index.md"])
                    "### foo {#foo}")))))))))
 
+(deftest multiple-links-issue
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "src/example/main.clj" "(ns example.main)\n(defn foo [])")
+      (fspit "README.md" "`example.main/foo` `example.main/foo`")
+      (let [output-path (str dir "/docs")
+            _ (dinodoc/generate {:inputs [{:path dir
+                                           :output-path "."}]
+                                 :output-path output-path
+                                 :github/repo "repo"
+                                 :git/branch "main"})
+            data (fsdata output-path)]
+        (is (= "[`example.main/foo`](./api/example/main/#foo) [`example.main/foo`](./api/example/main/#foo)" (naively-strip-front-matter (get-in data ["index.md"]))))))))

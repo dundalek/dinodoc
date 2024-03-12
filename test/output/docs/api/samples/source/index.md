@@ -168,7 +168,7 @@ Link to a var in the current namespace: [`foo`](#foo)
 ```
 
 
-Same link referenced multiple times will get messed up: [[`foo`](#foo)](#foo) and [[`foo`](#foo)](#foo)
+Same link referenced multiple times will not get messed up: [`foo`](#foo) and [`foo`](#foo)
 <p><sub><a href="/blob/master/test/projects/samples/src/samples/source.clj#L74-L76">Source</a></sub></p>
 
 ### links\-wikilinks {#links-wikilinks}

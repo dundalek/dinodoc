@@ -63,12 +63,6 @@
            :github/repo "http://example.com/"
            :git/branch "main"}))))
 
-(deftest var-pattern-test
-  (is (= [["`backtick-link`" "backtick-link"]
-          ["[[wikilink]]" "wikilink"]]
-         (impl/extract-var-links impl/backticks-and-wikilinks-pattern
-                                 "aaa `backtick-link` bbb [[wikilink]] ccc"))))
-
 (deftest escape-markdown-test
   (is (= "\\*abc\\*" (impl/escape-markdown "*abc*")))
   (is (= "\\\\\\`\\*\\_\\{\\}\\[\\]&lt;&gt;\\(\\)\\#\\+\\-\\.\\!\\|" (impl/escape-markdown "\\`*_{}[]<>()#+-.!|"))))
@@ -101,4 +95,8 @@
 
     (testing "unqualified var within current namespace link"
       (is (= "some text [`x->y`](#x--GT-y) other `not-found`"
-             (impl/format-docstring ns->vars 'a.b "some text `x->y` other `not-found`" opts))))))
+             (impl/format-docstring ns->vars 'a.b "some text `x->y` other `not-found`" opts))))
+
+    (testing "wikilink: unqualified var within current namespace link"
+      (is (= "some text [`x->y`](#x--GT-y) other [[not-found]]"
+             (impl/format-docstring ns->vars 'a.b "some text [[x->y]] other [[not-found]]" opts))))))
