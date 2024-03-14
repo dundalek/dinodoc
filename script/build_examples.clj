@@ -17,3 +17,8 @@
   (let [target-path (str "website/docs/examples/" example)
         source-dir (str "examples/" example)]
     (build-and-copy-docs source-dir target-path)))
+
+(defn copy-test-samples []
+  (let [target-path "website/docs/docs/samples"]
+    (fs/delete-tree target-path)
+    (fs/copy-tree "test/output/docs" target-path)))

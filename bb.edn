@@ -21,6 +21,9 @@
            example:openapi
            example:dbschema]}
 
+         ;; Debug test samples at http://localhost:3000/docs/samples/example/
+         samples:copy {:task (build-examples/copy-test-samples)}
+
          example:polylith {:task (build-examples/build-example-docs "polylith")}
          example:promesa {:task (build-examples/build-example-docs "promesa")}
          example:reitit {:task (build-examples/build-example-docs "reitit")}
