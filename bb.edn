@@ -19,7 +19,8 @@
            example:structurizr
            example:statecharts
            example:openapi
-           example:dbschema]}
+           example:dbschema
+           example:kotlin]}
 
          ;; Debug test samples at http://localhost:3000/docs/samples/example/
          samples:copy {:task (build-examples/copy-test-samples)}
@@ -31,6 +32,8 @@
          example:structurizr {:task (build-examples/build-example-docs "structurizr")}
          example:statecharts {:task (build-examples/build-example-docs "statecharts")}
          example:dbschema {:task (build-examples/build-example-docs "dbschema")}
+
+         example:kotlin {:task (build-examples/build-example-docs "kotlin")}
 
          example:openapi:reitit {:task (shell {:dir "examples/openapi"} "clojure -M:doc")}
          example:openapi {:depends [example:openapi:reitit]
