@@ -1,13 +1,3 @@
-{:deps {org.jetbrains.dokka/dokka-cli {:mvn/version "1.9.20"}
-        org.jetbrains.dokka/dokka-base {:mvn/version "1.9.20"}
-        org.jetbrains.dokka/analysis-kotlin-descriptors {:mvn/version "1.9.20"}
-
-        ;; for Markdown output
-        org.jetbrains.dokka/gfm-plugin {:mvn/version "1.9.20"}
-
-        cheshire/cheshire {:mvn/version "5.12.0"}
-        babashka/fs {:mvn/version "0.5.20"}}
-
- :aliases
- {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../../"}}
+{:aliases
+ {:doc {:extra-deps {dinodoc/dokka {:local/root "../../components/dokka"}}
         :main-opts ["doc.clj"]}}}

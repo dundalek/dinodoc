@@ -9,7 +9,8 @@
            {:path "components/structurizr"}
            {:path "components/statecharts"}
            {:path "examples/openapi"}
-           {:path "examples/dbschema"}]
+           {:path "examples/dbschema"}
+           {:path "components/dokka"}]
   :api-mode :global
   :output-path "docs"
   :git/branch "main"
@@ -31,5 +32,6 @@
 (fs/update-file "docs/openapi/index.md" str/replace "sidebar_position: 0," "sidebar_position: 3,")
 (fs/update-file "docs/dbschema/index.md" str/replace "sidebar_position: 0," "sidebar_position: 4,")
 (fs/update-file "docs/statecharts/index.md" str/replace "sidebar_position: 0," "sidebar_position: 5,")
+(fs/update-file "docs/dokka/index.md" str/replace "sidebar_position: 0," "sidebar_position: 6,")
 
 (shutdown-agents)
