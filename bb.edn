@@ -20,7 +20,8 @@
            example:statecharts
            example:openapi
            example:dbschema
-           example:kotlin]}
+           example:kotlin
+           example:java]}
 
          ;; Debug test samples at http://localhost:3000/docs/samples/example/
          samples:copy {:task (build-examples/copy-test-samples)}
@@ -34,6 +35,7 @@
          example:dbschema {:task (build-examples/build-example-docs "dbschema")}
 
          example:kotlin {:task (build-examples/build-example-docs "kotlin")}
+         example:java {:task (build-examples/build-example-docs "java")}
 
          example:openapi:reitit {:task (shell {:dir "examples/openapi"} "clojure -M:doc")}
          example:openapi {:depends [example:openapi:reitit]

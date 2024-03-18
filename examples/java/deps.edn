@@ -1,0 +1,16 @@
+{:deps {org.jetbrains.dokka/dokka-cli {:mvn/version "1.9.20"}
+        org.jetbrains.dokka/dokka-base {:mvn/version "1.9.20"}
+        org.jetbrains.dokka/analysis-kotlin-descriptors {:mvn/version "1.9.20"}
+
+        ;; for Markdown output
+        org.jetbrains.dokka/gfm-plugin {:mvn/version "1.9.20"}
+
+        ;; for Java signature format
+        org.jetbrains.dokka/kotlin-as-java-plugin {:mvn/version "1.9.20"}
+
+        cheshire/cheshire {:mvn/version "5.12.0"}
+        babashka/fs {:mvn/version "0.5.20"}}
+
+ :aliases
+ {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../../"}}
+        :main-opts ["doc.clj"]}}}
