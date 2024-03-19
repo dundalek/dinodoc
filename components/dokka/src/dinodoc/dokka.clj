@@ -47,6 +47,7 @@
     (fs/create-dirs output-path)
     (dokka opts)
     ;; Replace <br> to make output compatible with MDX
+    ;; https://github.com/Kotlin/dokka/issues/1616
     (doseq [f (fs/glob output-path "**.md")]
       (fs/update-file (fs/file f) str/replace "<br>" "<br/>"))
     ;; Finalize coroutines manually since we set finalizeCoroutines to false

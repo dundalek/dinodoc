@@ -26,6 +26,10 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
 - [TypeScript](https://dinodoc.pages.dev/examples/ts/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/ts))
   - including documentation for projects written in other languages within a single site
   - for example TypeScript using [docusaurus-plugin-typedoc](https://github.com/tgreyuk/typedoc-plugin-markdown/tree/master/packages/docusaurus-plugin-typedoc)
+- [Java](https://dinodoc.pages.dev/examples/java/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/java), experimental)
+  - using [Dokka](https://dinodoc.pages.dev/docs/dokka/) engine
+- [Kotlin](https://dinodoc.pages.dev/examples/kotlin/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/kotlin), experimental)
+  - using [Dokka](https://dinodoc.pages.dev/docs/dokka/) engine
 - [HTTP API](https://dinodoc.pages.dev/examples/openapi/petstore/add-pet) ([docs](https://dinodoc.pages.dev/docs/openapi/))
   - render documentation using [OpenAPI](https://www.openapis.org/) spec
   - extract and render API spec from code when using [Reitit](https://github.com/metosin/reitit) routes
