@@ -1,0 +1,16 @@
+[package]
+name = "dumper"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = "1.0.197"
+serde_json = "1.0.114"
+stack-graphs = "0.13.0"
+tree-sitter-stack-graphs = "0.8.1"
+
+
+[features]
+default = ["stack-graphs/serde", "stack-graphs/storage"]
