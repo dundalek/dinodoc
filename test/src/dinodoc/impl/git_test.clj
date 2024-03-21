@@ -5,7 +5,8 @@
 
 ;; mocking current branch so that test does not fail when being switched to other branch during development
 (defmacro with-main-branch [& body]
-  `(with-redefs [git/current-branch (fn [_#] "main")]
+  `(with-redefs [git/current-branch (fn [_#] "main")
+                 git/branch-remote (fn [_# _#] "origin")]
      ~@body))
 
 (deftest detect-repo-info
