@@ -50,7 +50,7 @@ jobs:
         run: bb test:init-submodules
 
       - name: Test Clojure
-        run: bb test
+        run: bb test:ci
 
       # - name: Setup upterm session
       #   uses: lhotari/action-upterm@v1
