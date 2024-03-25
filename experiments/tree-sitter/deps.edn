@@ -1,0 +1,4 @@
+{:deps {io.github.bonede/tree-sitter {:mvn/version "0.22.2"}
+        io.github.bonede/tree-sitter-typescript {:mvn/version "0.20.3"}
+        io.github.bonede/tree-sitter-clojure {:mvn/version "0.0.12"}
+        io.github.bonede/tree-sitter-json {:mvn/version "0.20.1"}}}
