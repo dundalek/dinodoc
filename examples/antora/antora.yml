@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/asciidoctor/asciidoctor-intellij-plugin/main/src/main/resources/jsonSchemas/antoraComponentSchema.json
+name: example
+title: My Example
+version: ~
+# version: 1.0
+# nav:
+# - modules/ROOT/nav.adoc
+ext:
+  collector:
+    run:
+      command: clojure -M:apidoc
+      dir: .
+    scan:
+      dir: ./docs
+      base: modules/ROOT/pages

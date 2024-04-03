@@ -22,3 +22,8 @@
   (let [target-path "website/docs/docs/samples"]
     (fs/delete-tree target-path)
     (fs/copy-tree "test/output/docs" target-path)))
+
+(defn copy-antora-example []
+  (let [target-path "website/build/examples/antora"]
+    (fs/delete-tree target-path)
+    (fs/copy-tree "examples/antora/build/site" target-path)))

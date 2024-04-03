@@ -6,6 +6,9 @@ mkShell {
     clojure
     git
 
+    # for antora example
+    pandoc
+
     # for dbschema example
     postgresql
     tbls
