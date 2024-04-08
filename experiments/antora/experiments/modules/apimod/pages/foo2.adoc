@@ -1,0 +1,14 @@
+
+## bar
+
+hi
+
+[#--GT-]
+## ->
+
+munged id
+
+[#->>]
+## ->>
+
+original id

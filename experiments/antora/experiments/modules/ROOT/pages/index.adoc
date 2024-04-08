@@ -1,0 +1,62 @@
+
+== Linking to AsciiDoc API docs in subdirectory (`apidir`) of current module
+
+xref:apidir/foo#bar[Single colon xref]
+
+xref::apidir/foo#bar[Double colon xref]
+
+xref:apidir/foo#[xref without extension with empty fragment]
+
+does not work:
+
+xref:apidir/foo[xref without extension and fragment]
+
+== Linking to AsciiDoc API docs in a different module (`apimod`)
+
+works:
+
+xref:apimod:foo2.adoc[xref with extension]
+
+xref:apimod:foo2#bar[xref with fragment without extension]
+
+cross reference with angle brackets:
+
+<<apimod:foo2#bar>>
+
+does not work:
+
+xref:apimod:foo2[xref without extension and fragment]
+
+== Linking to HTML API docs (via attachments)
+
+xref:attachment$foo3.html[xref to attachment]
+
+xref:attachment$foo3.html#bar[xref to attachment with fragment]
+
+link:_attachments/foo3.html[link to html file]
+
+link:_attachments/foo3.html#bar[link to html file with fragment]
+
+== Linking from nested page
+
+xref:nested/page.adoc[]
+
+== Linking to explicit ids
+
+xref:apimod:foo2#--GT-[->]
+
+works with traling dash escaped
+
+<<apimod:foo2#--GT\->> (works)
+vs.
+<<apimod:foo2#--GT->> (broken)
+
+xref:apimod:foo2#->>[unwanted arrow substitution ->>]
+vs.
+xref:apimod:foo2#->>[escaped arrow substitution \->>]
+
+broken
+
+<<apimod:foo2#->>>>
+
+<<apimod:foo2#\->>>>

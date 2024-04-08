@@ -6,7 +6,8 @@ content:
   sources:
   # if url is a path, it must be to the git repo root
   - url: ../..
-    start_paths: experiments/antora/examples
+    start_paths: experiments/antora/examples, experiments/antora/experiments
+    # start_paths: experiments/antora/experiments
 ui:
   bundle:
     url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable

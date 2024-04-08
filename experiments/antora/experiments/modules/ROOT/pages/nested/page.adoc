@@ -1,0 +1,34 @@
+
+= Nested page
+
+
+== Linking to AsciiDoc API docs in subdirectory (`apidir`) of current module
+
+xref:apidir/foo#bar[Single colon xref]
+
+xref::apidir/foo#bar[Double colon xref]
+
+== Linking to AsciiDoc API docs in a different module (`apimod`)
+
+works:
+
+xref:apimod:foo2.adoc[Link with extension]
+
+xref:apimod:foo2#bar[Link with fragment without extension]
+
+does not work:
+
+xref:apimod:foo2[Link without extension and fragment]
+
+== Linking to HTML API docs (via attachments)
+
+xref:attachment$foo3.html[xref to attachment]
+
+xref:attachment$foo3.html#bar[xref to attachment with fragment]
+
+does not work in nested page:
+
+link:_attachments/foo3.html[link to html file]
+
+link:_attachments/foo3.html#bar[link to html file with fragment]
+
