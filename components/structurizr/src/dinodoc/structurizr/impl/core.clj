@@ -88,11 +88,13 @@
 (defn render-children-links [label children]
   (when (seq children)
     (println (str label ":"))
+    (println)
     (doseq [child (sort-by :name children)]
       (let [child-path  (str "./"
                              (encode-url (element-path-segment child))
                              "/")]
-        (println (str "- [" (:name child) "](" child-path ")"))))))
+        (println (str "- [" (:name child) "](" child-path ")"))))
+    (println)))
 
 (defn views-for-element [workspace-edn element-id]
   (->> [; only show systemLandscapeViews on workspace level
