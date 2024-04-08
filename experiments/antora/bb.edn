@@ -1,0 +1,11 @@
+{:tasks
+ {:requires [[babashka.fs :as fs]]
+  generate {:task (shell "bunx antora generate antora-playbook.yml")}
+
+  examples {:depends [examples:generate examples:copy]}
+  examples:generate {:task (shell {:dir "../.."} "bb website:content")}
+  examples:copy {:task (let [target "examples/modules/ROOT/pages" #_"docs"]
+                         (fs/delete-tree target)
+                         (fs/copy-tree "../../website/docs" target)
+                         (doseq [file (fs/glob target "**.md")]
+                           (shell "pandoc -t asciidoc-auto_identifiers" (str file) "-o" (str (fs/strip-ext file) ".adoc"))))}}}

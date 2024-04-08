@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/asciidoctor/asciidoctor-intellij-plugin/main/src/main/resources/jsonSchemas/antoraPlaybookSchema.json
+site:
+  title: Antora Docs
+  # start_page: example::index.adoc
+content:
+  sources:
+  # if url is a path, it must be to the git repo root
+  - url: ../..
+    start_paths: experiments/antora/examples
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+antora:
+  extensions:
+  - require: '@sntke/antora-mermaid-extension'
