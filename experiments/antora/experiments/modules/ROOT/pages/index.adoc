@@ -1,3 +1,10 @@
+== Custom linking macro
+
+baseline
+xref:apimod:foo2#--GT-[foo2/\->]
+
+with macro
+api:foo2/\->[]
 
 == Linking to AsciiDoc API docs in subdirectory (`apidir`) of current module
 

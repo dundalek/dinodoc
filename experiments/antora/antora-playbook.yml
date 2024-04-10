@@ -15,3 +15,6 @@ ui:
 antora:
   extensions:
   - require: '@sntke/antora-mermaid-extension'
+asciidoc:
+  extensions:
+  - ./apilink-extension
