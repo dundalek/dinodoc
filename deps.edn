@@ -11,6 +11,7 @@
         ;; In the future should likely be a separate artifact published in
         ;; clojars and then have something like dinodoc-all that would depend
         ;; on every component for convenience.
+        dinodoc/antora {:local/root "components/antora"}
         dinodoc/structurizr {:local/root "components/structurizr"}
         dinodoc/statecharts {:local/root "components/statecharts"}}
 

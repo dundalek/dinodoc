@@ -28,7 +28,7 @@ Options:
         global-analysis (when (= api-mode :global)
                           (impl/run-analysis (mapcat :source-paths inputs)))]
     (fs/delete-tree root-outdir)
-    (fs/create-dir root-outdir)
+    (fs/create-dirs root-outdir)
 
     (when (= api-mode :global)
       (let [{:keys [github/repo git/branch]} root-opts

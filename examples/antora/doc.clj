@@ -2,9 +2,10 @@
   (:require
    [babashka.fs :as fs]
    [babashka.process :refer [shell]]
-   [dinodoc.api :as dinodoc]))
+   [dinodoc.api :as dinodoc]
+   [dinodoc.antora :as antora]))
 
-(def output-path "docs")
+(def output-path "docs/pages")
 
 (dinodoc/generate
  {:inputs [{:path "."}]
@@ -17,5 +18,7 @@
 
   ;; https://github.com/asciidoctor/kramdown-asciidoc
   ; (shell "kramdoc" (str file)))
+
+(spit "docs/nav.adoc" (antora/generate-navigation output-path))
 
 (shutdown-agents)

@@ -2,10 +2,12 @@
  {:tests
   [{:id :unit
     :source-paths ["src"
+                   "components/antora/src"
                    "components/structurizr/src"
                    "components/statecharts/src"
                    "examples/statecharts/src"]
     :test-paths ["test/src"
+                 "components/antora/test/src"
                  "components/structurizr/test/src"
                  "components/statecharts/test/src"]
     :skip-meta [:skip]
