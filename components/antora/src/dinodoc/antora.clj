@@ -24,7 +24,9 @@
          (str/join "\n"))))
 
 (defn md->adoc [input]
-  (-> (shell/sh "pandoc" "--from" "markdown" "--to" "asciidoc-auto_identifiers"
+  (-> (shell/sh "pandoc" "--from" "markdown"
+                ;; Disabling `auto_identifiers` feature so that explicit heading ids are used to make links to vars work properly.
+                "--to" "asciidoc-auto_identifiers"
                 "--shift-heading-level-by=-1"
                 "--standalone"
                 :in input)
@@ -32,3 +34,9 @@
       ;; Post-processing to use the `[#id]` syntax instead of legacy `[[id]]`,
       ;; otherwise asciidoctor would not parse ids starting with dash `-`.
       (str/replace #"(?m)^\[\[(.*)\]\]$" "[#$1]")))
+
+(defn transform-directory [path]
+  (doseq [file (fs/glob path "**.md")]
+    (->> (slurp (fs/file file))
+         (md->adoc)
+         (spit (str (fs/strip-ext file) ".adoc")))))

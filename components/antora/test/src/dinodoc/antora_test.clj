@@ -2,7 +2,7 @@
   (:require
    [clojure.test :refer [deftest is testing]]
    [dinodoc.antora :as antora]
-   [dinodoc.fs-helpers :as fsh :refer [with-temp-dir]]))
+   [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]))
 
 (deftest generate-navigation-basic
   (with-temp-dir
@@ -42,3 +42,13 @@
 (deftest md->adoc-test-heading-ids
   (is (= "[#greet]\n== greet\n" (antora/md->adoc "## greet {#greet}")))
   (is (= "[#-main]\n== -main\n" (antora/md->adoc "## -main {#-main}"))))
+
+(deftest transform-directory
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (let [foo-content "## foo {#foo}"]
+        (fspit "foo.md" foo-content)
+        (antora/transform-directory dir)
+        (is (= {"foo.md" foo-content
+                "foo.adoc" "[#foo]\n== foo\n"}
+               (fsdata dir)))))))

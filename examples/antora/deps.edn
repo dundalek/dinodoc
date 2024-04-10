@@ -1,6 +1,4 @@
 {:aliases
  {:apidoc
-  {:extra-deps {dinodoc/dinodoc {:local/root "../../"}
-                babashka/process {:mvn/version "0.5.22"}
-                babashka/fs {:mvn/version "0.5.20"}}
+  {:extra-deps {dinodoc/dinodoc {:local/root "../../"}}
    :main-opts ["doc.clj"]}}}
