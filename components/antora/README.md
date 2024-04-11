@@ -25,6 +25,8 @@ By leveraging this feature of Antora it could possible reduce the scope of the p
 
 ## Utilities
 
+Depends on [pandoc](https://pandoc.org/), v3+ needs to be installed.
+
 Use [[dinodoc.antora/transform-directory]]
 to convert a directory tree of markdown files to asciidoc format that can be rendered with Antora.
 
