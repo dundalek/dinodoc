@@ -10,8 +10,11 @@
        (mapcat (fn [f]
                  (cond
                    (fs/directory? f)
-                   (cons (str level " " (fs/file-name f))
-                         (generate-navigation-items f base-path (str level "*")))
+                   (let [[child other] (fs/glob f "*.adoc")]
+                     (if (and (nil? other) (= (some-> child fs/file-name) "index.adoc"))
+                       (generate-navigation-items f base-path level)
+                       (cons (str level " " (fs/file-name f))
+                             (generate-navigation-items f base-path (str level "*")))))
 
                    (= (fs/extension f) "adoc")
                    [(str level

@@ -22,6 +22,21 @@
         (is (= "* xref:a.adoc[]"
                (antora/generate-navigation dir)))))))
 
+(deftest generate-navigation-collapse-index
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "a/index.adoc" "")
+      (testing "collapses directory with only one index file into single entry"
+        (is (= "* xref:a/index.adoc[]"
+               (antora/generate-navigation dir))))))
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (fspit "a/index.adoc" "")
+      (fspit "a/index.md" "")
+      (testing "works the same with extra index md file"
+        (is (= "* xref:a/index.adoc[]"
+               (antora/generate-navigation dir)))))))
+
 (deftest generate-navigation-nested
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
