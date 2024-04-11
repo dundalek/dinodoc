@@ -30,6 +30,15 @@
                                      (str/replace #"\.md$" ".adoc"))]
                    (str "](" replacement ")")))))
 
+(defn- replace-heading-ids [input]
+  ;; Post-processing to use the `[#id]` syntax instead of legacy `[[id]]`,
+  ;; otherwise asciidoctor would not parse ids starting with dash `-`.
+  ;;
+  ;; Pandoc hardcodes `[[` in output: https://github.com/jgm/pandoc/blob/c29c18a0038b62718cf3133247177e3cb8ebf871/src/Text/Pandoc/Writers/AsciiDoc.hs#L200
+  ;; AsciiDoctor checks `BlockAnchorRx` regex https://github.com/asciidoctor/asciidoctor/blob/935a0a3a2fe05ba7d239d8e774ada20df5879599/lib/asciidoctor/parser.rb#L2051
+  ;; which cannot start with alphanum or underscore: https://github.com/asciidoctor/asciidoctor/blob/935a0a3a2fe05ba7d239d8e774ada20df5879599/lib/asciidoctor/rx.rb#L165
+  (str/replace input #"(?m)^\[\[(.*)\]\]$" "[#$1]"))
+
 (defn md->adoc [input]
   (-> (shell/sh "pandoc" "--from" "markdown"
                 ;; Disabling `auto_identifiers` feature so that explicit heading ids are used to make links to vars work properly.
@@ -38,6 +47,4 @@
                 "--standalone"
                 :in (replace-md-adoc-links input))
       :out
-      ;; Post-processing to use the `[#id]` syntax instead of legacy `[[id]]`,
-      ;; otherwise asciidoctor would not parse ids starting with dash `-`.
-      (str/replace #"(?m)^\[\[(.*)\]\]$" "[#$1]")))
+      replace-heading-ids))

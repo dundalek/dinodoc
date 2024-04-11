@@ -1,2 +1,3 @@
 {:tasks
- {generate {:task (shell "bunx antora generate antora-playbook.yml")}}}
+ {generate {:task (shell "bunx antora generate antora-playbook.yml")}
+  serve {:task (shell {:dir "build/site"} "bunx vite dev")}}}

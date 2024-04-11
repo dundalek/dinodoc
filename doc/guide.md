@@ -133,6 +133,7 @@ In case you don't need blog and other content pages you can configure [Docs-only
 #### Search
 
 Docusaurus offers various [search options](https://docusaurus.io/docs/search), there are two main categories:
+
 - Local Search - Easy to start with as it does not require any external services.
   It works by downloading a statically generated index and performing the search client-side.  
   The [docusaurus-search-local](https://github.com/easyops-cn/docusaurus-search-local) plugin seems to works well.

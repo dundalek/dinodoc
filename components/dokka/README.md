@@ -7,6 +7,7 @@ Use [[dinodoc.dokka/generate]] function.
 ## Experimental status
 
 This is an experimental approach that currently has known issues and limitations:
+
 - Class members are rendered on separate pages
   - Default Dokka markdown renderer (GFM) renders each class member as a separate page which is not very usable.
   - A modification is needed to render all members on a single like the HTML renderer.

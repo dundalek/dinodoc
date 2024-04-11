@@ -35,6 +35,7 @@ It works on top of [Docusaurus](https://docusaurus.io/) which provides:
   - extract and render API spec from code when using [Reitit](https://github.com/metosin/reitit) routes
 
 Diagrams:
+
 - [Structurizr](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
   - architecture documentation with diagrams based on the [C4 model](https://c4model.com/)
 - [DB Schema](https://dinodoc.pages.dev/examples/dbschema/chinook/) ([docs](https://dinodoc.pages.dev/docs/dbschema/))
@@ -43,6 +44,7 @@ Diagrams:
   - state machines and [statecharts](https://statecharts.dev/) extracted from source rendered as diagrams
 
 Combining mono and multi repos:
+
 - [Reitit](https://dinodoc.pages.dev/examples/reitit/) ([source](https://github.com/dundalek/dinodoc/blob/main/examples/reitit/doc.clj))
   - monorepo with multiple modules
   - API docs combined into a single namespace hierarchy

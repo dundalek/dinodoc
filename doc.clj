@@ -10,7 +10,8 @@
            {:path "components/statecharts"}
            {:path "examples/openapi"}
            {:path "examples/dbschema"}
-           {:path "components/dokka"}]
+           {:path "components/dokka"}
+           {:path "components/antora"}]
   :api-mode :global
   :output-path "docs"
   :git/branch "main"
@@ -33,5 +34,6 @@
 (fs/update-file "docs/dbschema/index.md" str/replace "sidebar_position: 0," "sidebar_position: 4,")
 (fs/update-file "docs/statecharts/index.md" str/replace "sidebar_position: 0," "sidebar_position: 5,")
 (fs/update-file "docs/dokka/index.md" str/replace "sidebar_position: 0," "sidebar_position: 6,")
+(fs/update-file "docs//antora/index.md" str/replace "sidebar_position: 0," "sidebar_position: 7,")
 
 (shutdown-agents)

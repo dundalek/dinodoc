@@ -3,6 +3,7 @@
 Render architecture documentation with diagrams based on the [C4 model](https://c4model.com/) expressed in [Structurizr DSL](https://structurizr.com/).
 
 Examples:
+
 - [Big Bank plc](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/)
 - [Financial Risk System](https://dinodoc.pages.dev/examples/structurizr/Financial%20Risk%20System-0/)
 
