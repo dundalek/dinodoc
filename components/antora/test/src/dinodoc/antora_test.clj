@@ -2,6 +2,7 @@
   (:require
    [clojure.test :refer [deftest is testing]]
    [dinodoc.antora :as antora]
+   [dinodoc.antora.impl :as impl]
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]))
 
 (deftest generate-navigation-basic
@@ -32,20 +33,20 @@
              (antora/generate-navigation dir))))))
 
 (deftest md->adoc-test
-  (is (= "= h1\n\n" (antora/md->adoc "# h1\n\n")))
-  (is (= "link:example.com[Example]\n" (antora/md->adoc "[Example](example.com)\n")))
+  (is (= "= h1\n\n" (impl/md->adoc "# h1\n\n")))
+  (is (= "link:example.com[Example]\n" (impl/md->adoc "[Example](example.com)\n")))
 
   ;; it would be better if the output did not includ heading id `[#h2]` when not explicitly defined
-  (is (= "= h1\n\n[#h2]\n== h2\n" (antora/md->adoc "# h1\n\n## h2\n")))
-  (is (= "[#h2]\n== h2\n" (antora/md->adoc "## h2\n"))))
+  (is (= "= h1\n\n[#h2]\n== h2\n" (impl/md->adoc "# h1\n\n## h2\n")))
+  (is (= "[#h2]\n== h2\n" (impl/md->adoc "## h2\n"))))
 
 (deftest md->adoc-test-heading-ids
-  (is (= "[#greet]\n== greet\n" (antora/md->adoc "## greet {#greet}")))
-  (is (= "[#-main]\n== -main\n" (antora/md->adoc "## -main {#-main}"))))
+  (is (= "[#greet]\n== greet\n" (impl/md->adoc "## greet {#greet}")))
+  (is (= "[#-main]\n== -main\n" (impl/md->adoc "## -main {#-main}"))))
 
 (deftest md->adoc-md-links-fixup
-  (is (= "link:foo.adoc[]\n" (antora/md->adoc "[](foo.md)")))
-  (is (= "https://example/foo.md[]\n" (antora/md->adoc "[](https://example/foo.md)"))))
+  (is (= "link:foo.adoc[]\n" (impl/md->adoc "[](foo.md)")))
+  (is (= "https://example/foo.md[]\n" (impl/md->adoc "[](https://example/foo.md)"))))
 
 (deftest transform-directory
   (with-temp-dir
