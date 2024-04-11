@@ -2,3 +2,5 @@
 name: examples
 title: Examples
 version: ~
+nav:
+- modules/ROOT/nav.adoc
