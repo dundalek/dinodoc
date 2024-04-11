@@ -56,7 +56,10 @@
   (is (= "[#h2]\n== h2\n" (impl/md->adoc "## h2\n"))))
 
 (deftest md->adoc-test-heading-ids
-  (is (= "[#greet]\n== greet\n" (impl/md->adoc "## greet {#greet}")))
+  (is (= "[#greet]\n== greet\n" (impl/md->adoc "## greet {#greet}"))))
+
+(deftest ^{:skip-ci "current version of pandoc is 3.1, pandoc on ubuntu 22.04 in CI is 2.9 which is old and works differently"}
+  md->adoc-test-heading-ids-special
   (is (= "[#-main]\n== -main\n" (impl/md->adoc "## -main {#-main}"))))
 
 (deftest md->adoc-md-links-fixup
