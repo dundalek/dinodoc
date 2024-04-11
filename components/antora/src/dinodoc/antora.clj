@@ -23,13 +23,22 @@
     (->> (generate-navigation-items path base-path "*")
          (str/join "\n"))))
 
+(defn- replace-md-adoc-links [input]
+  ;; naive regex implementation, it would be better to replace over AST
+  (str/replace input #"\]\(([^)]+)\)"
+               (fn [[_ link]]
+                 (let [replacement (cond-> link
+                                     (not (str/includes? link "://"))
+                                     (str/replace #"\.md$" ".adoc"))]
+                   (str "](" replacement ")")))))
+
 (defn md->adoc [input]
   (-> (shell/sh "pandoc" "--from" "markdown"
                 ;; Disabling `auto_identifiers` feature so that explicit heading ids are used to make links to vars work properly.
                 "--to" "asciidoc-auto_identifiers"
                 "--shift-heading-level-by=-1"
                 "--standalone"
-                :in input)
+                :in (replace-md-adoc-links input))
       :out
       ;; Post-processing to use the `[#id]` syntax instead of legacy `[[id]]`,
       ;; otherwise asciidoctor would not parse ids starting with dash `-`.

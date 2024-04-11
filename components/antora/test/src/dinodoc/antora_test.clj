@@ -43,6 +43,10 @@
   (is (= "[#greet]\n== greet\n" (antora/md->adoc "## greet {#greet}")))
   (is (= "[#-main]\n== -main\n" (antora/md->adoc "## -main {#-main}"))))
 
+(deftest md->adoc-md-links-fixup
+  (is (= "link:foo.adoc[]\n" (antora/md->adoc "[](foo.md)")))
+  (is (= "https://example/foo.md[]\n" (antora/md->adoc "[](https://example/foo.md)"))))
+
 (deftest transform-directory
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
