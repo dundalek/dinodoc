@@ -84,4 +84,6 @@ This is an example of a namespace written in markdown, rather than the usual
 
 
 Some function defined in the namespace.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/markdown.clj#L70-L73">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/markdown.clj#L70-L73)
+

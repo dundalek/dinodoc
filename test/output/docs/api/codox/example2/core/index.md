@@ -16,4 +16,6 @@ Namespace with three parts
 (inner x)
 ```
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example2/core.clj#L4-L4">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2/core.clj#L4-L4)
+

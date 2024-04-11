@@ -21,18 +21,24 @@ custom_edit_url:
 
 *macro*
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L6-L6">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L6-L6)
+
 
 ### baz {#baz}
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L8-L8">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L8-L8)
+
 
 ### foo {#foo}
 ``` clojure
 (foo x y & z)
 ```
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L4-L4">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L4-L4)
+
 
 ### marklinks {#marklinks}
 ``` clojure
@@ -43,14 +49,20 @@ custom_edit_url:
 Let's try some [links][1].
 
   [1]: http://example.com
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L16-L21">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L16-L21)
+
 
 ### quz {#quz}
 
 
 Var with removed source link.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L10-L10">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L10-L10)
+
 
 ### really\-long\-function\-name\-with\-hyphens {#really-long-function-name-with-hyphens}
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L23-L23">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2.clj#L23-L23)
+

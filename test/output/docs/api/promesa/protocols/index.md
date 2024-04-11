@@ -16,7 +16,9 @@ A generic promise abstraction and related protocols.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L101-L102">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L101-L102)
+
 
 #### \-await\! {#-await-BANG-}
 ``` clojure
@@ -35,7 +37,9 @@ block current thread await termination
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L89-L93">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L89-L93)
+
 
 #### \-full? {#-full-QMARK-}
 ``` clojure
@@ -80,7 +84,9 @@ A cancellation abstraction.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L43-L46">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L43-L46)
+
 
 #### \-cancel\! {#-cancel-BANG-}
 ``` clojure
@@ -117,7 +123,9 @@ A cancellation abstraction.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L85-L87">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L85-L87)
+
 
 #### \-close\! {#-close-BANG-}
 ``` clojure
@@ -143,7 +151,9 @@ A cancellation abstraction.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L48-L50">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L48-L50)
+
 
 #### \-reject\! {#-reject-BANG-}
 ``` clojure
@@ -172,7 +182,9 @@ Deliver a value to empty promise.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L52-L55">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L52-L55)
+
 
 #### \-exec\! {#-exec-BANG-}
 ``` clojure
@@ -212,7 +224,9 @@ Submit a task and return a promise.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L95-L98">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L95-L98)
+
 
 #### \-active? {#-active-QMARK-}
 ``` clojure
@@ -248,7 +262,9 @@ An experimental lock protocol, used internally; no public api
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L67-L70">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L67-L70)
+
 
 #### \-lock\! {#-lock-BANG-}
 ``` clojure
@@ -273,7 +289,9 @@ An experimental lock protocol, used internally; no public api
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L10-L30">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L10-L30)
+
 
 #### \-fmap {#-fmap}
 ``` clojure
@@ -356,7 +374,9 @@ A promise constructor abstraction.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L39-L41">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L39-L41)
+
 
 #### \-promise {#-promise}
 ``` clojure
@@ -374,7 +394,9 @@ Create a promise instance from other types
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L72-L73">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L72-L73)
+
 
 #### \-take\! {#-take-BANG-}
 ``` clojure
@@ -392,7 +414,9 @@ A generic abstraction for scheduler facilities.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L57-L59">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L57-L59)
+
 
 #### \-schedule\! {#-schedule-BANG-}
 ``` clojure
@@ -412,7 +436,9 @@ An experimental semaphore protocol, used internally; no public api
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L61-L65">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L61-L65)
+
 
 #### \-acquire\! {#-acquire-BANG-}
 ``` clojure
@@ -458,7 +484,9 @@ Additional state/introspection abstraction.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L32-L37">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L32-L37)
+
 
 #### \-extract {#-extract}
 ``` clojure
@@ -510,7 +538,9 @@ Returns true if a promise is resolved.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L75-L76">Source</a></sub></p>
+
+[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L75-L76)
+
 
 #### \-put\! {#-put-BANG-}
 ``` clojure

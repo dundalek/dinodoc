@@ -227,7 +227,7 @@
     (when-not (and (defined-by-protocol? var)
                    (empty? (:protocol-members var)))
       ;; This needs to be in its own paragraph since the docstring may end with an indented list
-      (println (format "<p><sub><a href=\"%s\">Source</a></sub></p>" (var-source var opts))))
+      (println (format "\n[source](%s)\n" (var-source var opts))))
     (doseq [member (:protocol-members var)]
       (print-var-impl print-protocol-member-header ns->vars ns-name member _source opts))
     (when collapse-vars (println "</details>\n\n"))))

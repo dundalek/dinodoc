@@ -23,7 +23,9 @@ A dynamic var.
 
 *dynamic*
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L60-L62">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L60-L62)
+
 
 ### Foop {#Foop}
 
@@ -32,7 +34,9 @@ An example protocol.
 
 *protocol*
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L43-L46">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L43-L46)
+
 
 #### barp {#barp}
 ``` clojure
@@ -60,7 +64,9 @@ A protocol function belonging to the protocol Foom.
 
 
 This is an example var.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L15-L17">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L15-L17)
+
 
 ### foo {#foo}
 ``` clojure
@@ -70,7 +76,9 @@ This is an example var.
 
 
 This is an example function.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L10-L13">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L10-L13)
+
 
 ### foobar {#foobar}
 ``` clojure
@@ -82,7 +90,9 @@ An obsolete function.
 
 *deprecated*
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L28-L31">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L28-L31)
+
 
 ### foobaz {#foobaz}
 ``` clojure
@@ -94,7 +104,9 @@ An obsolete function with a specific version.
 
 *deprecated in 1.1*
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L33-L36">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L33-L36)
+
 
 ### foom {#foom}
 ``` clojure
@@ -103,13 +115,17 @@ An obsolete function with a specific version.
 
 
 An example multimethod.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L48-L51">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L48-L51)
+
 
 ### froo {#froo}
 
 
 A derefable thing created using reify.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L64-L67">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L64-L67)
+
 
 ### markfoo {#markfoo}
 ``` clojure
@@ -118,7 +134,9 @@ A derefable thing created using reify.
 
 
 A docstring that selectively uses **markdown**.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L55-L58">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L55-L58)
+
 
 ### quz {#quz}
 ``` clojure
@@ -130,7 +148,9 @@ Another example function.
 
 *added in 1.1*
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L23-L26">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L23-L26)
+
 
 ### quzbar {#quzbar}
 ``` clojure
@@ -142,7 +162,9 @@ A function with a lifespan.
 
 *deprecated in 1.1 | added in 1.0*
 
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L38-L41">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L38-L41)
+
 
 ### zoo? {#zoo-QMARK-}
 ``` clojure
@@ -151,4 +173,6 @@ A function with a lifespan.
 
 
 An example predicate.
-<p><sub><a href="/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L19-L21">Source</a></sub></p>
+
+[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L19-L21)
+
