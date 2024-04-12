@@ -4,7 +4,8 @@
    [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
-   [dinodoc.approval-helpers :as approval]))
+   [dinodoc.approval-helpers :as approval]
+   [readme]))
 
 (defn- naively-strip-front-matter [s]
   (str/replace s #"(?s).*---\n\n" ""))

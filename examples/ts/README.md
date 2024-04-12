@@ -8,3 +8,8 @@ Run with:
 ```sh
 bun src/index.ts
 ```
+
+Test with:
+```sh
+bun test
+```

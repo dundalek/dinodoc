@@ -71,7 +71,7 @@ const config = {
     // Example including documentation for TypeScript project
     [
       'docusaurus-plugin-typedoc', {
-        entryPoints: ['../examples/ts/src/index.ts'],
+        entryPoints: ['../examples/ts/src/app.ts', '../examples/ts/src/greeter.ts'],
         out: 'examples/ts'
         // tsconfig: '../tsconfig.json',
       }

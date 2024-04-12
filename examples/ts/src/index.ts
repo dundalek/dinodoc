@@ -1,6 +1,3 @@
-/** Prepares a greeting for the given name. */
-function greet(name: string): string {
-  return "Hello, " + name;
-}
+import { main } from "./app";
 
-console.log(greet("World"));
+main()
