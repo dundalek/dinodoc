@@ -110,41 +110,45 @@
    (or target-ns "")
    (if target-var (str "#" (heading-id target-var)) "")))
 
-(defn format-docstring* [ns->vars current-ns format-href docstring opts]
+(defn make-link-resolver [ns->vars current-ns format-href]
+  (fn [inner]
+    (cond
+      ;; Looks qualified
+      (str/includes? inner "/")
+      (let [split (str/split inner #"/")]
+        (when (and (= (count split) 2)
+                   (get-in ns->vars [(symbol (first split))
+                                     (symbol (second split))]))
+          (format-href
+           (symbol (first split))
+           (second split))))
+      ;; Not qualified, maybe a namespace
+      (contains? ns->vars (symbol inner))
+      (format-href inner nil)
+      ;; Not qualified, maybe a var in the current namespace
+      (get-in ns->vars [current-ns (symbol inner)])
+      (format-href nil inner))))
+
+(defn make-docstring-link-resolver [ns->vars current-ns]
+  (let [format-href (fn [target-ns target-var]
+                      (format-href (when target-ns (namespace-link current-ns target-ns))
+                                   target-var))]
+    (make-link-resolver ns->vars current-ns format-href)))
+
+(defn format-docstring [link-resolver docstring opts]
   (if-some [var-regex (:var-regex opts)]
     (str/replace docstring var-regex
                  (fn [[raw & inners]]
                    (let [inner (some identity inners)]
-                     (if-some [href (cond
-                                      ;; Looks qualified
-                                      (str/includes? inner "/")
-                                      (let [split (str/split inner #"/")]
-                                        (when (and (= (count split) 2)
-                                                   (get-in ns->vars [(symbol (first split))
-                                                                     (symbol (second split))]))
-                                          (format-href
-                                           (symbol (first split))
-                                           (second split))))
-                                      ;; Not qualified, maybe a namespace
-                                      (contains? ns->vars (symbol inner))
-                                      (format-href inner nil)
-                                      ;; Not qualified, maybe a var in the current namespace
-                                      (get-in ns->vars [current-ns (symbol inner)])
-                                      (format-href nil inner))]
+                     (if-some [href (link-resolver inner)]
                        (format "[`%s`](%s)" inner href)
                        ;; Just regular markdown backticks
                        raw))))
     docstring))
 
-(defn format-docstring [ns->vars current-ns docstring opts]
-  (let [format-href (fn [target-ns target-var]
-                      (format-href (when target-ns (namespace-link current-ns target-ns))
-                                   target-var))]
-    (format-docstring* ns->vars current-ns format-href docstring opts)))
-
-(defn print-docstring [ns->vars current-ns docstring opts]
+(defn print-docstring [link-resolver docstring opts]
   (println
-   (format-docstring ns->vars current-ns docstring opts)))
+   (format-docstring link-resolver docstring opts)))
 
 (defn defined-by-protocol? [{:keys [defined-by] :as _var}]
   (or (= defined-by 'clojure.core/defprotocol)
@@ -186,7 +190,7 @@
   (println "####" (escape-markdown (:name var))
            (heading-reference (:name var))))
 
-(defn print-var-impl [print-header ns->vars ns-name var _source {:keys [collapse-vars] :as opts}]
+(defn print-var-impl [print-header link-resolver ns-name var _source {:keys [collapse-vars] :as opts}]
   (println)
   (when (var-filter var)
     (when collapse-vars (println "<details>\n\n"))
@@ -221,7 +225,7 @@
     (println)
     (when-let [doc (:doc var)]
       (println)
-      (print-docstring ns->vars ns-name doc opts))
+      (print-docstring link-resolver doc opts))
     (print-var-metadata-line var)
     ;; Do not print source link for protocol members because it only adds noise
     (when-not (and (defined-by-protocol? var)
@@ -229,11 +233,11 @@
       ;; This needs to be in its own paragraph since the docstring may end with an indented list
       (println (format "\n[source](%s)\n" (var-source var opts))))
     (doseq [member (:protocol-members var)]
-      (print-var-impl print-protocol-member-header ns->vars ns-name member _source opts))
+      (print-var-impl print-protocol-member-header link-resolver ns-name member _source opts))
     (when collapse-vars (println "</details>\n\n"))))
 
-(defn print-var [ns->vars ns-name var _source opts]
-  (print-var-impl print-var-header ns->vars ns-name var _source opts))
+(defn print-var [link-resolver ns-name var _source opts]
+  (print-var-impl print-var-header link-resolver ns-name var _source opts))
 
 (defn print-ns-frontmatter [ns-name]
   (println "---")
@@ -278,7 +282,8 @@
         (when-let [vars (seq (filter var-filter (vals var-map)))]
           (let [ana (->> (vars-with-grouped-protocols vars)
                          (group-by :name))
-                collapse-nss (:collapse-nss opts)]
+                collapse-nss (:collapse-nss opts)
+                link-resolver (make-docstring-link-resolver ns->vars ns-name)]
             (when collapse-nss (println "<details>\n\n"))
             (when collapse-nss (println "<summary><code>" ns-name "</code></summary>\n\n"))
             ;; Printing h1 is not necessary since docusaurus will fill it in
@@ -286,12 +291,12 @@
             ;; But in that case should also make sure to escape properly
             #_(println (format "# <a name=\"%s\">%s</a>\n\n" ns-name ns-name))
             (when-let [doc (:doc ns)]
-              (print-docstring ns->vars ns-name doc opts))
+              (print-docstring link-resolver doc opts))
             (print-ns-metadata-line ns)
             (println "\n\n")
             (run! (fn [[_ vars]]
                     (let [var (last vars)]
-                      (print-var ns->vars ns-name var source opts)))
+                      (print-var link-resolver ns-name var source opts)))
                   (sort-by first ana))
             (when collapse-nss (println "</details>\n\n"))))))))
 

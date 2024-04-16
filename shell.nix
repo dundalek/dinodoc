@@ -12,5 +12,8 @@ mkShell {
     # for dbschema example
     postgresql
     tbls
+
+    # for javadoc example
+    jdk
   ];
 }

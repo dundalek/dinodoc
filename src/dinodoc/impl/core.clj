@@ -54,15 +54,11 @@
         ns->vars (update-vals nss (comp set (partial map :name)))]
     ns->vars))
 
-(defn- copy-with-frontmatter [{:keys [file src target data ns->vars api-path-prefix file-map]}]
+(defn- copy-with-frontmatter [{:keys [file src target data link-resolver file-map]}]
   (let [content (slurp (fs/file src))
-        current-ns nil
-        format-href (fn [target-ns target-var]
-                      (let [formatted-ns (str api-path-prefix "/" (impl/absolute-namespace-link target-ns))]
-                        (impl/format-href formatted-ns target-var)))
         content (replace-links content {:source file
                                         :link-map file-map})
-        content (impl/format-docstring* ns->vars current-ns format-href content {:var-regex impl/backticks-and-wikilinks-pattern})]
+        content (impl/format-docstring link-resolver content {:var-regex impl/backticks-and-wikilinks-pattern})]
     (spit (fs/file target)
           (str "---\n"
                (yaml/generate-string data)
@@ -109,15 +105,21 @@
              (process-doc-tree-pure (assoc opts :parent-path path)
                                     children)))))
 
-(defn process-doc-tree! [ops {:keys [file-map ns->vars]}]
+(defn process-doc-tree! [ops {:keys [file-map link-resolver]}]
   (doseq [[op & args] ops]
     (case op
       :copy-with-frontmatter
-      (let [[{:keys [target] :as opts}] args]
+      (let [[{:keys [target api-path-prefix] :as opts}] args
+            link-resolver (fn [s]
+                            (when-some [target (link-resolver s)]
+                              ;; pathname:// workaround for non-absolute links to HTML assets
+                              ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
+                              (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
+                                (str (when html-target? "pathname://") api-path-prefix "/" target))))]
         (fs/create-dirs (fs/parent target))
         (copy-with-frontmatter (assoc opts
                                       :file-map file-map
-                                      :ns->vars ns->vars)))
+                                      :link-resolver link-resolver)))
       :spit
       (let [[target content] args]
         (fs/create-dirs (fs/parent target))
