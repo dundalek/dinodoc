@@ -129,7 +129,7 @@
       (get-in ns->vars [current-ns (symbol inner)])
       (format-href nil inner))))
 
-(defn format-docstring*2 [link-resolver docstring opts]
+(defn format-docstring* [link-resolver docstring opts]
   (if-some [var-regex (:var-regex opts)]
     (str/replace docstring var-regex
                  (fn [[raw & inners]]
@@ -140,37 +140,13 @@
                        raw))))
     docstring))
 
-(defn format-docstring* [ns->vars current-ns format-href docstring opts]
-  (if-some [var-regex (:var-regex opts)]
-    (str/replace docstring var-regex
-                 (fn [[raw & inners]]
-                   (let [inner (some identity inners)]
-                     (if-some [href (cond
-                                      ;; Looks qualified
-                                      (str/includes? inner "/")
-                                      (let [split (str/split inner #"/")]
-                                        (when (and (= (count split) 2)
-                                                   (get-in ns->vars [(symbol (first split))
-                                                                     (symbol (second split))]))
-                                          (format-href
-                                           (symbol (first split))
-                                           (second split))))
-                                      ;; Not qualified, maybe a namespace
-                                      (contains? ns->vars (symbol inner))
-                                      (format-href inner nil)
-                                      ;; Not qualified, maybe a var in the current namespace
-                                      (get-in ns->vars [current-ns (symbol inner)])
-                                      (format-href nil inner))]
-                       (format "[`%s`](%s)" inner href)
-                       ;; Just regular markdown backticks
-                       raw))))
-    docstring))
-
 (defn format-docstring [ns->vars current-ns docstring opts]
   (let [format-href (fn [target-ns target-var]
                       (format-href (when target-ns (namespace-link current-ns target-ns))
                                    target-var))]
-    (format-docstring* ns->vars current-ns format-href docstring opts)))
+    (format-docstring*
+     (make-link-resolver ns->vars current-ns format-href)
+     docstring opts)))
 
 (defn print-docstring [ns->vars current-ns docstring opts]
   (println

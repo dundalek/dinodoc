@@ -63,7 +63,7 @@
         content (replace-links content {:source file
                                         :link-map file-map})
         link-resolver (impl/make-link-resolver ns->vars current-ns format-href)
-        content (impl/format-docstring*2 link-resolver content {:var-regex impl/backticks-and-wikilinks-pattern})]
+        content (impl/format-docstring* link-resolver content {:var-regex impl/backticks-and-wikilinks-pattern})]
     (spit (fs/file target)
           (str "---\n"
                (yaml/generate-string data)
