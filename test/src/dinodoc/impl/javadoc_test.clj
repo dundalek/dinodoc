@@ -14,17 +14,17 @@
       (let [javadoc-path dir]
         (fspit "demo/Greeter.html" "<body><section id=\"greet(java.lang.String)\">")
 
-        (is (= "demo/Greeter.html" (javadoc/resolve javadoc-path "demo.Greeter")))
+        (is (= "demo/Greeter.html" (javadoc/resolve-link javadoc-path "demo.Greeter")))
 
-        (is (= nil (javadoc/resolve javadoc-path "demo.NonExisting")))
+        (is (= nil (javadoc/resolve-link javadoc-path "demo.NonExisting")))
 
-        (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve javadoc-path "demo.Greeter.greet")))))
-    ; (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve javadoc-path "demo.Greeter#greet")))
+        (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve-link javadoc-path "demo.Greeter.greet")))))
+    ; (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve-link javadoc-path "demo.Greeter#greet")))
 
     ;; what about multiple arities?
 
     #_(testing "non-qualified"
-        (is (= "demo/Greeter.html" (javadoc/resolve javadoc-path "Greeter"))))))
+        (is (= "demo/Greeter.html" (javadoc/resolve-link javadoc-path "Greeter"))))))
 
     ;; warn when multiple candidates?
 
@@ -38,7 +38,7 @@
 
       (let [output-path (str dir "/docs")
             javadoc-path (str dir "/api")
-            resolve-apilink #(javadoc/resolve javadoc-path %)
+            resolve-apilink #(javadoc/resolve-link javadoc-path %)
             _ (dinodoc/generate {:inputs [{:path dir
                                            :output-path "."}]
                                  :output-path output-path

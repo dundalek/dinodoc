@@ -14,6 +14,6 @@
 (dinodoc/generate
  {:inputs [{:path "."}]
   :output-path "docs"
-  :resolve-apilink #(javadoc/resolve api-path %)})
+  :resolve-apilink #(javadoc/resolve-link api-path %)})
 
 (shutdown-agents)

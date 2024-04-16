@@ -19,7 +19,7 @@
                    [id match])))
          (into {}))))
 
-(defn resolve [javadoc-path definition]
+(defn resolve-link [javadoc-path definition]
   (let [segments (str/split definition #"\.")
         target (segments->path segments)]
     (if (fs/exists? (fs/file javadoc-path target))
