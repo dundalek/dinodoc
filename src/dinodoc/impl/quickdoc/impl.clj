@@ -135,7 +135,7 @@
                                    target-var))]
     (make-link-resolver ns->vars current-ns format-href)))
 
-(defn format-docstring* [link-resolver docstring opts]
+(defn format-docstring [link-resolver docstring opts]
   (if-some [var-regex (:var-regex opts)]
     (str/replace docstring var-regex
                  (fn [[raw & inners]]
@@ -146,17 +146,9 @@
                        raw))))
     docstring))
 
-(defn format-docstring [ns->vars current-ns docstring opts]
-  (let [format-href (fn [target-ns target-var]
-                      (format-href (when target-ns (namespace-link current-ns target-ns))
-                                   target-var))]
-    (format-docstring*
-     (make-link-resolver ns->vars current-ns format-href)
-     docstring opts)))
-
 (defn print-docstring [link-resolver docstring opts]
   (println
-   (format-docstring* link-resolver docstring opts)))
+   (format-docstring link-resolver docstring opts)))
 
 (defn defined-by-protocol? [{:keys [defined-by] :as _var}]
   (or (= defined-by 'clojure.core/defprotocol)

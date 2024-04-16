@@ -80,23 +80,24 @@
 
 (deftest format-docstring-test
   (let [ns->vars {'a.b #{'x->y}}
-        opts {:var-regex impl/backticks-and-wikilinks-pattern}]
+        opts {:var-regex impl/backticks-and-wikilinks-pattern}
+        link-resolver (impl/make-docstring-link-resolver ns->vars 'a.b)]
     (testing "non existing var"
       (is (= "abc `a.b/not-found`"
-             (impl/format-docstring ns->vars 'a.b "abc `a.b/not-found`" opts))))
+             (impl/format-docstring link-resolver "abc `a.b/not-found`" opts))))
 
     (testing "qualified var link"
       (is (= "some text [`a.b/x->y`](../../a/b/#x--GT-y) other text"
-             (impl/format-docstring ns->vars 'a.b "some text `a.b/x->y` other text" opts))))
+             (impl/format-docstring link-resolver "some text `a.b/x->y` other text" opts))))
 
     (testing "namespace link"
       (is (= "some text [`a.b`](../../a/b/) other text"
-             (impl/format-docstring ns->vars 'a.b "some text `a.b` other text" opts))))
+             (impl/format-docstring link-resolver "some text `a.b` other text" opts))))
 
     (testing "unqualified var within current namespace link"
       (is (= "some text [`x->y`](#x--GT-y) other `not-found`"
-             (impl/format-docstring ns->vars 'a.b "some text `x->y` other `not-found`" opts))))
+             (impl/format-docstring link-resolver "some text `x->y` other `not-found`" opts))))
 
     (testing "wikilink: unqualified var within current namespace link"
       (is (= "some text [`x->y`](#x--GT-y) other [[not-found]]"
-             (impl/format-docstring ns->vars 'a.b "some text [[x->y]] other [[not-found]]" opts))))))
+             (impl/format-docstring link-resolver "some text [[x->y]] other [[not-found]]" opts))))))
