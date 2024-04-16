@@ -192,7 +192,7 @@
   (println "####" (escape-markdown (:name var))
            (heading-reference (:name var))))
 
-(defn print-var-impl [print-header ns->vars ns-name var _source {:keys [collapse-vars] :as opts}]
+(defn print-var-impl [print-header link-resolver ns-name var _source {:keys [collapse-vars] :as opts}]
   (println)
   (when (var-filter var)
     (when collapse-vars (println "<details>\n\n"))
@@ -227,11 +227,7 @@
     (println)
     (when-let [doc (:doc var)]
       (println)
-      (let [format-href (fn [target-ns target-var]
-                          (format-href (when target-ns (namespace-link ns-name target-ns))
-                                       target-var))
-            link-resolver (make-link-resolver ns->vars ns-name format-href)]
-        (print-docstring link-resolver doc opts)))
+      (print-docstring link-resolver doc opts))
     (print-var-metadata-line var)
     ;; Do not print source link for protocol members because it only adds noise
     (when-not (and (defined-by-protocol? var)
@@ -239,11 +235,11 @@
       ;; This needs to be in its own paragraph since the docstring may end with an indented list
       (println (format "\n[source](%s)\n" (var-source var opts))))
     (doseq [member (:protocol-members var)]
-      (print-var-impl print-protocol-member-header ns->vars ns-name member _source opts))
+      (print-var-impl print-protocol-member-header link-resolver ns-name member _source opts))
     (when collapse-vars (println "</details>\n\n"))))
 
-(defn print-var [ns->vars ns-name var _source opts]
-  (print-var-impl print-var-header ns->vars ns-name var _source opts))
+(defn print-var [link-resolver ns-name var _source opts]
+  (print-var-impl print-var-header link-resolver ns-name var _source opts))
 
 (defn print-ns-frontmatter [ns-name]
   (println "---")
@@ -288,7 +284,11 @@
         (when-let [vars (seq (filter var-filter (vals var-map)))]
           (let [ana (->> (vars-with-grouped-protocols vars)
                          (group-by :name))
-                collapse-nss (:collapse-nss opts)]
+                collapse-nss (:collapse-nss opts)
+                format-href (fn [target-ns target-var]
+                              (format-href (when target-ns (namespace-link ns-name target-ns))
+                                           target-var))
+                link-resolver (make-link-resolver ns->vars ns-name format-href)]
             (when collapse-nss (println "<details>\n\n"))
             (when collapse-nss (println "<summary><code>" ns-name "</code></summary>\n\n"))
             ;; Printing h1 is not necessary since docusaurus will fill it in
@@ -296,16 +296,12 @@
             ;; But in that case should also make sure to escape properly
             #_(println (format "# <a name=\"%s\">%s</a>\n\n" ns-name ns-name))
             (when-let [doc (:doc ns)]
-              (let [format-href (fn [target-ns target-var]
-                                  (format-href (when target-ns (namespace-link ns-name target-ns))
-                                               target-var))
-                    link-resolver (make-link-resolver ns->vars ns-name format-href)]
-                (print-docstring link-resolver doc opts)))
+              (print-docstring link-resolver doc opts))
             (print-ns-metadata-line ns)
             (println "\n\n")
             (run! (fn [[_ vars]]
                     (let [var (last vars)]
-                      (print-var ns->vars ns-name var source opts)))
+                      (print-var link-resolver ns-name var source opts)))
                   (sort-by first ana))
             (when collapse-nss (println "</details>\n\n"))))))))
 
