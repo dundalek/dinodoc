@@ -54,15 +54,10 @@
         ns->vars (update-vals nss (comp set (partial map :name)))]
     ns->vars))
 
-(defn- copy-with-frontmatter [{:keys [file src target data ns->vars api-path-prefix file-map]}]
+(defn- copy-with-frontmatter [{:keys [file src target data link-resolver file-map]}]
   (let [content (slurp (fs/file src))
-        current-ns nil
-        format-href (fn [target-ns target-var]
-                      (let [formatted-ns (str api-path-prefix "/" (impl/absolute-namespace-link target-ns))]
-                        (impl/format-href formatted-ns target-var)))
         content (replace-links content {:source file
                                         :link-map file-map})
-        link-resolver (impl/make-link-resolver ns->vars current-ns format-href)
         content (impl/format-docstring link-resolver content {:var-regex impl/backticks-and-wikilinks-pattern})]
     (spit (fs/file target)
           (str "---\n"
@@ -114,11 +109,15 @@
   (doseq [[op & args] ops]
     (case op
       :copy-with-frontmatter
-      (let [[{:keys [target] :as opts}] args]
+      (let [[{:keys [target api-path-prefix] :as opts}] args
+            format-href (fn [target-ns target-var]
+                          (let [formatted-ns (str api-path-prefix "/" (impl/absolute-namespace-link target-ns))]
+                            (impl/format-href formatted-ns target-var)))
+            link-resolver (impl/make-link-resolver ns->vars nil format-href)]
         (fs/create-dirs (fs/parent target))
         (copy-with-frontmatter (assoc opts
                                       :file-map file-map
-                                      :ns->vars ns->vars)))
+                                      :link-resolver link-resolver)))
       :spit
       (let [[target content] args]
         (fs/create-dirs (fs/parent target))
