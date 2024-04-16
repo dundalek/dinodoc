@@ -129,6 +129,12 @@
       (get-in ns->vars [current-ns (symbol inner)])
       (format-href nil inner))))
 
+(defn make-docstring-link-resolver [ns->vars current-ns]
+  (let [format-href (fn [target-ns target-var]
+                      (format-href (when target-ns (namespace-link current-ns target-ns))
+                                   target-var))]
+    (make-link-resolver ns->vars current-ns format-href)))
+
 (defn format-docstring* [link-resolver docstring opts]
   (if-some [var-regex (:var-regex opts)]
     (str/replace docstring var-regex
@@ -285,10 +291,7 @@
           (let [ana (->> (vars-with-grouped-protocols vars)
                          (group-by :name))
                 collapse-nss (:collapse-nss opts)
-                format-href (fn [target-ns target-var]
-                              (format-href (when target-ns (namespace-link ns-name target-ns))
-                                           target-var))
-                link-resolver (make-link-resolver ns->vars ns-name format-href)]
+                link-resolver (make-docstring-link-resolver ns->vars ns-name)]
             (when collapse-nss (println "<details>\n\n"))
             (when collapse-nss (println "<summary><code>" ns-name "</code></summary>\n\n"))
             ;; Printing h1 is not necessary since docusaurus will fill it in
