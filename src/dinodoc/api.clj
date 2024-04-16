@@ -13,7 +13,7 @@ Options:
 
 * `:output-path` - Directory where to output the documentation (required)
 * `:api-mode` - Set to `:global` to render API docs for inputs combined in a single namespace hierarchy (default: separate for each input)
-* `:resolve-apilink`
+* `:resolve-apilink` - EXPERIMENTAL - Function used to resolve API links from logical value to physical href
 * `:inputs` - List of strings/paths/files or maps of:
   * `:path`
   * `:output-path` - Directory where to output documentation of the input relative to top level `:output-path` (default: last segment of `:path`)

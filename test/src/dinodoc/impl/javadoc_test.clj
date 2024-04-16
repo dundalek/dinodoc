@@ -46,4 +46,4 @@
             data (fsdata output-path)]
         (is (str/includes?
              (get-in data ["index.md"])
-             "Link to method: [`demo.Greeter.greet`](./api/demo/Greeter.html#greet(java.lang.String))"))))))
+             "Link to method: [`demo.Greeter.greet`](pathname://./api/demo/Greeter.html#greet(java.lang.String))"))))))

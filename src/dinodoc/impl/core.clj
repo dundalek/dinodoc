@@ -112,7 +112,10 @@
       (let [[{:keys [target api-path-prefix] :as opts}] args
             link-resolver (fn [s]
                             (when-some [target (link-resolver s)]
-                              (str api-path-prefix "/" target)))]
+                              ;; pathname:// workaround for non-absolute links to HTML assets
+                              ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
+                              (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
+                                (str (when html-target? "pathname://") api-path-prefix "/" target))))]
         (fs/create-dirs (fs/parent target))
         (copy-with-frontmatter (assoc opts
                                       :file-map file-map
