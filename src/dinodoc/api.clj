@@ -3,7 +3,8 @@
    [babashka.fs :as fs]
    [clojure.string :as str]
    [dinodoc.impl.core :as impl]
-   [dinodoc.impl.quickdoc.api :as qd]))
+   [dinodoc.impl.quickdoc.api :as qd]
+   [dinodoc.impl.quickdoc.impl :as qimpl]))
 
 (defn generate
   "Generates documentation for given inputs. Input options can be also specified as top-level keys that will be shared by all inputs.
@@ -58,10 +59,14 @@ Options:
                           (filter #(= (first %) :copy-with-frontmatter))
                           (map (fn [[_ {:keys [file target]}]]
                                  [file (str/replace-first target (str output-path "/") "")]))
-                          (into {}))]
+                          (into {}))
+            format-href (fn [target-ns target-var]
+                          (let [formatted-ns (qimpl/absolute-namespace-link target-ns)]
+                            (qimpl/format-href formatted-ns target-var)))
+            link-resolver (qimpl/make-link-resolver (impl/make-ns->vars analysis) nil format-href)]
 
         (impl/process-doc-tree! doc-tree-ops {:file-map file-map
-                                              :ns->vars (impl/make-ns->vars analysis)})
+                                              :link-resolver link-resolver})
 
         (when (not= api-mode :global)
           (println "Generating" path)

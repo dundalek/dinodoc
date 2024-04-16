@@ -105,15 +105,14 @@
              (process-doc-tree-pure (assoc opts :parent-path path)
                                     children)))))
 
-(defn process-doc-tree! [ops {:keys [file-map ns->vars]}]
+(defn process-doc-tree! [ops {:keys [file-map link-resolver]}]
   (doseq [[op & args] ops]
     (case op
       :copy-with-frontmatter
       (let [[{:keys [target api-path-prefix] :as opts}] args
-            format-href (fn [target-ns target-var]
-                          (let [formatted-ns (str api-path-prefix "/" (impl/absolute-namespace-link target-ns))]
-                            (impl/format-href formatted-ns target-var)))
-            link-resolver (impl/make-link-resolver ns->vars nil format-href)]
+            link-resolver (fn [s]
+                            (when-some [target (link-resolver s)]
+                              (str api-path-prefix "/" target)))]
         (fs/create-dirs (fs/parent target))
         (copy-with-frontmatter (assoc opts
                                       :file-map file-map
