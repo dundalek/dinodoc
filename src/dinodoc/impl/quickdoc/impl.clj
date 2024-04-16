@@ -148,9 +148,9 @@
      (make-link-resolver ns->vars current-ns format-href)
      docstring opts)))
 
-(defn print-docstring [ns->vars current-ns docstring opts]
+(defn print-docstring [link-resolver docstring opts]
   (println
-   (format-docstring ns->vars current-ns docstring opts)))
+   (format-docstring* link-resolver docstring opts)))
 
 (defn defined-by-protocol? [{:keys [defined-by] :as _var}]
   (or (= defined-by 'clojure.core/defprotocol)
@@ -227,7 +227,11 @@
     (println)
     (when-let [doc (:doc var)]
       (println)
-      (print-docstring ns->vars ns-name doc opts))
+      (let [format-href (fn [target-ns target-var]
+                          (format-href (when target-ns (namespace-link ns-name target-ns))
+                                       target-var))
+            link-resolver (make-link-resolver ns->vars ns-name format-href)]
+        (print-docstring link-resolver doc opts)))
     (print-var-metadata-line var)
     ;; Do not print source link for protocol members because it only adds noise
     (when-not (and (defined-by-protocol? var)
@@ -292,7 +296,11 @@
             ;; But in that case should also make sure to escape properly
             #_(println (format "# <a name=\"%s\">%s</a>\n\n" ns-name ns-name))
             (when-let [doc (:doc ns)]
-              (print-docstring ns->vars ns-name doc opts))
+              (let [format-href (fn [target-ns target-var]
+                                  (format-href (when target-ns (namespace-link ns-name target-ns))
+                                               target-var))
+                    link-resolver (make-link-resolver ns->vars ns-name format-href)]
+                (print-docstring link-resolver doc opts)))
             (print-ns-metadata-line ns)
             (println "\n\n")
             (run! (fn [[_ vars]]
