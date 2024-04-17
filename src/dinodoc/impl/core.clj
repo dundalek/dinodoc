@@ -133,11 +133,11 @@
                           (map #(str path "/" %)))
         cljdoc-path (str  doc-path "/cljdoc.edn")
         api-docs-dir (str outdir "/api")
-        path-to-api-fn (if (= (:api-mode root-opts) :global)
-                         (fn [file-path]
-                           (path-to-root (str/replace-first file-path root-outdir "")))
-                         (fn [file-path]
-                           (path-to-root (str/replace-first file-path outdir ""))))
+        path-to-root-fn (if (= (:api-mode root-opts) :global)
+                          (fn [file-path]
+                            (path-to-root (str/replace-first file-path root-outdir "")))
+                          (fn [file-path]
+                            (path-to-root (str/replace-first file-path outdir ""))))
         [repo branch] (if (and repo branch)
                         [repo branch]
                         ;; potential optimization: could skip detection if `edit-url-fn` option is set
@@ -168,7 +168,7 @@
      :output-path outdir
      :source-paths source-paths
      :api-docs-dir api-docs-dir
-     :path-to-api-fn path-to-api-fn
+     :path-to-root-fn path-to-root-fn
      :github/repo repo
      :git/branch branch
      :edit-url-fn edit-url-fn}))

@@ -48,7 +48,7 @@ Options:
                 "{\"label\":\"API\"}"))))
 
     (doseq [input inputs]
-      (let [{:keys [path doc-tree output-path source-paths api-docs-dir path-to-api-fn github/repo git/branch edit-url-fn]} input
+      (let [{:keys [path doc-tree output-path source-paths api-docs-dir path-to-root-fn github/repo git/branch edit-url-fn]} input
             analysis (or global-analysis (impl/run-analysis source-paths))
             doc-tree-opts {:root-path output-path
                            :parent-path output-path
@@ -69,9 +69,8 @@ Options:
                             (when-some [target (resolve-apilink s)]
                               ;; pathname:// workaround for non-absolute links to HTML assets
                               ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
-                              (let [html-target? (re-find #"\.html$|\.html#.*$" target)
-                                    api-path-prefix (path-to-api-fn file-path)]
-                                (str (when html-target? "pathname://") api-path-prefix "/api/" target))))]
+                              (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
+                                (str (when html-target? "pathname://") (path-to-root-fn file-path) "/api/" target))))]
 
         (impl/process-doc-tree! doc-tree-ops {:file-map file-map
                                               :link-resolver link-resolver})
