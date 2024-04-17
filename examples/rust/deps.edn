@@ -1,0 +1,4 @@
+{:aliases
+ {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../../"}
+                     babashka/process {:mvn/version "0.5.22"}}
+        :main-opts ["doc.clj"]}}}

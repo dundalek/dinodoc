@@ -13,6 +13,9 @@ mkShell {
     postgresql
     tbls
 
+    # for rust example
+    cargo
+
     # for javadoc example
     jdk
   ];
