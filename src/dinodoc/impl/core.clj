@@ -55,7 +55,8 @@
     ns->vars))
 
 (defn- copy-with-frontmatter [{:keys [file src target data link-resolver file-map]}]
-  (let [content (slurp (fs/file src))
+  (let [link-resolver #(link-resolver target %)
+        content (slurp (fs/file src))
         content (replace-links content {:source file
                                         :link-map file-map})
         content (impl/format-docstring link-resolver content {:var-regex impl/backticks-and-wikilinks-pattern})]
@@ -81,7 +82,7 @@
         (mapcat (fn [[i item]]
                   (process-doc-tree-pure opts i item)))))
   ([opts i item]
-   (let [{:keys [root-path parent-path input-path edit-url-fn path-to-api-fn]} opts
+   (let [{:keys [root-path parent-path input-path edit-url-fn]} opts
          [label {:keys [file]} & children] item
          path (str parent-path "/" (some-> label slugify))
          root? (= root-path parent-path)
@@ -96,8 +97,7 @@
                                             :target file-path
                                             :data (cond-> {:sidebar_position i
                                                            :custom_edit_url (edit-url-fn file)}
-                                                    label (assoc :sidebar_label label))
-                                            :api-path-prefix (path-to-api-fn file-path)}]
+                                                    label (assoc :sidebar_label label))}]
               label [:spit
                      (str path "/_category_.json")
                      (json/generate-string {:position i  :label label})])]
@@ -109,13 +109,7 @@
   (doseq [[op & args] ops]
     (case op
       :copy-with-frontmatter
-      (let [[{:keys [target api-path-prefix] :as opts}] args
-            link-resolver (fn [s]
-                            (when-some [target (link-resolver s)]
-                              ;; pathname:// workaround for non-absolute links to HTML assets
-                              ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
-                              (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
-                                (str (when html-target? "pathname://") api-path-prefix "/" target))))]
+      (let [[{:keys [target] :as opts}] args]
         (fs/create-dirs (fs/parent target))
         (copy-with-frontmatter (assoc opts
                                       :file-map file-map
@@ -141,11 +135,9 @@
         api-docs-dir (str outdir "/api")
         path-to-api-fn (if (= (:api-mode root-opts) :global)
                          (fn [file-path]
-                           (str (path-to-root (str/replace-first file-path root-outdir ""))
-                                "/api"))
+                           (path-to-root (str/replace-first file-path root-outdir "")))
                          (fn [file-path]
-                           (str (path-to-root (str/replace-first file-path outdir ""))
-                                "/api")))
+                           (path-to-root (str/replace-first file-path outdir ""))))
         [repo branch] (if (and repo branch)
                         [repo branch]
                         ;; potential optimization: could skip detection if `edit-url-fn` option is set
