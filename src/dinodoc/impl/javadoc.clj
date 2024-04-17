@@ -15,8 +15,10 @@
     (->> (hs/select (hs/attr :id) tree)
          (map (comp :id :attrs))
          (keep (fn [html-id]
-                 (when-some [[match id] (re-matches #"(.*)\(.*\)" html-id)]
-                   [id match])))
+                 (when-not (str/includes? html-id "-")
+                   (if-some [[match id] (re-matches #"(.*)\(.*\)" html-id)]
+                     [id match]
+                     [html-id html-id]))))
          (into {}))))
 
 (defn resolve-link [javadoc-path definition]
@@ -36,12 +38,18 @@
   (def tree (-> (h/parse "<a href=\"foo\">foo</a>")
                 (h/as-hickory)))
 
-  (def tree (-> (slurp (fs/file javadoc-path "demo/Greeter.html"))
+  (def tree (-> (slurp "examples/javadoc/static/examples/javadoc/api/demo/Greeter.html")
                 h/parse h/as-hickory))
+
+  (->> (hs/select (hs/attr :id) tree)
+       (map (fn [{:keys [tag attrs]}]
+              [tag (:id attrs)])))
 
   (->> (hs/select (hs/attr :id) tree)
        (map (comp :id :attrs))
        (keep (fn [html-id]
-               (when-some [[match id] (re-matches #"(.*)\(.*\)" html-id)]
-                 [id match])))
+               (when-not (str/includes? html-id "-")
+                 (if-some [[match id] (re-matches #"(.*)\(.*\)" html-id)]
+                   [id match]
+                   [html-id html-id]))))
        (into {})))

@@ -1,7 +1,7 @@
 (ns dinodoc.impl.javadoc-test
   (:require
    [clojure.string :as str]
-   [clojure.test :refer [deftest is]]
+   [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
    [dinodoc.fs-helpers :refer [fsdata with-temp-dir]]
    [dinodoc.impl.javadoc :as javadoc]))
@@ -12,16 +12,23 @@
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
       (let [javadoc-path dir]
-        (fspit "demo/Greeter.html" "<body><section id=\"greet(java.lang.String)\">")
+        (fspit "demo/Greeter.html" "<body><section id=\"greet(java.lang.String)\"><section id=\"GREETING\">")
 
-        (is (= "demo/Greeter.html" (javadoc/resolve-link javadoc-path "demo.Greeter")))
+        (testing "resolves classes"
+          (is (= "demo/Greeter.html" (javadoc/resolve-link javadoc-path "demo.Greeter"))))
 
-        (is (= nil (javadoc/resolve-link javadoc-path "demo.NonExisting")))
+        (testing "resolves methods"
+          (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve-link javadoc-path "demo.Greeter.greet"))))
+          ;; what about multiple arities?
 
-        (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve-link javadoc-path "demo.Greeter.greet")))))
-    ; (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve-link javadoc-path "demo.Greeter#greet")))
+          ;; allow alternative notation with `#` separator?
+          ; (is (= "demo/Greeter.html#greet(java.lang.String)" (javadoc/resolve-link javadoc-path "demo.Greeter#greet")))
 
-    ;; what about multiple arities?
+        (testing "fields"
+          (is (= "demo/Greeter.html#GREETING" (javadoc/resolve-link javadoc-path "demo.Greeter.GREETING"))))
+
+        (testing "no link for missing definitions"
+          (is (= nil (javadoc/resolve-link javadoc-path "demo.NonExisting"))))))
 
     #_(testing "non-qualified"
         (is (= "demo/Greeter.html" (javadoc/resolve-link javadoc-path "Greeter"))))))

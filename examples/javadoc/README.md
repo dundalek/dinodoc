@@ -5,3 +5,4 @@ we can still link from markdown articles by transforming logical references to H
 
 For example the entrypoint is [[demo.Main.main]] and uses the [[demo.Greeter.greet]] method.
 
+Example linking to a field: [[demo.Greeter.GREETING]].
