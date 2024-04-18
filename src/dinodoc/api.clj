@@ -63,14 +63,16 @@ Options:
             resolve-apilink (or resolve-apilink
                                 (let [format-href (fn [target-ns target-var]
                                                     (let [formatted-ns (qimpl/absolute-namespace-link target-ns)]
-                                                      (qimpl/format-href formatted-ns target-var)))]
-                                  (qimpl/make-link-resolver (impl/make-ns->vars analysis) nil format-href)))
+                                                      (qimpl/format-href formatted-ns target-var)))
+                                      resolver (qimpl/make-link-resolver (impl/make-ns->vars analysis) nil format-href)]
+                                  (fn [s]
+                                    (some->> (resolver s) (str "api/")))))
             link-resolver (fn [file-path s]
                             (when-some [target (resolve-apilink s)]
                               ;; pathname:// workaround for non-absolute links to HTML assets
                               ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
                               (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
-                                (str (when html-target? "pathname://") (path-to-root-fn file-path) "/api/" target))))]
+                                (str (when html-target? "pathname://") (path-to-root-fn file-path) "/" target))))]
 
         (impl/process-doc-tree! doc-tree-ops {:file-map file-map
                                               :link-resolver link-resolver})

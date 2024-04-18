@@ -6,8 +6,6 @@
    [dinodoc.fs-helpers :refer [fsdata with-temp-dir]]
    [dinodoc.impl.javadoc :as javadoc]))
 
-; (def javadoc-path "examples/java/out")
-
 (deftest resolve-test
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
@@ -49,7 +47,7 @@
             _ (dinodoc/generate {:inputs [{:path dir
                                            :output-path "."}]
                                  :output-path output-path
-                                 :resolve-apilink resolve-apilink})
+                                 :resolve-apilink #(some->> (resolve-apilink %) (str "api/"))})
             data (fsdata output-path)]
         (is (str/includes?
              (get-in data ["index.md"])

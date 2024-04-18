@@ -1,4 +1,5 @@
 {:aliases
- {:doc {:extra-deps {babashka/fs {:mvn/version "0.4.19"}
+ {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../../"}
+                     babashka/fs {:mvn/version "0.4.19"}
                      babashka/process {:mvn/version "0.5.21"}}
         :main-opts ["doc.clj"]}}}

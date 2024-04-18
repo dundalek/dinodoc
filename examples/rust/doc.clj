@@ -16,6 +16,6 @@
 (dinodoc/generate
  {:inputs [{:path "."}]
   :output-path "docs"
-  :resolve-apilink #(rustdoc/resolve-link api-path %)})
+  :resolve-apilink #(some->> (rustdoc/resolve-link api-path %) (str "api/"))})
 
 (shutdown-agents)

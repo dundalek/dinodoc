@@ -9,6 +9,10 @@ Examples (defined in [doc.clj](https://github.com/dundalek/dinodoc/blob/main/exa
   It may not be desirable to connect to real database just to extract schema.
   This example shows how to generate docs from a static DDL SQL script by loading it into a temporary Postgres instance.
 
+Examples of wikilinks:
+- [[chinook:Album]]
+- [[sakila:public.actor]] or [[sakila:actor]] (without the `public.` schema)
+
 ### Diagram format considerations
 
 `tbls` supports rendering diagrams as SVG (default, uses graphviz) and Mermaid.

@@ -2,7 +2,9 @@
   (:require
    [babashka.fs :as fs]
    [babashka.process :refer [shell]]
-   [clojure.string :as str]))
+   [clojure.string :as str]
+   [dinodoc.api :as dinodoc]
+   [dinodoc.impl.tbls :as tbls]))
 
 (defn generate [{:keys [dsn output-path]}]
   (try
@@ -48,10 +50,10 @@
 
 ;; SQLite Chinook example
 (generate {:dsn "sqlite:./chinook/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"
-           :output-path "docs/chinook"})
+           :output-path "tmp/chinook"})
 
 ;; PostgreSQL Sakila example
-(let [output-path "docs/sakila"]
+(let [output-path "tmp/sakila"]
   (with-temporary-postgres-db
     (fn [{:keys [host db uri]}]
       (shell "psql --quiet -f" "pagila/pagila-schema.sql"
@@ -63,3 +65,11 @@
   (fs/update-file (str output-path "/README.md")
                   str/replace "# tmp\n" "# Sakila\n"))
 
+(dinodoc/generate
+ {:inputs [{:path "."}]
+  :output-path "docs"
+  :resolve-apilink #(tbls/resolve-link "tmp" %)})
+(fs/move "tmp/chinook" "docs")
+(fs/move "tmp/sakila" "docs")
+
+(shutdown-agents)
