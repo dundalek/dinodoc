@@ -1,0 +1,5 @@
+{:deps
+ {org.contextmapper/context-mapper-dsl {:mvn/version "6.10.0"}
+  org.clojure/java.data {:mvn/version "1.2.107"}
+  babashka/fs {:mvn/version "0.5.20"}
+  net.sourceforge.plantuml/plantuml-mit {:mvn/version "1.2024.4"}}}

@@ -23,6 +23,7 @@
  :aliases
  {:test
   {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}
+                dinodoc/contextmapper {:local/root "components/contextmapper"}
                 ;; for statecharts tests
                 examples/statecharts {:local/root "examples/statecharts"}}
    :main-opts ["-m" "kaocha.runner"]}

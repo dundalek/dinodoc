@@ -1,0 +1,37 @@
+ContextMap ExampleMap {
+  contains ContextA
+  contains ContextB
+}
+
+BoundedContext ContextA {
+}
+
+BoundedContext ContextB implements SubdomainB {
+  type = SYSTEM
+  domainVisionStatement  = "Responsible for B."
+  responsibilities = "Foo", "Bar"
+  implementationTechnology = "Clojure"
+
+  Aggregate AggregateFoo {
+    owner = TeamX
+  }
+
+  Aggregate AggregateBar {
+   owner = TeamX
+  }
+}
+
+BoundedContext TeamX { type TEAM }
+BoundedContext TeamY { type TEAM }
+
+Domain DomainA {
+  domainVisionStatement = "About domain A."
+  Subdomain SubdomainB {
+     type = CORE_DOMAIN
+     domainVisionStatement = "SubdomainB managing B."
+  }
+  Subdomain SubdomainWithoutMetadata {
+  }
+}
+
+Domain BlankDomain {}
