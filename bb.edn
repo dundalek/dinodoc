@@ -25,7 +25,8 @@
            example:kotlin
            example:java
            example:javadoc
-           example:rust]}
+           example:rust
+           example:contextmapper]}
 
          ;; Debug test samples at http://localhost:3000/docs/samples/example/
          samples:copy {:task (build-examples/copy-test-samples)}
@@ -42,6 +43,7 @@
          example:java {:task (build-examples/build-example-docs "java")}
          example:javadoc {:task (build-examples/build-example-docs "javadoc")}
          example:rust {:task (build-examples/build-example-docs "rust")}
+         example:contextmapper {:task (build-examples/build-example-docs "contextmapper")}
 
          example:openapi:reitit {:task (shell {:dir "examples/openapi"} "clojure -M:doc")}
          example:openapi {:depends [example:openapi:reitit]
