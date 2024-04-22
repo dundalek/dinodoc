@@ -11,7 +11,8 @@
            {:path "examples/openapi"}
            {:path "examples/dbschema"}
            {:path "components/dokka"}
-           {:path "components/antora"}]
+           {:path "components/antora"}
+           {:path "components/contextmapper"}]
   :api-mode :global
   :output-path "docs"
   :git/branch "main"
