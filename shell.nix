@@ -13,6 +13,9 @@ mkShell {
     postgresql
     tbls
 
+    # for contextmapper examples (dependency of plantuml)
+    graphviz
+
     # for rust example
     cargo
 
