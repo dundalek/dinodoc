@@ -124,7 +124,8 @@
         merged-options (merge (select-keys root-opts [:source-paths :doc-path :edit-url-fn :github/repo :git/branch])
                               (if (map? input) input {:path input}))
         {:keys [github/repo git/branch edit-url-fn source-paths
-                path doc-path doc-tree output-path]} merged-options
+                path doc-path doc-tree output-path
+                generator]} merged-options
         path (or (some-> path str) ".")
         outdir (or output-path (fs/file-name path))
         outdir (str (fs/normalize (str root-outdir "/" outdir)))
@@ -171,7 +172,8 @@
      :path-to-root-fn path-to-root-fn
      :github/repo repo
      :git/branch branch
-     :edit-url-fn edit-url-fn}))
+     :edit-url-fn edit-url-fn
+     :generator generator}))
 
 (defn run-analysis [source-paths]
   (-> (clj-kondo/run! {:lint source-paths

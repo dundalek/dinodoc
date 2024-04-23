@@ -5,6 +5,7 @@
         clj-commons/clj-yaml {:mvn/version "1.0.27"}
         slugify/slugify {:mvn/version "0.0.1"}
         babashka/fs {:mvn/version "0.4.19"}
+        babashka/process {:mvn/version "0.5.22"}
 
         ;; Parsing HTML for javadoc integration
         org.clj-commons/hickory {:mvn/version "0.7.4"}

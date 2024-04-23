@@ -1,7 +1,10 @@
 (ns dinodoc.impl.javadoc
   (:require
    [babashka.fs :as fs]
+   [babashka.process :refer [shell]]
    [clojure.string :as str]
+   [dinodoc.generator :as generator]
+   [dinodoc.impl.fs :refer [create-local-temp-dir]]
    [hickory.core :as h]
    [hickory.select :as hs]))
 
@@ -53,3 +56,16 @@
                    [id match]
                    [html-id html-id]))))
        (into {})))
+
+(deftype JavadocGenerator [opts tmp-dir]
+  generator/Generator
+  (prepare-index [_]
+    (let [{:keys [sourcepath subpackages]} opts]
+      (shell "javadoc -sourcepath" sourcepath "-subpackages" subpackages "-d" tmp-dir)))
+  (resolve-link [_ target]
+    (resolve-link tmp-dir target))
+  (generate [_ {:keys [output-path]}]
+    (fs/move tmp-dir output-path)))
+
+(defn make-generator [opts]
+  (->JavadocGenerator opts (str (create-local-temp-dir))))
