@@ -9,8 +9,8 @@
 (deftype CljapiGenerator [opts ^:volatile-mutable resolve-link-fn ^:volatile-mutable analysis]
   generator/Generator
   (prepare-index [_]
-    (let [{:keys [source-paths global-analysis]} opts
-          analysis' (or global-analysis (impl/run-analysis source-paths))]
+    (let [{:keys [source-paths]} opts
+          analysis' (impl/run-analysis source-paths)]
       (set! analysis analysis')
       (set! resolve-link-fn
             (let [format-href (fn [target-ns target-var]

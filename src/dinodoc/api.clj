@@ -28,42 +28,34 @@ Options:
   (let [{:keys [inputs api-mode resolve-apilink] root-outdir :output-path :as root-opts} opts
         inputs (->> (if (seq inputs) inputs ["."])
                     (map #(impl/normalize-input % root-opts)))
-        global-analysis (when (= api-mode :global)
-                          (impl/run-analysis (mapcat :source-paths inputs)))
-        article-generator-inputs (->> inputs
-                                      (remove :generator))
+        article-generator-inputs (->> inputs (remove :generator))
         generator-inputs (->> inputs
-                              (map (fn [input]
-                                     (if (:generator input)
-                                       (assoc input
-                                              :generator-output-path (:output-path input)
-                                              :generator-output-prefix (:output-path input))
-                                       (assoc input
-                                              :generator-output-path (:api-docs-dir input)
-                                              :generator-output-prefix (:api-docs-prefix input)
-                                              :generator
-                                              (cljapi/make-generator
-                                               (-> (select-keys input [:source-paths :path :github/repo :git/branch])
-                                                   (assoc :global-analysis global-analysis))))))))
+                              (keep (fn [input]
+                                      (cond
+                                        (:generator input)
+                                        (assoc input
+                                               :generator-output-path (:output-path input)
+                                               :generator-output-prefix (:output-path input))
+
+                                        (not= api-mode :global)
+                                        (assoc input
+                                               :generator-output-path (:api-docs-dir input)
+                                               :generator-output-prefix (:api-docs-prefix input)
+                                               :generator
+                                               (cljapi/make-generator
+                                                (select-keys input [:source-paths :path :github/repo :git/branch])))))))
+        generator-inputs (cond->> generator-inputs
+                           (= api-mode :global)
+                           (cons {:generator-output-path (str root-outdir "/api")
+                                  :generator-output-prefix "api"
+                                  :generator (cljapi/make-generator
+                                              (-> (select-keys root-opts [:github/repo :git/branch])
+                                                  (assoc :path nil
+                                                         :source-paths (mapcat :source-paths inputs))))}))
         resolve-from-generators (impl/make-resolve-link generator-inputs)]
 
     (fs/delete-tree root-outdir)
     (fs/create-dirs root-outdir)
-
-    (when (= api-mode :global)
-      (let [{:keys [github/repo git/branch]} root-opts
-            api-docs-dir (str root-outdir "/api")]
-        (qd/quickdoc
-         {:analysis global-analysis
-          ;; TODO filename-remove-prefix
-          ; :filename-remove-prefix path
-          :outdir api-docs-dir
-          :git/branch branch
-          :github/repo repo})
-
-        (when (fs/exists? api-docs-dir)
-          (spit (str api-docs-dir "/_category_.json")
-                "{\"label\":\"API\"}"))))
 
     (doseq [{:keys [generator]} generator-inputs]
       (generator/prepare-index generator))
@@ -92,9 +84,8 @@ Options:
                                               :link-resolver link-resolver})))
 
     (doseq [input generator-inputs]
-      (when (not= api-mode :global)
-        (let [{:keys [generator generator-output-path]} input]
-          (generator/generate generator {:output-path generator-output-path}))))))
+      (let [{:keys [generator generator-output-path]} input]
+        (generator/generate generator {:output-path generator-output-path})))))
 
 (comment
   (generate
