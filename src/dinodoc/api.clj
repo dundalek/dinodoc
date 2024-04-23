@@ -3,9 +3,9 @@
    [babashka.fs :as fs]
    [clojure.string :as str]
    [dinodoc.generator :as generator]
+   [dinodoc.impl.cljapi :as cljapi]
    [dinodoc.impl.core :as impl]
-   [dinodoc.impl.quickdoc.api :as qd]
-   [dinodoc.impl.quickdoc.impl :as qimpl]))
+   [dinodoc.impl.quickdoc.api :as qd]))
 
 (defn generate
   "Generates documentation for given inputs. Input options can be also specified as top-level keys that will be shared by all inputs.
@@ -29,7 +29,19 @@ Options:
         inputs (->> (if (seq inputs) inputs ["."])
                     (map #(impl/normalize-input % root-opts)))
         global-analysis (when (= api-mode :global)
-                          (impl/run-analysis (mapcat :source-paths inputs)))]
+                          (impl/run-analysis (mapcat :source-paths inputs)))
+        generator-inputs (->> inputs
+                              (map (fn [input]
+                                     (if (:generator input)
+                                       input
+                                       (assoc input
+                                              :output-path "api"
+                                              :generator
+                                              (cljapi/make-generator
+                                               {:global-analysis global-analysis
+                                                :source-paths (:source-paths input)}))))))
+        resolve-from-generators (impl/make-resolve-link generator-inputs)]
+
     (fs/delete-tree root-outdir)
     (fs/create-dirs root-outdir)
 
@@ -48,60 +60,48 @@ Options:
           (spit (str api-docs-dir "/_category_.json")
                 "{\"label\":\"API\"}"))))
 
-    (doseq [{:keys [generator]} inputs]
-      (some-> generator
-              (generator/prepare-index)))
-    (let [resolve-from-generators (some->> inputs
-                                           (filter :generator)
-                                           seq
-                                           (impl/make-resolve-link))]
+    (doseq [{:keys [generator]} generator-inputs]
+      (generator/prepare-index generator))
 
-      (doseq [input inputs]
-        (if (:generator input)
-          (let [{:keys [generator output-path]} input]
-            (generator/generate generator {:output-path output-path}))
+    (doseq [input inputs]
+      (if (:generator input)
+        (let [{:keys [generator output-path]} input]
+          (generator/generate generator {:output-path output-path}))
 
-          (let [{:keys [path doc-tree output-path source-paths api-docs-dir path-to-root-fn github/repo git/branch edit-url-fn]} input
-                analysis (or global-analysis (impl/run-analysis source-paths))
-                doc-tree-opts {:root-path output-path
-                               :parent-path output-path
-                               :input-path path
-                               :edit-url-fn edit-url-fn}
-                doc-tree-ops (impl/process-doc-tree-pure doc-tree-opts doc-tree)
-                file-map (->> doc-tree-ops
-                              (filter #(= (first %) :copy-with-frontmatter))
-                              (map (fn [[_ {:keys [file target]}]]
-                                     [file (str/replace-first target (str output-path "/") "")]))
-                              (into {}))
-                resolve-apilink (or resolve-apilink
-                                    resolve-from-generators
-                                    (let [format-href (fn [target-ns target-var]
-                                                        (let [formatted-ns (qimpl/absolute-namespace-link target-ns)]
-                                                          (qimpl/format-href formatted-ns target-var)))
-                                          resolver (qimpl/make-link-resolver (impl/make-ns->vars analysis) nil format-href)]
-                                      (fn [s]
-                                        (some->> (resolver s) (str "api/")))))
-                link-resolver (fn [file-path s]
-                                (when-some [target (resolve-apilink s)]
-                                  ;; pathname:// workaround for non-absolute links to HTML assets
-                                  ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
-                                  (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
-                                    (str (when html-target? "pathname://") (path-to-root-fn file-path) "/" target))))]
+        (let [{:keys [path doc-tree output-path source-paths api-docs-dir path-to-root-fn github/repo git/branch edit-url-fn]} input
+              analysis (or global-analysis (impl/run-analysis source-paths))
+              doc-tree-opts {:root-path output-path
+                             :parent-path output-path
+                             :input-path path
+                             :edit-url-fn edit-url-fn}
+              doc-tree-ops (impl/process-doc-tree-pure doc-tree-opts doc-tree)
+              file-map (->> doc-tree-ops
+                            (filter #(= (first %) :copy-with-frontmatter))
+                            (map (fn [[_ {:keys [file target]}]]
+                                   [file (str/replace-first target (str output-path "/") "")]))
+                            (into {}))
+              resolve-apilink (or resolve-apilink resolve-from-generators)
+              link-resolver (fn [file-path s]
+                              (when-some [target (resolve-apilink s)]
+                                ;; pathname:// workaround for non-absolute links to HTML assets
+                                ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
+                                (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
+                                  (str (when html-target? "pathname://") (path-to-root-fn file-path) "/" target))))]
 
-            (impl/process-doc-tree! doc-tree-ops {:file-map file-map
-                                                  :link-resolver link-resolver})
-            (when (not= api-mode :global)
-              (println "Generating" path)
-              (qd/quickdoc
-               {:analysis analysis
-                :filename-remove-prefix path
-                :outdir api-docs-dir
-                :git/branch branch
-                :github/repo repo})
+          (impl/process-doc-tree! doc-tree-ops {:file-map file-map
+                                                :link-resolver link-resolver})
+          (when (not= api-mode :global)
+            (println "Generating" path)
+            (qd/quickdoc
+             {:analysis analysis
+              :filename-remove-prefix path
+              :outdir api-docs-dir
+              :git/branch branch
+              :github/repo repo})
 
-              (when (fs/exists? api-docs-dir)
-                (spit (str api-docs-dir "/_category_.json")
-                      "{\"label\":\"API\"}")))))))))
+            (when (fs/exists? api-docs-dir)
+              (spit (str api-docs-dir "/_category_.json")
+                    "{\"label\":\"API\"}"))))))))
 
 (comment
   (generate
