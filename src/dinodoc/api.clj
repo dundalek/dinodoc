@@ -39,7 +39,7 @@ Options:
                                     :cljapi-generator true
                                     :generator
                                     (cljapi/make-generator
-                                     (-> (select-keys input [:source-paths :path :github/repo :git/branch])
+                                     (-> (select-keys input [:source-paths :path :github/repo :git/branch :api-docs-dir])
                                          (assoc :global-analysis global-analysis))))))))
         resolve-from-generators (impl/make-resolve-link inputs)]
 
@@ -69,8 +69,7 @@ Options:
         (let [{:keys [generator generator-output-path]} input]
           (generator/generate generator {:output-path generator-output-path}))
 
-        (let [{:keys [path doc-tree output-path source-paths api-docs-dir path-to-root-fn github/repo git/branch edit-url-fn]} input
-              analysis (or global-analysis (impl/run-analysis source-paths))
+        (let [{:keys [path doc-tree output-path path-to-root-fn edit-url-fn]} input
               doc-tree-opts {:root-path output-path
                              :parent-path output-path
                              :input-path path
@@ -93,18 +92,8 @@ Options:
                                                 :link-resolver link-resolver})
           (when (not= api-mode :global)
             (println "Generating" path)
-            #_(let [{:keys [generator generator-output-path]} input]
-                (generator/generate generator {:output-path generator-output-path}))
-            (qd/quickdoc
-             {:analysis analysis
-              :filename-remove-prefix path
-              :outdir api-docs-dir
-              :git/branch branch
-              :github/repo repo})
-
-            (when (fs/exists? api-docs-dir)
-              (spit (str api-docs-dir "/_category_.json")
-                    "{\"label\":\"API\"}"))))))))
+            (let [{:keys [generator generator-output-path]} input]
+              (generator/generate generator {:output-path generator-output-path}))))))))
 
 (comment
   (generate

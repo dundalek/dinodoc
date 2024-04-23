@@ -19,18 +19,18 @@
               (qimpl/make-link-resolver (impl/make-ns->vars analysis) nil format-href)))))
   (resolve-link [_ target]
     (resolve-link-fn target))
-  (generate [opts {:keys [output-path]}]
-    (let [{:keys [path github/repo git/branch]} opts]
+  (generate [_ {:keys [output-path]}]
+    (let [{:keys [path github/repo git/branch api-docs-dir]} opts]
       (qd/quickdoc
        {:analysis analysis
         :filename-remove-prefix path
-        :outdir output-path
+        :outdir api-docs-dir
         :git/branch branch
-        :github/repo repo}))
+        :github/repo repo})
 
-    (when (fs/exists? output-path)
-      (spit (str output-path "/_category_.json")
-            "{\"label\":\"API\"}"))))
+      (when (fs/exists? api-docs-dir)
+        (spit (str api-docs-dir "/_category_.json")
+              "{\"label\":\"API\"}")))))
 
 (defn make-generator [opts]
   (->CljapiGenerator opts nil nil))
