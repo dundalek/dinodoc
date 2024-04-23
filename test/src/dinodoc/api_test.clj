@@ -1,13 +1,15 @@
 (ns dinodoc.api-test
   (:require
+   [babashka.fs :as fs]
    [clojure.string :as str]
    [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
    [dinodoc.approval-helpers :as approval]
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
+   [dinodoc.impl.fs :as fsi]
    [dinodoc.impl.javadoc :as javadoc]
    [dinodoc.impl.rustdoc :as rustdoc]
-   [dinodoc.impl.fs :as fs]
+   [dinodoc.impl.tbls :as tbls]
    [readme]))
 
 (defn- naively-strip-front-matter [s]
@@ -490,11 +492,14 @@
             data (fsdata output-path)]
         (is (= "[`example.main/foo`](./api/example/main/#foo) [`example.main/foo`](./api/example/main/#foo)" (naively-strip-front-matter (get-in data ["index.md"]))))))))
 
-(deftest generator-linking
-  (binding [fs/*tmp-dir* "/tmp"]
+(deftest ^{:skip-ci "tbls not available in ubuntu"} generator-linking
+  (binding [fsi/*tmp-dir* "/tmp"]
     (with-temp-dir
       (fn [{:keys [dir fspit]}]
-        (fspit "README.md" "- java: [[demo.Greeter.greet]]\n- rust: [[example::greeting::greet]]")
+        (fspit "README.md"
+               (str "- java: [[demo.Greeter.greet]]\n"
+                    "- rust: [[example::greeting::greet]]\n"
+                    "- dbschema: [[Album]]"))
         (let [output-path (str dir "/docs")
               _ (dinodoc/generate {:output-path output-path
                                    :github/repo "repo"
@@ -507,11 +512,19 @@
                                                           :subpackages "demo"})}
                                             {:output-path "rustdoc"
                                              :generator (rustdoc/make-generator
-                                                         {:manifest-path "examples/rust/Cargo.toml"})}]})
+                                                         {:manifest-path "examples/rust/Cargo.toml"})}
+                                            {:output-path "dbschema"
+                                             :generator (tbls/make-generator
+                                                         {:dsn (str "sqlite:" (fs/absolutize "examples/dbschema/chinook/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"))
+                                                          :title "_REPLACED_TITLE_SENTINEL_"})}]})
               data (fsdata output-path)
               expected [(str "- java: [`demo.Greeter.greet`](pathname://./" output-path "/javadoc/demo/Greeter.html#greet(java.lang.String))")
-                        (str "- rust: [`example::greeting::greet`](pathname://./" output-path "/rustdoc/example/greeting/fn.greet.html)")]]
+                        (str "- rust: [`example::greeting::greet`](pathname://./" output-path "/rustdoc/example/greeting/fn.greet.html)")
+                        (str "- dbschema: [`Album`](./" output-path "/dbschema/Album.md)")]]
           (is (= expected
                  (-> (get-in data ["index.md"])
                      (naively-strip-front-matter)
-                     (str/split-lines)))))))))
+                     (str/split-lines))))
+          (is (str/includes?
+               (get-in data ["dbschema" "README.md"])
+               "# _REPLACED_TITLE_SENTINEL_")))))))
