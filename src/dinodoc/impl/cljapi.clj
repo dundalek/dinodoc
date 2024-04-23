@@ -1,7 +1,9 @@
 (ns dinodoc.impl.cljapi
   (:require
+   [babashka.fs :as fs]
    [dinodoc.generator :as generator]
    [dinodoc.impl.core :as impl]
+   [dinodoc.impl.quickdoc.api :as qd]
    [dinodoc.impl.quickdoc.impl :as qimpl]))
 
 (deftype CljapiGenerator [opts ^:volatile-mutable resolve-link-fn ^:volatile-mutable analysis]
@@ -17,8 +19,18 @@
               (qimpl/make-link-resolver (impl/make-ns->vars analysis) nil format-href)))))
   (resolve-link [_ target]
     (resolve-link-fn target))
-  (generate [_ {:keys [output-path]}]))
+  (generate [opts {:keys [output-path]}]
+    (let [{:keys [path github/repo git/branch]} opts]
+      (qd/quickdoc
+       {:analysis analysis
+        :filename-remove-prefix path
+        :outdir output-path
+        :git/branch branch
+        :github/repo repo}))
+
+    (when (fs/exists? output-path)
+      (spit (str output-path "/_category_.json")
+            "{\"label\":\"API\"}"))))
 
 (defn make-generator [opts]
   (->CljapiGenerator opts nil nil))
-

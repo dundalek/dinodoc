@@ -30,17 +30,18 @@ Options:
                     (map #(impl/normalize-input % root-opts)))
         global-analysis (when (= api-mode :global)
                           (impl/run-analysis (mapcat :source-paths inputs)))
-        generator-inputs (->> inputs
-                              (map (fn [input]
-                                     (if (:generator input)
-                                       input
-                                       (assoc input
-                                              :output-path "api"
-                                              :generator
-                                              (cljapi/make-generator
-                                               {:global-analysis global-analysis
-                                                :source-paths (:source-paths input)}))))))
-        resolve-from-generators (impl/make-resolve-link generator-inputs)]
+        inputs (->> inputs
+                    (map (fn [input]
+                           (if (:generator input)
+                             (assoc input :generator-output-path (:output-path input))
+                             (assoc input
+                                    :generator-output-path "api"
+                                    :cljapi-generator true
+                                    :generator
+                                    (cljapi/make-generator
+                                     (-> (select-keys input [:source-paths :path :github/repo :git/branch])
+                                         (assoc :global-analysis global-analysis))))))))
+        resolve-from-generators (impl/make-resolve-link inputs)]
 
     (fs/delete-tree root-outdir)
     (fs/create-dirs root-outdir)
@@ -60,13 +61,13 @@ Options:
           (spit (str api-docs-dir "/_category_.json")
                 "{\"label\":\"API\"}"))))
 
-    (doseq [{:keys [generator]} generator-inputs]
+    (doseq [{:keys [generator]} inputs]
       (generator/prepare-index generator))
 
     (doseq [input inputs]
-      (if (:generator input)
-        (let [{:keys [generator output-path]} input]
-          (generator/generate generator {:output-path output-path}))
+      (if-not (:cljapi-generator input)
+        (let [{:keys [generator generator-output-path]} input]
+          (generator/generate generator {:output-path generator-output-path}))
 
         (let [{:keys [path doc-tree output-path source-paths api-docs-dir path-to-root-fn github/repo git/branch edit-url-fn]} input
               analysis (or global-analysis (impl/run-analysis source-paths))
@@ -92,6 +93,8 @@ Options:
                                                 :link-resolver link-resolver})
           (when (not= api-mode :global)
             (println "Generating" path)
+            #_(let [{:keys [generator generator-output-path]} input]
+                (generator/generate generator {:output-path generator-output-path}))
             (qd/quickdoc
              {:analysis analysis
               :filename-remove-prefix path

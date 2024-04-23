@@ -179,9 +179,9 @@
 (defn make-resolve-link [generator-inputs]
   (fn [target]
     ;; TODO: handle multiple resolved candidates
-    (some (fn [{:keys [generator output-path]}]
+    (some (fn [{:keys [generator generator-output-path]}]
             (some->> (generator/resolve-link generator target)
-                     (str output-path "/")))
+                     (str generator-output-path "/")))
           generator-inputs)))
 
 (defn run-analysis [source-paths]
