@@ -20,16 +20,17 @@
   (resolve-link [_ target]
     (resolve-link-fn target))
   (generate [_ {:keys [output-path]}]
-    (let [{:keys [path github/repo git/branch api-docs-dir]} opts]
+    (let [{:keys [path github/repo git/branch]} opts]
+      (println "Generating" path)
       (qd/quickdoc
        {:analysis analysis
         :filename-remove-prefix path
-        :outdir api-docs-dir
+        :outdir output-path
         :git/branch branch
         :github/repo repo})
 
-      (when (fs/exists? api-docs-dir)
-        (spit (str api-docs-dir "/_category_.json")
+      (when (fs/exists? output-path)
+        (spit (str output-path "/_category_.json")
               "{\"label\":\"API\"}")))))
 
 (defn make-generator [opts]

@@ -134,7 +134,8 @@
         source-paths (->> (or source-paths ["src"])
                           (map #(str path "/" %)))
         cljdoc-path (str  doc-path "/cljdoc.edn")
-        api-docs-dir (str outdir "/api")
+        api-docs-prefix "api"
+        api-docs-dir (str outdir "/" api-docs-prefix)
         path-to-root-fn (if (= (:api-mode root-opts) :global)
                           (fn [file-path]
                             (path-to-root (str/replace-first file-path root-outdir "")))
@@ -169,6 +170,7 @@
                        doc-files)
      :output-path outdir
      :source-paths source-paths
+     :api-docs-prefix api-docs-prefix
      :api-docs-dir api-docs-dir
      :path-to-root-fn path-to-root-fn
      :github/repo repo
@@ -179,9 +181,9 @@
 (defn make-resolve-link [generator-inputs]
   (fn [target]
     ;; TODO: handle multiple resolved candidates
-    (some (fn [{:keys [generator generator-output-path]}]
+    (some (fn [{:keys [generator generator-output-prefix]}]
             (some->> (generator/resolve-link generator target)
-                     (str generator-output-path "/")))
+                     (str generator-output-prefix "/")))
           generator-inputs)))
 
 (defn run-analysis [source-paths]

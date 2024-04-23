@@ -33,13 +33,16 @@ Options:
         inputs (->> inputs
                     (map (fn [input]
                            (if (:generator input)
-                             (assoc input :generator-output-path (:output-path input))
                              (assoc input
-                                    :generator-output-path "api"
+                                    :generator-output-path (:output-path input)
+                                    :generator-output-prefix (:output-path input))
+                             (assoc input
+                                    :generator-output-path (:api-docs-dir input)
+                                    :generator-output-prefix (:api-docs-prefix input)
                                     :cljapi-generator true
                                     :generator
                                     (cljapi/make-generator
-                                     (-> (select-keys input [:source-paths :path :github/repo :git/branch :api-docs-dir])
+                                     (-> (select-keys input [:source-paths :path :github/repo :git/branch])
                                          (assoc :global-analysis global-analysis))))))))
         resolve-from-generators (impl/make-resolve-link inputs)]
 
