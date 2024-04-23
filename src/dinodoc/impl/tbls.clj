@@ -38,7 +38,13 @@
         (catch java.io.IOException e
           (throw (ex-info "Something went wrong, please make sure to have `tbls` program installed." {} e))))))
   (resolve-link [_ target]
-    (resolve-link dbdoc-dir target))
+    (or (resolve-link dbdoc-dir target)
+        ;; This is a temporary hack to make multiple resolutions work for the dbschema example.
+        ;; To be implemented in generic way in the future.
+        (let [[prefix target] (str/split target #":" 2)]
+          (when (= (:UNSTABLE_prefix opts) prefix)
+            (resolve-link dbdoc-dir target)))))
+
   (generate [_ {:keys [output-path]}]
     (let [{:keys [title]} opts]
       (fs/move dbdoc-dir output-path)

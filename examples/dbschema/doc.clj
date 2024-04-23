@@ -26,11 +26,13 @@
     (dinodoc/generate
      {:inputs [{:path "."}
                {:generator (tbls/make-generator
-                            {:dsn (str "sqlite:" (fs/absolutize "./chinook/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"))})
+                            {:dsn (str "sqlite:" (fs/absolutize "./chinook/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"))
+                             :UNSTABLE_prefix "chinook"})
                 :output-path "chinook"}
                {:generator (tbls/make-generator
                             {:dsn uri
-                             :title "Sakila"})
+                             :title "Sakila"
+                             :UNSTABLE_prefix "sakila"})
                 :output-path "sakila"}]
       :output-path "docs"})))
 

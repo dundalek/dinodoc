@@ -499,7 +499,8 @@
         (fspit "README.md"
                (str "- java: [[demo.Greeter.greet]]\n"
                     "- rust: [[example::greeting::greet]]\n"
-                    "- dbschema: [[Album]]"))
+                    "- dbschema: [[Album]]\n"
+                    "- namespaced dbschema: [[chinook:Album]]\n"))
         (let [output-path (str dir "/docs")
               _ (dinodoc/generate {:output-path output-path
                                    :github/repo "repo"
@@ -516,11 +517,13 @@
                                             {:output-path "dbschema"
                                              :generator (tbls/make-generator
                                                          {:dsn (str "sqlite:" (fs/absolutize "examples/dbschema/chinook/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"))
-                                                          :title "_REPLACED_TITLE_SENTINEL_"})}]})
+                                                          :title "_REPLACED_TITLE_SENTINEL_"
+                                                          :UNSTABLE_prefix "chinook"})}]})
               data (fsdata output-path)
               expected [(str "- java: [`demo.Greeter.greet`](pathname://./" output-path "/javadoc/demo/Greeter.html#greet(java.lang.String))")
                         (str "- rust: [`example::greeting::greet`](pathname://./" output-path "/rustdoc/example/greeting/fn.greet.html)")
-                        (str "- dbschema: [`Album`](./" output-path "/dbschema/Album.md)")]]
+                        (str "- dbschema: [`Album`](./" output-path "/dbschema/Album.md)")
+                        (str "- namespaced dbschema: [`chinook:Album`](./" output-path "/dbschema/Album.md)")]]
           (is (= expected
                  (-> (get-in data ["index.md"])
                      (naively-strip-front-matter)
