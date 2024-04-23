@@ -65,10 +65,7 @@ Options:
       (generator/prepare-index generator))
 
     (doseq [input inputs]
-      (if-not (:cljapi-generator input)
-        (let [{:keys [generator generator-output-path]} input]
-          (generator/generate generator {:output-path generator-output-path}))
-
+      (when (:cljapi-generator input)
         (let [{:keys [path doc-tree output-path path-to-root-fn edit-url-fn]} input
               doc-tree-opts {:root-path output-path
                              :parent-path output-path
@@ -89,11 +86,10 @@ Options:
                                   (str (when html-target? "pathname://") (path-to-root-fn file-path) "/" target))))]
 
           (impl/process-doc-tree! doc-tree-ops {:file-map file-map
-                                                :link-resolver link-resolver})
-          (when (not= api-mode :global)
-            (println "Generating" path)
-            (let [{:keys [generator generator-output-path]} input]
-              (generator/generate generator {:output-path generator-output-path}))))))))
+                                                :link-resolver link-resolver})))
+      (when (not= api-mode :global)
+        (let [{:keys [generator generator-output-path]} input]
+          (generator/generate generator {:output-path generator-output-path}))))))
 
 (comment
   (generate
