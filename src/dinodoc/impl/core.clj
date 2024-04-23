@@ -1,14 +1,15 @@
 (ns dinodoc.impl.core
   {:no-doc true}
   (:require
-   [clojure.string :as str]
    [babashka.fs :as fs]
    [cheshire.core :as json]
    [clj-kondo.core :as clj-kondo]
    [clj-yaml.core :as yaml]
    [clojure.edn :as edn]
-   [dinodoc.impl.quickdoc.impl :as impl]
+   [clojure.string :as str]
+   [dinodoc.generator :as generator]
    [dinodoc.impl.git :as git]
+   [dinodoc.impl.quickdoc.impl :as impl]
    [slugify.core :refer [slugify]]))
 
 (def link-regex #"(\[[^\]]*\]\()([^\)]+)(\))")
@@ -174,6 +175,14 @@
      :git/branch branch
      :edit-url-fn edit-url-fn
      :generator generator}))
+
+(defn make-resolve-link [generator-inputs]
+  (fn [target]
+    ;; TODO: handle multiple resolved candidates
+    (some (fn [{:keys [generator output-path]}]
+            (some->> (generator/resolve-link generator target)
+                     (str output-path "/")))
+          generator-inputs)))
 
 (defn run-analysis [source-paths]
   (-> (clj-kondo/run! {:lint source-paths
