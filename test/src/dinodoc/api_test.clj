@@ -3,8 +3,11 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
-   [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
    [dinodoc.approval-helpers :as approval]
+   [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
+   [dinodoc.impl.javadoc :as javadoc]
+   [dinodoc.impl.rustdoc :as rustdoc]
+   [dinodoc.impl.fs :as fs]
    [readme]))
 
 (defn- naively-strip-front-matter [s]
@@ -486,3 +489,29 @@
                                  :git/branch "main"})
             data (fsdata output-path)]
         (is (= "[`example.main/foo`](./api/example/main/#foo) [`example.main/foo`](./api/example/main/#foo)" (naively-strip-front-matter (get-in data ["index.md"]))))))))
+
+(deftest generator-linking
+  (binding [fs/*tmp-dir* "/tmp"]
+    (with-temp-dir
+      (fn [{:keys [dir fspit]}]
+        (fspit "README.md" "- java: [[demo.Greeter.greet]]\n- rust: [[example::greeting::greet]]")
+        (let [output-path (str dir "/docs")
+              _ (dinodoc/generate {:output-path output-path
+                                   :github/repo "repo"
+                                   :git/branch "main"
+                                   :inputs [{:path dir
+                                             :output-path "."}
+                                            {:output-path "javadoc"
+                                             :generator (javadoc/make-generator
+                                                         {:sourcepath "examples/java/src/main/java"
+                                                          :subpackages "demo"})}
+                                            {:output-path "rustdoc"
+                                             :generator (rustdoc/make-generator
+                                                         {:manifest-path "examples/rust/Cargo.toml"})}]})
+              data (fsdata output-path)
+              expected [(str "- java: [`demo.Greeter.greet`](pathname://./" output-path "/javadoc/demo/Greeter.html#greet(java.lang.String))")
+                        (str "- rust: [`example::greeting::greet`](pathname://./" output-path "/rustdoc/example/greeting/fn.greet.html)")]]
+          (is (= expected
+                 (-> (get-in data ["index.md"])
+                     (naively-strip-front-matter)
+                     (str/split-lines)))))))))
