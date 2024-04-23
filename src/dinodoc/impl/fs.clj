@@ -1,4 +1,5 @@
 (ns dinodoc.impl.fs
+  ^{:no-doc true}
   (:require
    [babashka.fs :as fs]))
 

@@ -1,4 +1,5 @@
 (ns dinodoc.impl.cljapi
+  ^{:no-doc true}
   (:require
    [babashka.fs :as fs]
    [dinodoc.generator :as generator]
