@@ -519,12 +519,11 @@
                                                          {:dsn (str "sqlite:" (fs/absolutize "examples/dbschema/chinook/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"))
                                                           :title "_REPLACED_TITLE_SENTINEL_"
                                                           :UNSTABLE_prefix "chinook"})}]})
-              data (fsdata output-path)
-              expected [(str "- java: [`demo.Greeter.greet`](pathname://./" output-path "/javadoc/demo/Greeter.html#greet(java.lang.String))")
-                        (str "- rust: [`example::greeting::greet`](pathname://./" output-path "/rustdoc/example/greeting/fn.greet.html)")
-                        (str "- dbschema: [`Album`](./" output-path "/dbschema/Album.md)")
-                        (str "- namespaced dbschema: [`chinook:Album`](./" output-path "/dbschema/Album.md)")]]
-          (is (= expected
+              data (fsdata output-path)]
+          (is (= ["- java: [`demo.Greeter.greet`](pathname://./javadoc/demo/Greeter.html#greet(java.lang.String))"
+                  "- rust: [`example::greeting::greet`](pathname://./rustdoc/example/greeting/fn.greet.html)"
+                  "- dbschema: [`Album`](./dbschema/Album.md)"
+                  "- namespaced dbschema: [`chinook:Album`](./dbschema/Album.md)"]
                  (-> (get-in data ["index.md"])
                      (naively-strip-front-matter)
                      (str/split-lines))))

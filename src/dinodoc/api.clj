@@ -35,7 +35,7 @@ Options:
                                         (:generator input)
                                         (assoc input
                                                :generator-output-path (:output-path input)
-                                               :generator-output-prefix (:output-path input))
+                                               :generator-output-prefix (:output-path-prefix input))
 
                                         (not= api-mode :global)
                                         (assoc input

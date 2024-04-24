@@ -10,8 +10,8 @@ Examples (defined in [doc.clj](https://github.com/dundalek/dinodoc/blob/main/exa
   This example shows how to generate docs from a static DDL SQL script by loading it into a temporary Postgres instance.
 
 Examples of wikilinks:
-- [[chinook:Album]]
-- [[sakila:public.actor]] or [[sakila:actor]] (without the `public.` schema)
+- [[Album]] or [[chinook:Album]]
+- [[actor]] or [[sakila:public.actor]] or [[sakila:actor]] (without the `public.` schema)
 
 ### Diagram format considerations
 

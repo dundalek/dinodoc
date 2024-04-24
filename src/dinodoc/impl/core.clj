@@ -169,6 +169,7 @@
      :doc-tree (concat doc-tree
                        doc-files)
      :output-path outdir
+     :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
      :source-paths source-paths
      :api-docs-prefix api-docs-prefix
      :api-docs-dir api-docs-dir
