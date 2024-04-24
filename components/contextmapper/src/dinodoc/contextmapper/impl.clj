@@ -201,10 +201,13 @@
     (when (fs/directory? (str output-path "/contexts"))
       (spit (str output-path "/contexts/_category_.json") "{\"position\":2,\"label\":\"Contexts\"}"))))
 
-(defn generate [{:keys [model-file output-path]}]
-  (let [jmodel (load-model model-file)]
-    (render-model {:jmodel jmodel
-                   :output-path output-path})))
+(defn build-index [jmodel]
+  (let [model (j/from-java jmodel)]
+    (->> (concat (->> (bounded-contexts-without-teams model)
+                      (map (juxt :name bounded-context-path)))
+                 (->> (:domains model)
+                      (map (juxt :name domain-path))))
+         (into {}))))
 
 (comment
   (do

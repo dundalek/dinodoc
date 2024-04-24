@@ -5,6 +5,7 @@
    [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
    [dinodoc.approval-helpers :as approval]
+   [dinodoc.contextmapper :as contextmapper]
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
    [dinodoc.impl.fs :as fsi]
    [dinodoc.impl.javadoc :as javadoc]
@@ -500,7 +501,9 @@
                (str "- java: [[demo.Greeter.greet]]\n"
                     "- rust: [[example::greeting::greet]]\n"
                     "- dbschema: [[Album]]\n"
-                    "- namespaced dbschema: [[chinook:Album]]\n"))
+                    "- namespaced dbschema: [[chinook:Album]]\n"
+                    "- contextmapper domain: [[DomainA]]\n"
+                    "- contextmapper context: [[ContextB]]\n"))
         (let [output-path (str dir "/docs")
               _ (dinodoc/generate {:output-path output-path
                                    :github/repo "repo"
@@ -518,12 +521,17 @@
                                              :generator (tbls/make-generator
                                                          {:dsn (str "sqlite:" (fs/absolutize "examples/dbschema/chinook/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite"))
                                                           :title "_REPLACED_TITLE_SENTINEL_"
-                                                          :UNSTABLE_prefix "chinook"})}]})
+                                                          :UNSTABLE_prefix "chinook"})}
+                                            {:output-path "contextmapper"
+                                             :generator (contextmapper/make-generator
+                                                         {:model-file "components/contextmapper/test/resources/example.cml"})}]})
               data (fsdata output-path)]
           (is (= ["- java: [`demo.Greeter.greet`](pathname://./javadoc/demo/Greeter.html#greet(java.lang.String))"
                   "- rust: [`example::greeting::greet`](pathname://./rustdoc/example/greeting/fn.greet.html)"
                   "- dbschema: [`Album`](./dbschema/Album.md)"
-                  "- namespaced dbschema: [`chinook:Album`](./dbschema/Album.md)"]
+                  "- namespaced dbschema: [`chinook:Album`](./dbschema/Album.md)"
+                  "- contextmapper domain: [`DomainA`](./contextmapper/domains/DomainA/)"
+                  "- contextmapper context: [`ContextB`](./contextmapper/contexts/ContextB/)"]
                  (-> (get-in data ["index.md"])
                      (naively-strip-front-matter)
                      (str/split-lines))))

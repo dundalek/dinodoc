@@ -4,6 +4,7 @@ Example of rendering documentation for Domain Driven Design (DDD) model using [C
 defined [CML](https://contextmapper.org/docs/language-reference/) model.
 
 See the rendered [example](https://dinodoc.pages.dev/examples/contextmapper/insurance-map/).
+Example of linking to a specific domain [[InsuranceDomain]] or a bounded context [[RiskManagementContext]].
 
 ### Considerations
 

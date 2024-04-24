@@ -3,14 +3,17 @@
    [dinodoc.contextmapper.impl :as impl]
    [dinodoc.generator :as generator]))
 
-(deftype ContextMapperGenerator [opts]
+(deftype ContextMapperGenerator [opts ^:volatile-mutable jmodel ^:volatile-mutable index]
   generator/Generator
-  (prepare-index [_])
-  (resolve-link [_ target])
-  (generate [_ {:keys [output-path]}]
+  (prepare-index [_]
     (let [{:keys [model-file]} opts]
-      (impl/generate {:model-file model-file
-                      :output-path output-path}))))
+      (set! jmodel (impl/load-model model-file))
+      (set! index (impl/build-index jmodel))))
+  (resolve-link [_ target]
+    (get index target))
+  (generate [_ {:keys [output-path]}]
+    (impl/render-model {:jmodel jmodel
+                        :output-path output-path})))
 
 (defn make-generator [opts]
-  (->ContextMapperGenerator opts))
+  (->ContextMapperGenerator opts nil nil))
