@@ -1,6 +1,7 @@
 (ns dinodoc.structurizr-test
   (:require
    [clojure.test :refer [deftest]]
+   [dinodoc.api :as dinodoc]
    [dinodoc.approval-helpers :as approval-helpers]
    [dinodoc.structurizr :as structurizr]))
 
@@ -17,7 +18,8 @@
 
 (deftest generate-from-json
   (let [output-path "components/structurizr/test/output/from-json"]
-    (structurizr/generate
-     {:workspace-file "examples/structurizr/examples/json/getting-started/workspace.json"
+    (dinodoc/generate
+     {:inputs [{:generator (structurizr/make-generator
+                            {:workspace-file "examples/structurizr/examples/json/getting-started/workspace.json"})}]
       :output-path output-path})
     (approval-helpers/is-same? output-path)))

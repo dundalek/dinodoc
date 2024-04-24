@@ -1,16 +1,16 @@
 (ns doc
   (:require
+   [dinodoc.api :as dinodoc]
    [dinodoc.structurizr :as structurizr]))
 
-(def workspace-files
-  ["examples/dsl/big-bank-plc/workspace.dsl"
-   "examples/dsl/financial-risk-system/workspace.dsl"]
-   ; "examples/dsl/microservices/workspace.dsl"]
-  #_(fs/glob "." "examples/dsl/*/workspace.dsl"))
+(let [base-path "/examples/structurizr"]
+  (dinodoc/generate
+   {:output-path "docs"
+    :inputs [{:generator (structurizr/make-generator
+                          {:workspace-file "examples/dsl/big-bank-plc/workspace.dsl"
+                           :base-path base-path})}
+             {:generator (structurizr/make-generator
+                          {:workspace-file "examples/dsl/financial-risk-system/workspace.dsl"
+                           :base-path base-path})}]}))
 
-(doseq [workspace-file workspace-files]
-  (println "Generating:" (str workspace-file))
-  (structurizr/generate
-   {:workspace-file (str workspace-file)
-    :output-path "docs"
-    :base-path "/examples/structurizr"}))
+(shutdown-agents)

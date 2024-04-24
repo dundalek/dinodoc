@@ -1,5 +1,6 @@
 (ns dinodoc.structurizr
   (:require
+   [dinodoc.generator :as generator]
    [dinodoc.structurizr.impl.core :as impl]))
 
 (defn generate
@@ -15,3 +16,14 @@ Options:
     (impl/render-workspace {:workspace workspace
                             :output-path output-path
                             :base-path base-path})))
+
+(deftype StructurizrGenerator [opts]
+  generator/Generator
+  (prepare-index [_])
+  (resolve-link [_ target])
+  (generate [_ {:keys [output-path]}]
+    (generate (assoc opts
+                     :output-path output-path))))
+
+(defn make-generator [opts]
+  (->StructurizrGenerator opts))
