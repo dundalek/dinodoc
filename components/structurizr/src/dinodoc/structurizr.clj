@@ -17,13 +17,20 @@ Options:
                             :output-path output-path
                             :base-path base-path})))
 
-(deftype StructurizrGenerator [opts]
+(deftype StructurizrGenerator [opts ^:volatile-mutable workspace ^:volatile-mutable index]
   generator/Generator
-  (prepare-index [_])
-  (resolve-link [_ target])
+  (prepare-index [_]
+    (let [{:keys [workspace-file base-path]} opts]
+      (set! workspace (impl/load-workspace workspace-file))
+      (impl/set-element-urls {:workspace workspace
+                              :workspace-edn (impl/workspace->data workspace)}
+                             base-path)
+      (set! index (impl/build-index workspace base-path))))
+  (resolve-link [_ target]
+    (get index target))
   (generate [_ {:keys [output-path]}]
     (generate (assoc opts
                      :output-path output-path))))
 
 (defn make-generator [opts]
-  (->StructurizrGenerator opts))
+  (->StructurizrGenerator opts nil nil))

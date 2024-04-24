@@ -6,10 +6,15 @@
    [clojure.java.io :as io]
    [clojure.string :as str])
   (:import
+   [com.structurizr Workspace]
    [com.structurizr.dsl StructurizrDslParser]
+   [com.structurizr.export Diagram]
    [com.structurizr.export.mermaid MermaidDiagramExporter]
+   [com.structurizr.model Container Element SoftwareSystem]
    [com.structurizr.util WorkspaceUtils]
    [java.net URLEncoder]))
+
+; (set! *warn-on-reflection* true)
 
 ;; When setting URL on element with `.setUrl`, structurizr validates that it is an absolute URL with a protocol scheme.
 ;; To make the generator easier to use without needing to specify domain, we use relative paths by using a placeholder that gets stripped out afterwards
@@ -39,8 +44,8 @@
 (defn mermaid-diagram-exporter []
   (MermaidDiagramExporter.))
 
-(defn render-view-diagram [exporter view]
-  (let [diagram (.export exporter view)]
+(defn render-view-diagram [^MermaidDiagramExporter exporter view]
+  (let [^Diagram diagram (.export exporter view)]
     (println
      (str "### " (.getKey diagram) "\n\n"
           "```mermaid\n"
@@ -68,7 +73,7 @@
        "-"
        (:id element)))
 
-(defn set-element-urls [{:keys [workspace workspace-edn]} base-path]
+(defn set-element-urls [{:keys [^Workspace workspace workspace-edn]} base-path]
   (let [model (.getModel workspace)
         base-path (str relative-url-placeholder base-path)
         path (str base-path "/" (encode-url (element-path-segment workspace-edn)))]
@@ -111,7 +116,7 @@
        (filter (fn [{:keys [elements]}]
                  (some #(= (:id %) element-id) elements)))))
 
-(defn view-by-key [workspace key]
+(defn view-by-key [^Workspace workspace key]
   (.getViewWithKey (.getViews workspace) key))
 
 (defn render-element [ctx {:keys [element get-children render-child children-label]}]
@@ -168,10 +173,13 @@
                        :render-child render-container
                        :children-label "Containers"}))
 
+(defn workspace->data [workspace]
+  (-> workspace
+      (WorkspaceUtils/toJson false)
+      (json/parse-string true)))
+
 (defn render-workspace [{:keys [workspace output-path base-path]}]
-  (let [workspace-edn (-> workspace
-                          (WorkspaceUtils/toJson false)
-                          (json/parse-string true))
+  (let [workspace-edn (workspace->data workspace)
         path (str output-path "/" (element-path-segment workspace-edn))
         exporter (mermaid-diagram-exporter)
         ctx {:workspace workspace
@@ -205,3 +213,25 @@
       (let [parser (StructurizrDslParser.)]
         (.parse parser workspace-file)
         (.getWorkspace parser)))))
+
+(defn build-index [workspace base-path]
+  (let [^Workspace workspace workspace]
+    (->>
+     (.getModel workspace)
+     (.getSoftwareSystems)
+     (mapcat (fn [^SoftwareSystem system]
+               (cons system
+                     (->> (.getContainers system)
+                          (mapcat (fn [^Container container]
+                                    (cons container
+                                          (.getComponents container))))))))
+     (map (fn [^Element element]
+            [(.getName element)
+             (-> (.getUrl element)
+                 (str/replace-first (str relative-url-placeholder base-path "/") ""))]))
+     (into {}))))
+
+(comment
+  (do
+    (def workspace (load-workspace "examples/structurizr/examples/dsl/big-bank-plc/workspace.dsl"))
+    (def workspace-edn (workspace->data workspace))))
