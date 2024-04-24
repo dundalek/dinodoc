@@ -1,6 +1,6 @@
 (ns dinodoc.generator)
 
 (defprotocol Generator
-  (prepare-index [this])
-  (resolve-link [this target])
-  (generate [this opts]))
+  (prepare-index [_])
+  (resolve-link [_ target])
+  (generate [_ opts]))

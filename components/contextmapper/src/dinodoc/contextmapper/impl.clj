@@ -201,6 +201,11 @@
     (when (fs/directory? (str output-path "/contexts"))
       (spit (str output-path "/contexts/_category_.json") "{\"position\":2,\"label\":\"Contexts\"}"))))
 
+(defn generate [{:keys [model-file output-path]}]
+  (let [jmodel (load-model model-file)]
+    (render-model {:jmodel jmodel
+                   :output-path output-path})))
+
 (comment
   (do
     (def model-file "examples/contextmapper/examples/Insurance-Example-Stage-5.cml")

@@ -1,7 +1,16 @@
 (ns dinodoc.contextmapper
-  (:require [dinodoc.contextmapper.impl :as impl]))
+  (:require
+   [dinodoc.contextmapper.impl :as impl]
+   [dinodoc.generator :as generator]))
 
-(defn generate [{:keys [model-file output-path]}]
-  (let [jmodel (impl/load-model model-file)]
-    (impl/render-model {:jmodel jmodel
-                        :output-path output-path})))
+(deftype ContextMapperGenerator [opts]
+  generator/Generator
+  (prepare-index [_])
+  (resolve-link [_ target])
+  (generate [_ {:keys [output-path]}]
+    (let [{:keys [model-file]} opts]
+      (impl/generate {:model-file model-file
+                      :output-path output-path}))))
+
+(defn make-generator [opts]
+  (->ContextMapperGenerator opts))

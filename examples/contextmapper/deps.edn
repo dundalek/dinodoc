@@ -1,3 +1,4 @@
 {:aliases
- {:doc {:extra-deps {dinodoc/contextmapper {:local/root "../../components/contextmapper"}}
+ {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../.."}
+                     dinodoc/contextmapper {:local/root "../../components/contextmapper"}}
         :main-opts ["doc.clj"]}}}

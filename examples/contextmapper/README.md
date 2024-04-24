@@ -3,7 +3,7 @@
 Example of rendering documentation for Domain Driven Design (DDD) model using [ContextMapper](https://contextmapper.org)
 defined [CML](https://contextmapper.org/docs/language-reference/) model.
 
-See the rendered [example](https://dinodoc.pages.dev/examples/contextmapper/).
+See the rendered [example](https://dinodoc.pages.dev/examples/contextmapper/insurance-map/).
 
 ### Considerations
 

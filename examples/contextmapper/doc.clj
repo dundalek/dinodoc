@@ -1,7 +1,13 @@
 (ns doc
   (:require
+   [dinodoc.api :as dinodoc]
    [dinodoc.contextmapper :as contextmapper]))
 
-(contextmapper/generate
+(dinodoc/generate
  {:output-path "docs"
-  :model-file "examples/Insurance-Example-Stage-5.cml"})
+  :inputs [{:input "."}
+           {:generator (contextmapper/make-generator
+                        {:model-file "examples/Insurance-Example-Stage-5.cml"})
+            :output-path "insurance-map"}]})
+
+(shutdown-agents)
