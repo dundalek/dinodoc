@@ -2,7 +2,7 @@
 
 ## TeamX
 
-- [ContextB](../contexts/ContextB)
+- [ContextB](../contexts/ContextB/)
   - owns: AggregateBar, AggregateFoo
 
 ## TeamY

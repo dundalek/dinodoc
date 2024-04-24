@@ -9,11 +9,11 @@ title: ExampleMap
 
 ## Domains
 
-- [BlankDomain](domains/BlankDomain)
-- [DomainA](domains/DomainA)
+- [BlankDomain](domains/BlankDomain/)
+- [DomainA](domains/DomainA/)
 
 ## Bounded Contexts
 
-- [ContextA](contexts/ContextA)
-- [ContextB](contexts/ContextB)
+- [ContextA](contexts/ContextA/)
+- [ContextB](contexts/ContextB/)
 

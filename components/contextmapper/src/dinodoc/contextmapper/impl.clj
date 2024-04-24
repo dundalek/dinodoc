@@ -43,10 +43,10 @@
       (.createDiagram jbounded-context)))
 
 (defn bounded-context-path [bounded-context]
-  (str "contexts/" (:name bounded-context)))
+  (str "contexts/" (:name bounded-context) "/"))
 
 (defn domain-path [domain]
-  (str "domains/" (:name domain)))
+  (str "domains/" (:name domain) "/"))
 
 (defn bounded-contexts-without-teams [model]
   (->> (:boundedContexts model)

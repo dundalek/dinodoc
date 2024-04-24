@@ -8,7 +8,7 @@ SubdomainB managing B.
 
 *Core domain*
 
-- [ContextB](../../contexts/ContextB)
+- [ContextB](../../contexts/ContextB/)
 
 ## SubdomainWithoutMetadata
 
