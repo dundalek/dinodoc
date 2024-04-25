@@ -27,22 +27,20 @@ Options:
   (let [{:keys [inputs api-mode resolve-apilink] root-outdir :output-path :as root-opts} opts
         inputs (->> (if (seq inputs) inputs ["."])
                     (map #(impl/normalize-input % root-opts)))
-        article-generator-inputs (->> inputs (remove :generator))
         generator-inputs (->> inputs
                               (keep (fn [input]
                                       (cond
                                         (:generator input)
-                                        (assoc input
-                                               :generator-output-path (:output-path input)
-                                               :generator-output-prefix (:output-path-prefix input))
+                                        {:generator (:generator input)
+                                         :generator-output-path (:output-path input)
+                                         :generator-output-prefix (:output-path-prefix input)}
 
                                         (not= api-mode :global)
-                                        (assoc input
-                                               :generator-output-path (:api-docs-dir input)
-                                               :generator-output-prefix (:api-docs-prefix input)
-                                               :generator
-                                               (cljapi/make-generator
-                                                (select-keys input [:source-paths :path :github/repo :git/branch])))))))
+                                        {:generator-output-path (:api-docs-dir input)
+                                         :generator-output-prefix (:api-docs-prefix input)
+                                         :generator
+                                         (cljapi/make-generator
+                                          (select-keys input [:source-paths :path :github/repo :git/branch]))}))))
         generator-inputs (cond->> generator-inputs
                            (= api-mode :global)
                            (cons {:generator-output-path (str root-outdir "/api")
@@ -52,7 +50,14 @@ Options:
                                                   (assoc :path nil
                                                          :source-paths (mapcat :source-paths inputs))))}))
         resolve-from-generators (impl/make-resolve-link generator-inputs)
-        resolve-apilink (or resolve-apilink resolve-from-generators)]
+        resolve-apilink (or resolve-apilink resolve-from-generators)
+        article-generators (->> inputs
+                                (remove :generator)
+                                (map (fn [input]
+                                       {:generator
+                                        (articles/make-generator {:input input
+                                                                  :resolve-apilink resolve-apilink})})))
+        generator-inputs (concat article-generators generator-inputs)]
 
     (fs/delete-tree root-outdir)
     (fs/create-dirs root-outdir)
@@ -60,14 +65,8 @@ Options:
     (doseq [{:keys [generator]} generator-inputs]
       (generator/prepare-index generator))
 
-    (doseq [input article-generator-inputs]
-      (let [generator (articles/make-generator {:input input
-                                                :resolve-apilink resolve-apilink})]
-        (generator/generate generator {} #_{:output-path (:output-path input)})))
-
-    (doseq [input generator-inputs]
-      (let [{:keys [generator generator-output-path]} input]
-        (generator/generate generator {:output-path generator-output-path})))))
+    (doseq [{:keys [generator generator-output-path]} generator-inputs]
+      (generator/generate generator {:output-path generator-output-path}))))
 
 (comment
   (generate
