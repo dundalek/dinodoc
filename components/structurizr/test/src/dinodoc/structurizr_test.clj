@@ -23,6 +23,7 @@
   (let [output-path "components/structurizr/test/output/json-big-bank-plc"]
     (dinodoc/generate
      {:inputs [{:generator (structurizr/make-generator
-                            {:workspace-file "examples/structurizr/examples/json/big-bank-plc/workspace.json"})}]
+                            {:workspace-file "examples/structurizr/examples/json/big-bank-plc/workspace.json"})
+                :output-path "systems"}]
       :output-path output-path})
     (approval-helpers/is-same? output-path)))
