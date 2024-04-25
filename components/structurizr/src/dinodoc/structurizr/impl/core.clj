@@ -20,20 +20,20 @@
 ;; To make the generator easier to use without needing to specify domain, we use relative paths by using a placeholder that gets stripped out afterwards
 (def relative-url-placeholder "http://_DINODOC_RELATIVE_URL_PLACEHOLDER_")
 
-(defn fix-mermaid-links [s]
+(defn fix-mermaid-links [s path-to-root]
   (->> (str/split s #"\n")
        (map (fn [line]
               (str/replace line #"^(\s*click [^\s]+ )([^\s]+) \"([^\s]+)\"" #_"$1\"$2\""
                            (fn [[_ prefix url title]]
                              (str prefix "\""
-                                  (str/replace url relative-url-placeholder "")
+                                  (str/replace url relative-url-placeholder path-to-root)
                                   "\" \""
                                   (str/replace title relative-url-placeholder "")
                                   "\"")))))
        (str/join "\n")))
 
 (comment
-  (fix-mermaid-links "click 1 http://example.com/1 \"http://example.com/1\""))
+  (fix-mermaid-links "click 1 http://example.com/1 \"http://example.com/1\"" ""))
 
 ;; Structurizr exports mermaid diagrams with white background, which does not
 ;; look good with dark theme. The styles are hard-coded in mermaid exporter,
@@ -44,14 +44,14 @@
 (defn mermaid-diagram-exporter []
   (MermaidDiagramExporter.))
 
-(defn render-view-diagram [^MermaidDiagramExporter exporter view]
+(defn render-view-diagram [^MermaidDiagramExporter exporter view path-to-root]
   (let [^Diagram diagram (.export exporter view)]
     (println
      (str "### " (.getKey diagram) "\n\n"
           "```mermaid\n"
           (-> (.getDefinition diagram)
               (fix-mermaid-background)
-              (fix-mermaid-links))
+              (fix-mermaid-links path-to-root))
           "\n```\n"))))
 
 (defn render-image-view [{:keys [content title key]}]
@@ -73,20 +73,19 @@
        "-"
        (:id element)))
 
-(defn set-element-urls [{:keys [^Workspace workspace workspace-edn]} base-path]
+(defn set-element-urls [{:keys [^Workspace workspace workspace-edn]}]
   (let [model (.getModel workspace)
-        base-path (str relative-url-placeholder #_base-path)
-        path (str base-path "/" (encode-url (element-path-segment workspace-edn)))]
+        path relative-url-placeholder]
     (doseq [element (->> workspace-edn :model :softwareSystems)]
-      (let [path (str path "/" (encode-url (element-path-segment element)))
+      (let [path (str path (encode-url (element-path-segment element)) "/")
             element-obj (.getElement model (:id element))]
         (.setUrl element-obj path)
         (doseq [element (:containers element)]
-          (let [path (str path "/" (encode-url (element-path-segment element)))
+          (let [path (str path  (encode-url (element-path-segment element)) "/")
                 element-obj (.getElement model (:id element))]
             (.setUrl element-obj path)
             (doseq [element (:components element)]
-              (let [path (str path "/" (encode-url (element-path-segment element)))
+              (let [path (str path (encode-url (element-path-segment element)) "/")
                     element-obj (.getElement model (:id element))]
                 (.setUrl element-obj path)))))))))
 
@@ -119,7 +118,7 @@
 (defn view-by-key [^Workspace workspace key]
   (.getViewWithKey (.getViews workspace) key))
 
-(defn render-element [ctx {:keys [element get-children render-child children-label]}]
+(defn render-element [ctx {:keys [element get-children render-child children-label path-to-root]}]
   (let [{:keys [workspace-edn workspace exporter output-path]} ctx
         path-segment (element-path-segment element)
         path (str output-path "/" path-segment)]
@@ -140,7 +139,7 @@
 
           (->> (views-for-element workspace-edn id)
                (map #(view-by-key workspace (:key %)))
-               (run! #(render-view-diagram exporter %)))
+               (run! #(render-view-diagram exporter % path-to-root)))
           (->> workspace-edn :views :imageViews
                (filter #(= (:elementId %) id))
                (run! render-image-view))
@@ -152,31 +151,34 @@
               (doseq [[env views] (sort-by key environments)]
                 (println "## Deployment -" env)
                 (doseq [{:keys [key description]} views]
-                  (render-view-diagram exporter (view-by-key workspace key)))))))))
+                  (render-view-diagram exporter (view-by-key workspace key) path-to-root))))))))
     (run! #(render-child (assoc ctx :output-path path) %)
           (get-children element))))
 
 (defn render-component [ctx component]
   (render-element ctx {:element component
                        :get-children (fn [_])
-                       :render-child (fn [_])}))
+                       :render-child (fn [_])
+                       :path-to-root "../../../"}))
 
 (defn render-container [ctx container]
   (render-element ctx {:element container
                        :get-children :components
                        :render-child render-component
-                       :children-label "Components"}))
+                       :children-label "Components"
+                       :path-to-root "../../"}))
 
 (defn render-software-system [ctx system]
   (render-element ctx {:element system
                        :get-children :containers
                        :render-child render-container
-                       :children-label "Containers"}))
+                       :children-label "Containers"
+                       :path-to-root "../"}))
 
 (defn workspace->data [workspace]
   (j/from-java workspace))
 
-(defn render-workspace [{:keys [workspace output-path base-path]}]
+(defn render-workspace [{:keys [workspace output-path]}]
   (let [workspace-edn (workspace->data workspace)
         exporter (mermaid-diagram-exporter)
         ctx {:workspace workspace
@@ -186,7 +188,7 @@
         systems (->> workspace-edn
                      :model
                      :softwareSystems)]
-    (set-element-urls ctx base-path)
+    (set-element-urls ctx)
     (fs/delete-tree output-path)
     (fs/create-dirs output-path)
     (with-open [out (io/writer (str output-path "/index.md"))]
@@ -199,7 +201,7 @@
         (println)
         (->> workspace-edn :views :systemLandscapeViews
              (map #(view-by-key workspace (:key %)))
-             (run! #(render-view-diagram exporter %)))))
+             (run! #(render-view-diagram exporter % "")))))
     (run! #(render-software-system ctx %) systems)))
 
 ;; Inspired by https://github.com/structurizr/cli/blob/6f40424dd6c7777150fa6f22ffc5489ec7d3ece6/src/main/java/com/structurizr/cli/AbstractCommand.java#L45
@@ -211,7 +213,7 @@
         (.parse parser workspace-file)
         (.getWorkspace parser)))))
 
-(defn build-index [workspace base-path]
+(defn build-index [workspace]
   (let [^Workspace workspace workspace]
     (->>
      (.getModel workspace)
@@ -225,7 +227,7 @@
      (map (fn [^Element element]
             [(.getName element)
              (-> (.getUrl element)
-                 (str/replace-first (str relative-url-placeholder base-path "/") ""))]))
+                 (str/replace-first relative-url-placeholder ""))]))
      (into {}))))
 
 (comment

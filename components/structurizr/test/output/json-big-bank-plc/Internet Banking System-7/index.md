@@ -23,13 +23,13 @@ graph TB
       style enterprise fill:transparent,stroke:#444444,color:#444444
 
       4["<div style='font-weight: bold'>Mainframe Banking System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Stores all of the core<br />banking information about<br />customers, accounts,<br />transactions, etc.</div>"]
-      click 4 "/Big%20Bank%20plc-0/Mainframe%20Banking%20System-4" "/Big%20Bank%20plc-0/Mainframe%20Banking%20System-4"
+      click 4 "../Mainframe%20Banking%20System-4/" "Mainframe%20Banking%20System-4/"
       style 4 fill:#999999,stroke:#6b6b6b,color:#ffffff
       5["<div style='font-weight: bold'>E-mail System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>The internal Microsoft<br />Exchange e-mail system.</div>"]
-      click 5 "/Big%20Bank%20plc-0/E-mail%20System-5" "/Big%20Bank%20plc-0/E-mail%20System-5"
+      click 5 "../E-mail%20System-5/" "E-mail%20System-5/"
       style 5 fill:#999999,stroke:#6b6b6b,color:#ffffff
       7["<div style='font-weight: bold'>Internet Banking System</div><div style='font-size: 70%; margin-top: 0px'>[Software System]</div><div style='font-size: 80%; margin-top:10px'>Allows customers to view<br />information about their bank<br />accounts, and make payments.</div>"]
-      click 7 "/Big%20Bank%20plc-0/Internet%20Banking%20System-7" "/Big%20Bank%20plc-0/Internet%20Banking%20System-7"
+      click 7 "../Internet%20Banking%20System-7/" "Internet%20Banking%20System-7/"
       style 7 fill:#1168bd,stroke:#0b4884,color:#ffffff
     end
 
