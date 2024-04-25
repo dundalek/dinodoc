@@ -6,6 +6,8 @@
    [dinodoc.impl.cljapi :as cljapi]
    [dinodoc.impl.core :as impl]))
 
+(def default-api-prefix "api")
+
 (defn generate
   "Generates documentation for given inputs. Input options can be also specified as top-level keys that will be shared by all inputs.
 
@@ -34,16 +36,16 @@ Options:
                                       :generator-output-path output-path
                                       :generator-output-prefix output-path-prefix})))
         api-generators (if (= api-mode :global)
-                         [{:generator-output-path (str root-outdir "/api")
-                           :generator-output-prefix "api"
+                         [{:generator-output-path (str root-outdir "/" default-api-prefix)
+                           :generator-output-prefix default-api-prefix
                            :generator (cljapi/make-generator
                                        (-> (select-keys root-opts [:github/repo :git/branch])
                                            (assoc :source-paths (mapcat :source-paths inputs))))}]
                          (->> inputs
                               (remove :generator)
-                              (map (fn [{:keys [api-docs-prefix api-docs-dir] :as input}]
-                                     {:generator-output-path api-docs-dir
-                                      :generator-output-prefix api-docs-prefix
+                              (map (fn [{:keys [output-path] :as input}]
+                                     {:generator-output-path (str output-path "/" default-api-prefix)
+                                      :generator-output-prefix default-api-prefix
                                       :generator
                                       (cljapi/make-generator
                                        (select-keys input [:source-paths :path :github/repo :git/branch]))}))))

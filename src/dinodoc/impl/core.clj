@@ -134,8 +134,6 @@
         source-paths (->> (or source-paths ["src"])
                           (map #(str path "/" %)))
         cljdoc-path (str  doc-path "/cljdoc.edn")
-        api-docs-prefix "api"
-        api-docs-dir (str outdir "/" api-docs-prefix)
         path-to-root-fn (if (= (:api-mode root-opts) :global)
                           (fn [file-path]
                             (path-to-root (str/replace-first file-path root-outdir "")))
@@ -165,14 +163,13 @@
                    (sort)
                    (map (fn [file]
                           [nil {:file file}])))]
+    ;; Following needs some untangling, we are mixing common options with clj api generator and articles generator options
     {:path path
      :doc-tree (concat doc-tree
                        doc-files)
      :output-path outdir
      :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
      :source-paths source-paths
-     :api-docs-prefix api-docs-prefix
-     :api-docs-dir api-docs-dir
      :path-to-root-fn path-to-root-fn
      :github/repo repo
      :git/branch branch
