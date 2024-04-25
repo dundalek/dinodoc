@@ -27,44 +27,40 @@ Options:
   (let [{:keys [inputs api-mode resolve-apilink] root-outdir :output-path :as root-opts} opts
         inputs (->> (if (seq inputs) inputs ["."])
                     (map #(impl/normalize-input % root-opts)))
-        generator-inputs (->> inputs
-                              (keep (fn [input]
-                                      (cond
-                                        (:generator input)
-                                        {:generator (:generator input)
-                                         :generator-output-path (:output-path input)
-                                         :generator-output-prefix (:output-path-prefix input)}
-
-                                        (not= api-mode :global)
-                                        {:generator-output-path (:api-docs-dir input)
-                                         :generator-output-prefix (:api-docs-prefix input)
-                                         :generator
-                                         (cljapi/make-generator
-                                          (select-keys input [:source-paths :path :github/repo :git/branch]))}))))
-        generator-inputs (cond->> generator-inputs
-                           (= api-mode :global)
-                           (cons {:generator-output-path (str root-outdir "/api")
-                                  :generator-output-prefix "api"
-                                  :generator (cljapi/make-generator
-                                              (-> (select-keys root-opts [:github/repo :git/branch])
-                                                  (assoc :path nil
-                                                         :source-paths (mapcat :source-paths inputs))))}))
-        resolve-from-generators (impl/make-resolve-link generator-inputs)
-        resolve-link (or resolve-apilink resolve-from-generators)
+        input-generators (->> inputs
+                              (filter :generator)
+                              (map (fn [{:keys [generator output-path output-path-prefix]}]
+                                     {:generator generator
+                                      :generator-output-path output-path
+                                      :generator-output-prefix output-path-prefix})))
+        api-generators (if (= api-mode :global)
+                         [{:generator-output-path (str root-outdir "/api")
+                           :generator-output-prefix "api"
+                           :generator (cljapi/make-generator
+                                       (-> (select-keys root-opts [:github/repo :git/branch])
+                                           (assoc :source-paths (mapcat :source-paths inputs))))}]
+                         (->> inputs
+                              (remove :generator)
+                              (map (fn [{:keys [api-docs-prefix api-docs-dir] :as input}]
+                                     {:generator-output-path api-docs-dir
+                                      :generator-output-prefix api-docs-prefix
+                                      :generator
+                                      (cljapi/make-generator
+                                       (select-keys input [:source-paths :path :github/repo :git/branch]))}))))
         article-generators (->> inputs
                                 (remove :generator)
                                 (map (fn [input]
-                                       {:generator
-                                        (articles/make-generator {:input input})})))
-        generator-inputs (concat article-generators generator-inputs)]
+                                       {:generator (articles/make-generator {:input input})})))
+        generators (concat article-generators api-generators input-generators)
+        resolve-link (or resolve-apilink (impl/make-resolve-link generators))]
 
     (fs/delete-tree root-outdir)
     (fs/create-dirs root-outdir)
 
-    (doseq [{:keys [generator]} generator-inputs]
+    (doseq [{:keys [generator]} generators]
       (generator/prepare-index generator))
 
-    (doseq [{:keys [generator generator-output-path]} generator-inputs]
+    (doseq [{:keys [generator generator-output-path]} generators]
       (generator/generate generator {:output-path generator-output-path
                                      :resolve-link resolve-link}))))
 
