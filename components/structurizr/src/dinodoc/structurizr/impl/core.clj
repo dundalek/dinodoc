@@ -10,7 +10,7 @@
    [com.structurizr.dsl StructurizrDslParser]
    [com.structurizr.export Diagram]
    [com.structurizr.export.mermaid MermaidDiagramExporter]
-   [com.structurizr.model Container Element SoftwareSystem]
+   [com.structurizr.model Component Container Element SoftwareSystem]
    [com.structurizr.util WorkspaceUtils]
    [java.net URLEncoder]))
 
@@ -64,29 +64,31 @@
   (-> (URLEncoder/encode url)
       (str/replace "+" "%20")))
 
-(defn element-path-segment [element]
-  (str (-> (:name element)
-           ;; Got an error from Docusaurus `Module not found: Error: Can't resolve`
-           ;; when a name that ends up being used as file path contained a dot,
-           ;; stripping it as a workaround.
-           (str/replace "." ""))
-       "-"
-       (:id element)))
+(defn sanitize-file-path [s]
+  ;; Got an error from Docusaurus `Module not found: Error: Can't resolve`
+  ;; when a name that ends up being used as file path contained a dot,
+  ;; stripping it as a workaround.
+  (str/replace s "." ""))
 
-(defn set-element-urls [{:keys [^Workspace workspace workspace-edn]}]
+(defn element-path-segment [element]
+  (sanitize-file-path
+   (str (:name element) "-" (:id element))))
+
+(defn element-obj-path-segment [^Element element]
+  (sanitize-file-path
+   (str (.getName element) "-" (.getId element))))
+
+(defn set-element-urls [^Workspace workspace]
   (let [model (.getModel workspace)
         path relative-url-placeholder]
-    (doseq [element (->> workspace-edn :model :softwareSystems)]
-      (let [path (str path (encode-url (element-path-segment element)) "/")
-            element-obj (.getElement model (:id element))]
+    (doseq [^SoftwareSystem element-obj (.getSoftwareSystems model)]
+      (let [path (str path (encode-url (element-obj-path-segment element-obj)) "/")]
         (.setUrl element-obj path)
-        (doseq [element (:containers element)]
-          (let [path (str path  (encode-url (element-path-segment element)) "/")
-                element-obj (.getElement model (:id element))]
+        (doseq [^Container element-obj (.getContainers element-obj)]
+          (let [path (str path  (encode-url (element-obj-path-segment element-obj)) "/")]
             (.setUrl element-obj path)
-            (doseq [element (:components element)]
-              (let [path (str path (encode-url (element-path-segment element)) "/")
-                    element-obj (.getElement model (:id element))]
+            (doseq [^Component element-obj (.getComponents element-obj)]
+              (let [path (str path (encode-url (element-obj-path-segment element-obj)) "/")]
                 (.setUrl element-obj path)))))))))
 
 (defn render-children-links [label children]
@@ -188,8 +190,6 @@
         systems (->> workspace-edn
                      :model
                      :softwareSystems)]
-    (set-element-urls ctx)
-    (fs/delete-tree output-path)
     (fs/create-dirs output-path)
     (with-open [out (io/writer (str output-path "/index.md"))]
       (binding [*out* out]

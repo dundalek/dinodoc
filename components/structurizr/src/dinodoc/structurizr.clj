@@ -8,8 +8,7 @@
   (prepare-index [_]
     (let [{:keys [workspace-file]} opts]
       (set! workspace (impl/load-workspace workspace-file))
-      (impl/set-element-urls {:workspace workspace
-                              :workspace-edn (impl/workspace->data workspace)})
+      (impl/set-element-urls workspace)
       (set! index (impl/build-index workspace))))
   (resolve-link [_ target]
     (get index target))
