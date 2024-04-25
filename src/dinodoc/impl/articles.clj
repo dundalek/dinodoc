@@ -7,8 +7,7 @@
 (deftype ArticlesGenerator [opts ^:volatile-mutable state]
   generator/Generator
   (prepare-index [_]
-    (let [{:keys [input]} opts
-          {:keys [path doc-tree output-path edit-url-fn]} input
+    (let [{:keys [path doc-tree output-path edit-url-fn]} opts
           doc-tree-opts {:root-path output-path
                          :parent-path output-path
                          :input-path path
@@ -23,8 +22,7 @@
                    :file-map file-map})))
   (resolve-link [_ _])
   (generate [_ {:keys [resolve-link _output-path]}]
-    (let [{:keys [input]} opts
-          {:keys [path-to-root-fn]} input
+    (let [{:keys [path-to-root-fn]} opts
           {:keys [doc-tree-ops file-map]} state
           link-resolver (fn [file-path s]
                           (when-some [target (resolve-link s)]
