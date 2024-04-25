@@ -50,13 +50,12 @@ Options:
                                                   (assoc :path nil
                                                          :source-paths (mapcat :source-paths inputs))))}))
         resolve-from-generators (impl/make-resolve-link generator-inputs)
-        resolve-apilink (or resolve-apilink resolve-from-generators)
+        resolve-link (or resolve-apilink resolve-from-generators)
         article-generators (->> inputs
                                 (remove :generator)
                                 (map (fn [input]
                                        {:generator
-                                        (articles/make-generator {:input input
-                                                                  :resolve-apilink resolve-apilink})})))
+                                        (articles/make-generator {:input input})})))
         generator-inputs (concat article-generators generator-inputs)]
 
     (fs/delete-tree root-outdir)
@@ -66,7 +65,8 @@ Options:
       (generator/prepare-index generator))
 
     (doseq [{:keys [generator generator-output-path]} generator-inputs]
-      (generator/generate generator {:output-path generator-output-path}))))
+      (generator/generate generator {:output-path generator-output-path
+                                     :resolve-link resolve-link}))))
 
 (comment
   (generate

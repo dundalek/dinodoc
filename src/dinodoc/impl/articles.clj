@@ -22,12 +22,12 @@
       (set! state {:doc-tree-ops doc-tree-ops
                    :file-map file-map})))
   (resolve-link [_ _])
-  (generate [_ {:keys [_output-path]}]
-    (let [{:keys [input resolve-apilink]} opts
+  (generate [_ {:keys [resolve-link _output-path]}]
+    (let [{:keys [input]} opts
           {:keys [path-to-root-fn]} input
-          {:keys [doc-tree-ops file-map link-resolver]} state
+          {:keys [doc-tree-ops file-map]} state
           link-resolver (fn [file-path s]
-                          (when-some [target (resolve-apilink s)]
+                          (when-some [target (resolve-link s)]
                             ;; pathname:// workaround for non-absolute links to HTML assets
                             ;; https://github.com/facebook/docusaurus/issues/3894#issuecomment-740622170
                             (let [html-target? (re-find #"\.html$|\.html#.*$" target)]
