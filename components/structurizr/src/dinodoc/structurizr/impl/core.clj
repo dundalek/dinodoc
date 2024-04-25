@@ -2,7 +2,7 @@
   {:no-doc true}
   (:require
    [babashka.fs :as fs]
-   [cheshire.core :as json]
+   [clojure.java.data :as j]
    [clojure.java.io :as io]
    [clojure.string :as str])
   (:import
@@ -75,7 +75,7 @@
 
 (defn set-element-urls [{:keys [^Workspace workspace workspace-edn]} base-path]
   (let [model (.getModel workspace)
-        base-path (str relative-url-placeholder base-path)
+        base-path (str relative-url-placeholder #_base-path)
         path (str base-path "/" (encode-url (element-path-segment workspace-edn)))]
     (doseq [element (->> workspace-edn :model :softwareSystems)]
       (let [path (str path "/" (encode-url (element-path-segment element)))
@@ -174,9 +174,7 @@
                        :children-label "Containers"}))
 
 (defn workspace->data [workspace]
-  (-> workspace
-      (WorkspaceUtils/toJson false)
-      (json/parse-string true)))
+  (j/from-java workspace))
 
 (defn render-workspace [{:keys [workspace output-path base-path]}]
   (let [workspace-edn (workspace->data workspace)
