@@ -41,7 +41,7 @@ API documentation:
   - extract and render API spec from code when using [Reitit](https://github.com/metosin/reitit) routes
 
 Architecture:
-- [Structurizr](https://dinodoc.pages.dev/examples/structurizr/Big%20Bank%20plc-0/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
+- [Structurizr](https://dinodoc.pages.dev/examples/structurizr/big-bank-plc/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
   - architecture documentation with diagrams based on the [C4 model](https://c4model.com/)
 - [ContextMapper](https://dinodoc.pages.dev/examples/contextmapper/insurance-map/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/contextmapper))
   - Domain Driven Design

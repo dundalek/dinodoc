@@ -180,19 +180,18 @@
 
 (defn render-workspace [{:keys [workspace output-path base-path]}]
   (let [workspace-edn (workspace->data workspace)
-        path (str output-path "/" (element-path-segment workspace-edn))
         exporter (mermaid-diagram-exporter)
         ctx {:workspace workspace
              :workspace-edn workspace-edn
              :exporter exporter
-             :output-path path}
+             :output-path output-path}
         systems (->> workspace-edn
                      :model
                      :softwareSystems)]
     (set-element-urls ctx base-path)
-    (fs/delete-tree path)
-    (fs/create-dirs path)
-    (with-open [out (io/writer (str path "/index.md"))]
+    (fs/delete-tree output-path)
+    (fs/create-dirs output-path)
+    (with-open [out (io/writer (str output-path "/index.md"))]
       (binding [*out* out]
         (println "#" (:name workspace-edn))
         (println)

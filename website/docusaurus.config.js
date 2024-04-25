@@ -139,7 +139,7 @@ const config = {
               { to: '/examples/promesa/', label: 'Clojure API' },
               { to: '/examples/ts/', label: 'TypeScript API' },
               { to: '/examples/openapi/petstore/add-pet', label: 'HTTP API' },
-              { to: '/examples/structurizr/Big%20Bank%20plc-0/', label: 'Architecture Docs' },
+              { to: '/examples/structurizr/big-bank-plc/', label: 'Architecture Docs' },
               { to: '/examples/contextmapper/', label: 'Domain Driven Design' },
               { to: '/examples/dbschema/chinook/', label: 'DB Schema' },
               { to: '/examples/statecharts/', label: 'Statechart Diagrams' },

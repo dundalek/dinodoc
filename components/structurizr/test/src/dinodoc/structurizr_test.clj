@@ -20,6 +20,7 @@
   (let [output-path "components/structurizr/test/output/from-json"]
     (dinodoc/generate
      {:inputs [{:generator (structurizr/make-generator
-                            {:workspace-file "examples/structurizr/examples/json/getting-started/workspace.json"})}]
+                            {:workspace-file "examples/structurizr/examples/json/getting-started/workspace.json"})
+                :output-path "Getting Started-0"}]
       :output-path output-path})
     (approval-helpers/is-same? output-path)))
