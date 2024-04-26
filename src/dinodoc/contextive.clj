@@ -3,7 +3,8 @@
    [babashka.fs :as fs]
    [clj-yaml.core :as yaml]
    [clojure.java.io :as io]
-   [dinodoc.generator :as generator]))
+   [dinodoc.generator :as generator]
+   [slugify.core :refer [slugify]]))
 
 (deftype ContextiveGenerator [opts ^:volatile-mutable bounded-contexts ^:volatile-mutable index]
   generator/Generator
@@ -15,7 +16,7 @@
             (->> contexts
                  (reduce (fn [m {:keys [terms] context-name :name}]
                            (reduce (fn [m {term-name :name}]
-                                     (let [target (str context-name "#" term-name)]
+                                     (let [target (str context-name "#" (slugify term-name))]
                                        (-> m
                                            (assoc term-name target)
                                            (assoc (str context-name ":" term-name) target))))
@@ -35,6 +36,7 @@
             (println (str "- [" context-name "](" context-name "/)")))))
 
       (doseq [{:keys [terms domainVisionStatement] context-name :name} bounded-contexts]
+        (assert (string? context-name))
         (let [path (str output-path "/" context-name "/index.md")]
           (fs/create-dirs (fs/parent path))
           (with-open [out (io/writer path)]
@@ -43,10 +45,12 @@
               (println)
               (println domainVisionStatement)
               (doseq [{:keys [definition examples] term-name :name} terms]
+                (assert (string? term-name))
                 (println)
-                (println "##" term-name)
-                (println)
-                (println definition)
+                (println "##" term-name (str "{#" (slugify term-name) "}"))
+                (when definition
+                  (println)
+                  (println definition))
                 (when (seq examples)
                   (println)
                   (println "Examples:")

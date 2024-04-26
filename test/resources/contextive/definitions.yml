@@ -1,0 +1,12 @@
+contexts:
+  - name: ContextA
+    domainVisionStatement: Lorem Ipsum
+    terms:
+      - name: foo
+        definition: Some definition of Foo
+      - name: bar
+        definition: Some definition of Bar
+        examples:
+          - First
+          - Second
+      - name: Multi Word Term
