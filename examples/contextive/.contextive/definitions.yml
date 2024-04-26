@@ -1,0 +1,77 @@
+# Source: https://github.com/chrissimon-au/tdd-ddd-demo-dotnet/blob/891aeb03e19cb5df71a8246f499716115372af97/.contextive/definitions.yml
+#
+# MIT License
+#
+# Copyright (c) 2023 Chris Simon
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+contexts:
+  - name: University
+    domainVisionStatement: To allow students to register and enrol in courses.
+    terms:
+    - name: student
+      definition: A person who would like to study a course.
+      examples:
+        - The student has registered at the university.
+        - The student has enroled in the course.
+    - name: register
+      definition: The process of a student registering with the university.  They will not yet be enroled in a course after registering.
+      examples:
+        - The student has registered and is intending to enrol in 3 courses.
+    - name: room
+      definition: A physical space that a course can be delivered in. Since it has a physical size it has a limited capacity for the number of students who can attend a course in the room.
+      examples:
+        - The room doesn't yet have any courses assigned to it.
+    - name: capacity
+      definition: The number of students who can enrol in a course that is happening in the room.
+      examples:
+        - The capacity of the room is 10.
+    - name: setup
+      definition: The process of defining a new room that is available at the university.  Usually only done once when the university is setting up the system, but may be done if they reconfigure their layouts.
+      examples:
+        - The admin has setup a new room.
+    - name: course
+      definition: A unit of study that is focussed on a topic or group of related topics.
+      examples:
+        - 'The student is enroling in the "Ancient History: Myths and Legends" course.'
+        - 10 students have enroled in the Test-Driven Development course.
+    - name: catalog
+      definition: The list of courses that are available for students to enrol in.
+      examples:
+        - The catalog has 10 courses available.
+    - name: include
+      definition: The process of including a course in the catalog.
+      examples:
+        - The administrator hasn't yet included my course in the catalog.
+    - name: enrol
+      definition: To enrol in a course is for a student to tell the university that they will study that course.
+      examples:
+        - I would like to enrol in Urban Geography.
+    - name: enroling
+      definition: The process of a student enroling in a course.
+      examples:
+        - I am enroling in Advanced Domain Modeling.
+    - name: enrolment
+      definition: A student enrols in a course and when they do we record their enrolment. The enrolment keeps track of which student has enroled in which course.
+      examples:
+        - A course has 5 enrolments so far.
+    - name: schedule
+      definition: Either the process of creating a schedule, or the schedule itself, where the schedule is a definition of which courses are assigned to which rooms.
+      examples:
+        - I will be scheduling the courses on Friday, after enrolments are closed.

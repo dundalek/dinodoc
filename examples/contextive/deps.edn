@@ -1,0 +1,3 @@
+{:aliases
+ {:doc {:extra-deps {dinodoc/dinodoc {:local/root "../../"}}
+        :main-opts ["doc.clj"]}}}
