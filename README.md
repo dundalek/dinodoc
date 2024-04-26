@@ -44,7 +44,9 @@ Architecture:
 - [Structurizr](https://dinodoc.pages.dev/examples/structurizr/big-bank-plc/) ([docs](https://dinodoc.pages.dev/docs/structurizr/))
   - architecture documentation with diagrams based on the [C4 model](https://c4model.com/)
 - [ContextMapper](https://dinodoc.pages.dev/examples/contextmapper/insurance-map/) ([source](https://github.com/dundalek/dinodoc/tree/main/examples/contextmapper))
-  - Domain Driven Design
+  - using Domain Driven Design (DDD) to map Bounded Contexts 
+- [Glossary](https://dinodoc.pages.dev/examples/contextive/glossary/University/) of terms ([source](https://github.com/dundalek/dinodoc/tree/main/examples/contextive))
+  - use [Contextive](https://github.com/dev-cycles/contextive) definition format to maintain Ubiquitous Language
 
 Diagrams:
 
