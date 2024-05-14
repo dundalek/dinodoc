@@ -2,7 +2,7 @@
   (:require
    [clojure.test :refer [deftest is testing]]
    [dinodoc.fs-helpers :refer [with-temp-dir]]
-   [dinodoc.impl.tbls :refer [resolve-link]]))
+   [dinodoc.tbls.impl :refer [resolve-link]]))
 
 (deftest resolve-test
   (with-temp-dir
