@@ -57,5 +57,3 @@ running --> walking : slow-down
 }
 }
 ```
-
-[source](https://github.com/dundalek/dinodoc/blob/main/example/statecharts.clj#L26-L26)

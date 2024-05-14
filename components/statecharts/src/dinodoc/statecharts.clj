@@ -65,12 +65,13 @@
    (let [{:keys [name file line doc]} (meta machine-var)
          machine @machine-var
          ;; consider ability to allow passing repo info to avoid running detection for each diagram
-         {:keys [url branch]} (git/detect-repo-info ".")
-         source-url (impl/var-source
-                     {:filename file :row line :end-row line}
-                     {:github/repo url
-                      :git/branch branch
-                      :filename-add-prefix filename-add-prefix})]
+         repo-info (git/detect-repo-info ".")
+         source-url (when-some [{:keys [url branch]} repo-info]
+                      (impl/var-source
+                       {:filename file :row line :end-row line}
+                       {:github/repo url
+                        :git/branch branch
+                        :filename-add-prefix filename-add-prefix}))]
      (println)
      (println "##" name)
      (when doc
@@ -78,5 +79,6 @@
        (println doc))
      (println)
      (render-machine-block machine)
-     (println)
-     (println (str "[source](" source-url ")")))))
+     (when source-url
+       (println)
+       (println (str "[source](" source-url ")"))))))
