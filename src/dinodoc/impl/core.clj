@@ -164,19 +164,27 @@
                    (map (fn [file]
                           [nil {:file file}])))]
     ;; Following needs some untangling, we are mixing common options with clj api generator and articles generator options
-    {:path path
-     :doc-tree (concat doc-tree
-                       doc-files)
-     :output-path outdir
-     :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
-     :source-paths source-paths
-     :path-to-root-fn path-to-root-fn
-
-     :github/repo repo
+    {:github/repo repo
      :git/branch branch
 
+     ;; cljapi, article, generator
+     :output-path outdir
+
+     ;; cljapi, article
+     :path path
+
+     ;; generator input
+     :generator generator
+     :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
+
+     ;; article
+     :doc-tree (concat doc-tree
+                       doc-files)
      :edit-url-fn edit-url-fn
-     :generator generator}))
+     :path-to-root-fn path-to-root-fn
+
+     ;; cljapi
+     :source-paths source-paths}))
 
 (defn input->var-source-opts [{:keys [gihub/repo git/branch]}]
   (let [source-uri (if (and repo branch)
