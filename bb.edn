@@ -1,9 +1,9 @@
 {:paths ["script"]
  :tasks {:requires [[build-examples]]
 
-         test {:task (clojure "-M:test")}
+         test {:task (clojure "-M:test" #_#_"--plugin" "notifier" "--watch")}
+         test:once {:task (clojure "-M:test")}
          test:ci {:task (clojure "-M:test" "--skip-meta" "skip-ci")}
-         test:watch {:task (clojure "-M:test" #_#_"--plugin" "notifier" "--watch")}
          test:coverage {:task (clojure "-M:test:coverage")}
          test:init-submodules (shell "git submodule update --init test/projects/codox test/projects/promesa examples/structurizr/examples")
 
