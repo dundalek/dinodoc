@@ -9,7 +9,7 @@
    [clojure.string :as str]
    [dinodoc.generator :as generator]
    [dinodoc.impl.git :as git]
-   [dinodoc.impl.quickdoc.impl :as impl]
+   [dinodoc.impl.quickdoc.impl :as qimpl]
    [slugify.core :refer [slugify]]))
 
 (def link-regex #"(\[[^\]]*\]\()([^\)]+)(\))")
@@ -60,7 +60,7 @@
         content (slurp (fs/file src))
         content (replace-links content {:source file
                                         :link-map file-map})
-        content (impl/format-docstring link-resolver content {:var-regex impl/backticks-and-wikilinks-pattern})]
+        content (qimpl/format-docstring link-resolver content {:var-regex qimpl/backticks-and-wikilinks-pattern})]
     (spit (fs/file target)
           (str "---\n"
                (yaml/generate-string data)
@@ -144,9 +144,6 @@
                         ;; potential optimization: could skip detection if `edit-url-fn` option is set
                         (let [{:keys [url branch]} (git/detect-repo-info path)]
                           [url branch]))
-        source-uri (if (and repo branch)
-                     "{repo}/blob/{branch}/{filename}#L{row}-L{end-row}"
-                     "")
         edit-url-fn (or edit-url-fn
                         (fn [filename]
                           (str repo "/tree/" branch "/" filename)))
@@ -174,11 +171,20 @@
      :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
      :source-paths source-paths
      :path-to-root-fn path-to-root-fn
+
      :github/repo repo
      :git/branch branch
-     :source-uri source-uri
+
      :edit-url-fn edit-url-fn
      :generator generator}))
+
+(defn input->var-source-opts [{:keys [gihub/repo git/branch]}]
+  (let [source-uri (if (and repo branch)
+                     "{repo}/blob/{branch}/{filename}#L{row}-L{end-row}"
+                     "")]
+    {:git/branch branch
+     :github/repo repo
+     :source-uri source-uri}))
 
 (defn make-resolve-link [generator-inputs]
   (fn [target]

@@ -21,16 +21,12 @@
   (resolve-link [_ target]
     (resolve-link-fn target))
   (generate [_ {:keys [output-path]}]
-    (let [{:keys [path github/repo git/branch source-uri]} opts
-          var-source-opts {:filename-remove-prefix path
-                           :git/branch branch
-                           :github/repo repo
-                           :source-uri source-uri}]
+    (let [{:keys [path var-source-fn]} opts]
       (println "Generating" path)
       (qd/quickdoc
        {:analysis analysis
         :outdir output-path
-        :var-source-fn #(qimpl/var-source % var-source-opts)})
+        :var-source-fn var-source-fn})
 
       (when (fs/exists? output-path)
         (spit (str output-path "/_category_.json")

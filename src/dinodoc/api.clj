@@ -4,7 +4,8 @@
    [dinodoc.generator :as generator]
    [dinodoc.impl.articles :as articles]
    [dinodoc.impl.cljapi :as cljapi]
-   [dinodoc.impl.core :as impl]))
+   [dinodoc.impl.core :as impl]
+   [dinodoc.impl.quickdoc.impl :as qimpl]))
 
 (def default-api-prefix "api")
 
@@ -36,19 +37,25 @@ Options:
                                       :generator-output-path output-path
                                       :generator-output-prefix output-path-prefix})))
         api-generators (if (= api-mode :global)
-                         [{:generator-output-path (str root-outdir "/" default-api-prefix)
-                           :generator-output-prefix default-api-prefix
-                           :generator (cljapi/make-generator
-                                       (-> (select-keys root-opts [:github/repo :git/branch :source-uri])
-                                           (assoc :source-paths (mapcat :source-paths inputs))))}]
+                         (let [var-source-opts (impl/input->var-source-opts root-opts)]
+                           [{:generator-output-path (str root-outdir "/" default-api-prefix)
+                             :generator-output-prefix default-api-prefix
+                             :generator (cljapi/make-generator
+                                         {:source-paths (mapcat :source-paths inputs)
+                                          :path ""
+                                          :var-source-fn #(qimpl/var-source % var-source-opts)})}])
                          (->> inputs
                               (remove :generator)
-                              (map (fn [{:keys [output-path] :as input}]
-                                     {:generator-output-path (str output-path "/" default-api-prefix)
-                                      :generator-output-prefix default-api-prefix
-                                      :generator
-                                      (cljapi/make-generator
-                                       (select-keys input [:source-paths :path :github/repo :git/branch :source-uri]))}))))
+                              (map (fn [{:keys [output-path path source-paths] :as input}]
+                                     (let [var-source-opts (-> (impl/input->var-source-opts input)
+                                                               (assoc :filename-remove-prefix path))]
+                                       {:generator-output-path (str output-path "/" default-api-prefix)
+                                        :generator-output-prefix default-api-prefix
+                                        :generator
+                                        (cljapi/make-generator
+                                         {:source-paths source-paths
+                                          :path path
+                                          :var-source-fn #(qimpl/var-source % var-source-opts)})})))))
         article-generators (->> inputs
                                 (remove :generator)
                                 (map (fn [{:keys [path doc-tree output-path edit-url-fn path-to-root-fn]}]
