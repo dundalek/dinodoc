@@ -128,33 +128,31 @@
                 path doc-path doc-tree output-path
                 generator]} merged-options
         path (or (some-> path str) ".")
-        outdir (or output-path (fs/file-name path))
-        outdir (str (fs/normalize (str root-outdir "/" outdir)))
+        relative-output-path (or output-path (fs/file-name path))
+        output-path (str (fs/normalize (str root-outdir "/" relative-output-path)))
         source-paths (->> (or source-paths ["src"])
                           (map #(str path "/" %)))
         path-to-root-fn (if (= (:api-mode root-opts) :global)
                           (fn [file-path]
                             (path-to-root (str/replace-first file-path root-outdir "")))
                           (fn [file-path]
-                            (path-to-root (str/replace-first file-path outdir ""))))
+                            (path-to-root (str/replace-first file-path output-path ""))))
         [repo branch] (if (and repo branch)
                         [repo branch]
-                        ;; potential optimization: could skip detection if `edit-url-fn` option is set
                         (let [{:keys [url branch]} (git/detect-repo-info path)]
                           [url branch]))]
     ;; Following needs some untangling, we are mixing common options with clj api generator and articles generator options
-    {:github/repo repo
-     :git/branch branch
-
-     ;; cljapi, article, generator
-     :output-path outdir
+    {;; cljapi, article, generator
+     :output-path output-path
 
      ;; cljapi, article
      :path path
+     :github/repo repo
+     :git/branch branch
 
      ;; generator input
      :generator generator
-     :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
+     :output-path-prefix (str/replace-first output-path (str root-outdir "/") "")
 
      ;; article
      :doc-path doc-path
