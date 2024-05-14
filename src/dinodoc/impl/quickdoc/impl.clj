@@ -193,7 +193,7 @@
   (println "####" (escape-markdown (:name var))
            (heading-reference (:name var))))
 
-(defn print-var-impl [print-header link-resolver ns-name var _source {:keys [collapse-vars] :as opts}]
+(defn print-var-impl [print-header link-resolver ns-name var _source {:keys [collapse-vars var-source-fn] :as opts}]
   (println)
   (when (var-filter var)
     (when collapse-vars (println "<details>\n\n"))
@@ -234,7 +234,7 @@
     (when-not (and (defined-by-protocol? var)
                    (empty? (:protocol-members var)))
       ;; This needs to be in its own paragraph since the docstring may end with an indented list
-      (when-some [source-uri (var-source var opts)]
+      (when-some [source-uri (var-source-fn var)]
         (println (format "\n[source](%s)\n" source-uri))))
     (doseq [member (:protocol-members var)]
       (print-var-impl print-protocol-member-header link-resolver ns-name member _source opts))
