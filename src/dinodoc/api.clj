@@ -58,13 +58,9 @@ Options:
                                           :var-source-fn #(qimpl/var-source % var-source-opts)})})))))
         article-generators (->> inputs
                                 (remove :generator)
-                                (map (fn [{:keys [path doc-tree output-path edit-url-fn path-to-root-fn]}]
+                                (map (fn [input]
                                        {:generator (articles/make-generator
-                                                    {:path path
-                                                     :doc-tree doc-tree
-                                                     :output-path output-path
-                                                     :edit-url-fn edit-url-fn
-                                                     :path-to-root-fn path-to-root-fn})})))
+                                                    (impl/input->article-opts input))})))
         generators (concat article-generators api-generators input-generators)
         resolve-link (or resolve-apilink (impl/make-resolve-link generators))]
 

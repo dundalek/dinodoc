@@ -194,6 +194,13 @@
      :github/repo repo
      :source-uri source-uri}))
 
+(defn input->article-opts [{:keys [path doc-tree output-path edit-url-fn path-to-root-fn]}]
+  {:path path
+   :doc-tree doc-tree
+   :output-path output-path
+   :edit-url-fn edit-url-fn
+   :path-to-root-fn path-to-root-fn})
+
 (defn make-resolve-link [generator-inputs]
   (fn [target]
     ;; TODO: handle multiple resolved candidates
