@@ -37,7 +37,12 @@ Options:
                                       :generator-output-path output-path
                                       :generator-output-prefix output-path-prefix})))
         api-generators (if (= api-mode :global)
-                         (let [var-source-opts (impl/input->var-source-opts root-opts)]
+                         (let [repos (->> inputs (map :github/repo) set)
+                               branches (->> inputs (map :git/branch) set)
+                               opts (merge {:github/repo (when (= (count repos) 1) (first repos))
+                                            :git/branch (when (= (count branches) 1) (first branches))}
+                                           root-opts)
+                               var-source-opts (impl/input->var-source-opts opts)]
                            [{:generator-output-path (str root-outdir "/" default-api-prefix)
                              :generator-output-prefix default-api-prefix
                              :generator (cljapi/make-generator
@@ -47,8 +52,7 @@ Options:
                          (->> inputs
                               (remove :generator)
                               (map (fn [{:keys [output-path path source-paths] :as input}]
-                                     (let [var-source-opts (-> (impl/input->var-source-opts input)
-                                                               (assoc :filename-remove-prefix path))]
+                                     (let [var-source-opts (impl/input->var-source-opts input)]
                                        {:generator-output-path (str output-path "/" default-api-prefix)
                                         :generator-output-prefix default-api-prefix
                                         :generator

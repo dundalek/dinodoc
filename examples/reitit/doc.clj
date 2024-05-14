@@ -9,11 +9,9 @@
            [{:path "reitit"
              :output-path "."}]
            (fs/list-dir "reitit/modules"))
+  :path "reitit"
   :output-path "docs"
-  :api-mode :global
-  ;; per-input edit urls seem broken in global api-mode, so git auto detection also does not work
-  :github/repo "https://github.com/metosin/reitit"
-  :git/branch "master"})
+  :api-mode :global})
 
 (fs/copy-tree "reitit/doc/images" "docs/images")
 

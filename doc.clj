@@ -14,9 +14,7 @@
            {:path "components/antora"}
            {:path "components/contextmapper"}]
   :api-mode :global
-  :output-path "docs"
-  :git/branch "main"
-  :github/repo "https://github.com/dundalek/dinodoc"})
+  :output-path "docs"})
 
 ;; Fixup to change absolute URLs to relative links in readme.
 ;; Having absolute URLs in README.md to make them work when opened on Github.

@@ -163,13 +163,14 @@
      ;; cljapi
      :source-paths source-paths}))
 
-(defn input->var-source-opts [{:keys [gihub/repo git/branch]}]
+(defn input->var-source-opts [{:keys [github/repo git/branch path]}]
   (let [source-uri (if (and repo branch)
                      "{repo}/blob/{branch}/{filename}#L{row}-L{end-row}"
                      "")]
-    {:git/branch branch
-     :github/repo repo
-     :source-uri source-uri}))
+    (cond-> {:git/branch branch
+             :github/repo repo
+             :source-uri source-uri}
+      path (assoc :filename-remove-prefix path))))
 
 (defn input->article-opts [{:keys [path output-path github/repo git/branch doc-path doc-tree edit-url-fn path-to-root-fn]}]
   (let [doc-path (str path "/" (or doc-path "doc"))
