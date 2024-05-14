@@ -130,10 +130,8 @@
         path (or (some-> path str) ".")
         outdir (or output-path (fs/file-name path))
         outdir (str (fs/normalize (str root-outdir "/" outdir)))
-        doc-path (str path "/" (or doc-path "doc"))
         source-paths (->> (or source-paths ["src"])
                           (map #(str path "/" %)))
-        cljdoc-path (str  doc-path "/cljdoc.edn")
         path-to-root-fn (if (= (:api-mode root-opts) :global)
                           (fn [file-path]
                             (path-to-root (str/replace-first file-path root-outdir "")))
@@ -143,7 +141,41 @@
                         [repo branch]
                         ;; potential optimization: could skip detection if `edit-url-fn` option is set
                         (let [{:keys [url branch]} (git/detect-repo-info path)]
-                          [url branch]))
+                          [url branch]))]
+    ;; Following needs some untangling, we are mixing common options with clj api generator and articles generator options
+    {:github/repo repo
+     :git/branch branch
+
+     ;; cljapi, article, generator
+     :output-path outdir
+
+     ;; cljapi, article
+     :path path
+
+     ;; generator input
+     :generator generator
+     :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
+
+     ;; article
+     :doc-path doc-path
+     :doc-tree doc-tree
+     :edit-url-fn edit-url-fn
+     :path-to-root-fn path-to-root-fn
+
+     ;; cljapi
+     :source-paths source-paths}))
+
+(defn input->var-source-opts [{:keys [gihub/repo git/branch]}]
+  (let [source-uri (if (and repo branch)
+                     "{repo}/blob/{branch}/{filename}#L{row}-L{end-row}"
+                     "")]
+    {:git/branch branch
+     :github/repo repo
+     :source-uri source-uri}))
+
+(defn input->article-opts [{:keys [path output-path github/repo git/branch doc-path doc-tree edit-url-fn path-to-root-fn]}]
+  (let [doc-path (str path "/" (or doc-path "doc"))
+        cljdoc-path (str doc-path "/cljdoc.edn")
         edit-url-fn (or edit-url-fn
                         (fn [filename]
                           (str repo "/tree/" branch "/" filename)))
@@ -163,43 +195,12 @@
                    (sort)
                    (map (fn [file]
                           [nil {:file file}])))]
-    ;; Following needs some untangling, we are mixing common options with clj api generator and articles generator options
-    {:github/repo repo
-     :git/branch branch
-
-     ;; cljapi, article, generator
-     :output-path outdir
-
-     ;; cljapi, article
-     :path path
-
-     ;; generator input
-     :generator generator
-     :output-path-prefix (str/replace-first outdir (str root-outdir "/") "")
-
-     ;; article
+    {:path path
+     :output-path output-path
      :doc-tree (concat doc-tree
                        doc-files)
      :edit-url-fn edit-url-fn
-     :path-to-root-fn path-to-root-fn
-
-     ;; cljapi
-     :source-paths source-paths}))
-
-(defn input->var-source-opts [{:keys [gihub/repo git/branch]}]
-  (let [source-uri (if (and repo branch)
-                     "{repo}/blob/{branch}/{filename}#L{row}-L{end-row}"
-                     "")]
-    {:git/branch branch
-     :github/repo repo
-     :source-uri source-uri}))
-
-(defn input->article-opts [{:keys [path doc-tree output-path edit-url-fn path-to-root-fn]}]
-  {:path path
-   :doc-tree doc-tree
-   :output-path output-path
-   :edit-url-fn edit-url-fn
-   :path-to-root-fn path-to-root-fn})
+     :path-to-root-fn path-to-root-fn}))
 
 (defn make-resolve-link [generator-inputs]
   (fn [target]
