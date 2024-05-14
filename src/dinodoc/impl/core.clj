@@ -170,7 +170,7 @@
     (cond-> {:git/branch branch
              :github/repo repo
              :source-uri source-uri}
-      path (assoc :filename-remove-prefix path))))
+      path (assoc :filename-remove-prefix (str path "/")))))
 
 (defn input->article-opts [{:keys [path output-path github/repo git/branch doc-path doc-tree edit-url-fn path-to-root-fn]}]
   (let [doc-path (str path "/" (or doc-path "doc"))

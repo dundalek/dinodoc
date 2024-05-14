@@ -43,7 +43,10 @@
                            :git/branch "main"})
         (is (str/includes?
              (get-in (fsdata output-path) ["api" "example" "main" "index.md"])
-             "\n### foo {#foo}\n"))))))
+             "\n### foo {#foo}\n"))
+        (is (str/includes?
+             (get-in (fsdata output-path) ["api" "example" "main" "index.md"])
+             "[source](repo/blob/main/src/example/main.clj#L2-L2)"))))))
 
 (deftest generate-without-git-repo
   (with-temp-dir
