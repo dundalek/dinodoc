@@ -1,6 +1,7 @@
 (ns dinodoc.api-test
   (:require
    [babashka.fs :as fs]
+   [babashka.process :refer [shell]]
    [clojure.string :as str]
    [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
@@ -51,6 +52,22 @@
 (deftest generate-without-git-repo
   (with-temp-dir
     (fn [{:keys [dir fspit]}]
+      (let [output-path (str dir "/docs")]
+        (fspit "src/example/main.clj" "(ns example.main)\n(defn foo [])")
+        (dinodoc/generate {:inputs [{:path dir
+                                     :output-path "."}]
+                           :output-path output-path})
+        (is (str/includes?
+             (get-in (fsdata output-path) ["api" "example" "main" "index.md"])
+             "\n### foo {#foo}\n"))
+        (is (not (str/includes?
+                  (get-in (fsdata output-path) ["api" "example" "main" "index.md"])
+                  "[source](")))))))
+
+(deftest generate-without-git-remote
+  (with-temp-dir
+    (fn [{:keys [dir fspit]}]
+      (shell {:dir dir} "git init")
       (let [output-path (str dir "/docs")]
         (fspit "src/example/main.clj" "(ns example.main)\n(defn foo [])")
         (dinodoc/generate {:inputs [{:path dir
