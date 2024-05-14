@@ -1,5 +1,4 @@
-(ns dinodoc.impl.tbls
-  ^{:no-doc true}
+(ns dinodoc.tbls
   (:require
    [babashka.fs :as fs]
    [clojure.string :as str]

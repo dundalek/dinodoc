@@ -1,4 +1,4 @@
-(ns dinodoc.impl.tbls-test
+(ns dinodoc.tbls-test
   (:require
    [clojure.test :refer [deftest is testing]]
    [dinodoc.fs-helpers :refer [with-temp-dir]]

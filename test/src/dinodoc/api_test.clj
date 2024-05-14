@@ -11,7 +11,7 @@
    [dinodoc.impl.fs :as fsi]
    [dinodoc.impl.javadoc :as javadoc]
    [dinodoc.impl.rustdoc :as rustdoc]
-   [dinodoc.impl.tbls :as tbls]
+   [dinodoc.tbls :as tbls]
    [readme]))
 
 (defn- naively-strip-front-matter [s]

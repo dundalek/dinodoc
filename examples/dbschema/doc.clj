@@ -3,7 +3,7 @@
    [babashka.fs :as fs]
    [babashka.process :refer [shell]]
    [dinodoc.api :as dinodoc]
-   [dinodoc.impl.tbls :as tbls]))
+   [dinodoc.tbls :as tbls]))
 
 (defn with-temporary-postgres-db [f]
   (fs/with-temp-dir [dir {}]
