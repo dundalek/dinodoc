@@ -146,9 +146,7 @@
             _ (dinodoc/generate {:inputs [(str dir "/a")
                                           (str dir "/b")]
                                  :output-path output-path
-                                 :api-mode :global
-                                 :github/repo "repo"
-                                 :git/branch "main"})
+                                 :api-mode :global})
             data (fsdata output-path)]
         (is (str/includes? (get-in data ["api" "example" "a-main" "index.md"])
                            "\n### foo {#foo}\n"))
@@ -469,9 +467,7 @@
                                                       ["nested" {}
                                                        ["b" {:file "doc/b.md"}]]]}]
                                  :api-mode :global
-                                 :output-path output-path
-                                 :github/repo "repo"
-                                 :git/branch "main"})
+                                 :output-path output-path})
             data (fsdata output-path)]
 
         (testing "backtick links"
@@ -502,7 +498,9 @@
                   :git/branch "main"}]
         (doseq [[label opts]
                 [["default-mode" opts]
-                 ["global-mode" (assoc opts :api-mode :global)]]]
+                 ["global-mode" (assoc opts
+                                       :api-mode :global
+                                       :path dir)]]]
           (let [output-path (str dir "/" label)
                 _ (dinodoc/generate (assoc opts :output-path output-path))
                 data (fsdata output-path)]
@@ -512,7 +510,13 @@
                    "lorem [`example.main/foo`](./api/example/main/#foo) ipsum"))
               (is (str/includes?
                    (get-in data ["api" "example" "main" "index.md"])
-                   "### foo {#foo}")))))))))
+                   "### foo {#foo}"))
+              (is (= "[source](repo/blob/main/src/example/main.clj#L2-L2)"
+                     (-> (get-in data ["api" "example" "main" "index.md"])
+                         (naively-strip-front-matter)
+                         (str/trim)
+                         (str/split-lines)
+                         (last)))))))))))
 
 (deftest multiple-links-issue
   (with-temp-dir
