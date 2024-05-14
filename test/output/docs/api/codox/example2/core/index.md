@@ -16,6 +16,3 @@ Namespace with three parts
 (inner x)
 ```
 
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example2/core.clj#L4-L4)
-

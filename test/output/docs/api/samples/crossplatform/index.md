@@ -19,23 +19,14 @@ And this docstring comes from CLJS.
 
 CLJ docstring
 
-[source](/blob/master/test/projects/samples/src/samples/crossplatform.clj#L6-L8)
-
-
 ### some\-clj\-fn {#some-clj-fn}
 ``` clojure
 (some-clj-fn)
 ```
 
 
-[source](/blob/master/test/projects/samples/src/samples/crossplatform.clj#L4-L4)
-
-
 ### some\-cljs\-fn {#some-cljs-fn}
 ``` clojure
 (some-cljs-fn)
 ```
-
-
-[source](/blob/master/test/projects/samples/src/samples/crossplatform.cljs#L4-L4)
 

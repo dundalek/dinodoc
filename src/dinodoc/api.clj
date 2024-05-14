@@ -39,7 +39,7 @@ Options:
                          [{:generator-output-path (str root-outdir "/" default-api-prefix)
                            :generator-output-prefix default-api-prefix
                            :generator (cljapi/make-generator
-                                       (-> (select-keys root-opts [:github/repo :git/branch])
+                                       (-> (select-keys root-opts [:github/repo :git/branch :source-uri])
                                            (assoc :source-paths (mapcat :source-paths inputs))))}]
                          (->> inputs
                               (remove :generator)
@@ -48,7 +48,7 @@ Options:
                                       :generator-output-prefix default-api-prefix
                                       :generator
                                       (cljapi/make-generator
-                                       (select-keys input [:source-paths :path :github/repo :git/branch]))}))))
+                                       (select-keys input [:source-paths :path :github/repo :git/branch :source-uri]))}))))
         article-generators (->> inputs
                                 (remove :generator)
                                 (map (fn [{:keys [path doc-tree output-path edit-url-fn path-to-root-fn]}]

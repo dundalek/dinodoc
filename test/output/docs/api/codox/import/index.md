@@ -15,6 +15,3 @@ custom_edit_url:
 (foop & args)
 ```
 
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/import.clj#L4-L6)
-

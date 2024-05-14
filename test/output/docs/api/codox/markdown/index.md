@@ -84,6 +84,3 @@ This is an example of a namespace written in markdown, rather than the usual
 
 
 Some function defined in the namespace.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/markdown.clj#L70-L73)
-

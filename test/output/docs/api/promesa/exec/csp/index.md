@@ -37,9 +37,6 @@ A defalt executor for channel callback dispatching
 *dynamic*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L38-L40)
-
-
 ### &lt;\! {#-LT--BANG-}
 ``` clojure
 (<! port)
@@ -50,9 +47,6 @@ A defalt executor for channel callback dispatching
 
 A convenience alias for [`take!`](#take-BANG-).
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L182-L189)
-
-
 ### &gt;\! {#-GT--BANG-}
 ``` clojure
 (>! port val)
@@ -62,9 +56,6 @@ A convenience alias for [`take!`](#take-BANG-).
 
 
 A convenience alias for [`put!`](#put-BANG-).
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L146-L153)
-
 
 ### alts {#alts}
 ``` clojure
@@ -85,9 +76,6 @@ Completes at most one of several operations on channel. Receives a
   value of the operation and channel identifies the channel where the
   the operation is succeeded.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L223-L237)
-
-
 ### alts\! {#alts-BANG-}
 ``` clojure
 (alts! ports & {:as opts})
@@ -95,9 +83,6 @@ Completes at most one of several operations on channel. Receives a
 
 
 A blocking variant of [`alts`](#alts).
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L240-L243)
-
 
 ### chan {#chan}
 ``` clojure
@@ -109,9 +94,6 @@ Creates a new channel instance, it optionally accepts buffer,
   transducer and error handler. If buffer is an integer, it will be
   used as initial capacity for the expanding buffer.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L91-L107)
-
-
 ### chan? {#chan-QMARK-}
 ``` clojure
 (chan? o)
@@ -119,9 +101,6 @@ Creates a new channel instance, it optionally accepts buffer,
 
 
 Returns true if `o` is instance of Channel or satisfies IChannel protocol.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L259-L262)
-
 
 ### close\! {#close-BANG-}
 ``` clojure
@@ -132,9 +111,6 @@ Returns true if `o` is instance of Channel or satisfies IChannel protocol.
 
 Close the channel.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L245-L252)
-
-
 ### close\-with\-exception {#close-with-exception}
 ``` clojure
 (close-with-exception ch cause)
@@ -144,9 +120,6 @@ Close the channel.
 A channel exception handler that closes the channel with the cause
   if an exception is raised in the transducer.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L109-L112)
-
-
 ### closed? {#closed-QMARK-}
 ``` clojure
 (closed? port)
@@ -155,9 +128,6 @@ A channel exception handler that closes the channel with the cause
 
 Returns true if channel is closed.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L254-L257)
-
-
 ### dropping\-buffer {#dropping-buffer}
 ``` clojure
 (dropping-buffer n)
@@ -165,9 +135,6 @@ Returns true if channel is closed.
 
 
 Create a dropping buffer instance.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L288-L291)
-
 
 ### expanding\-buffer {#expanding-buffer}
 ``` clojure
@@ -180,9 +147,6 @@ Create a fixed size (but expanding) buffer instance.
   This buffer is used by default if you pass an integer as buffer on
   channel constructor.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L303-L309)
-
-
 ### fixed\-buffer {#fixed-buffer}
 ``` clojure
 (fixed-buffer n)
@@ -190,9 +154,6 @@ Create a fixed size (but expanding) buffer instance.
 
 
 Create a fixed size buffer instance.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L293-L296)
-
 
 ### go {#go}
 ``` clojure
@@ -211,9 +172,6 @@ Schedules the body to be executed asychronously, potentially using
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L42-L54)
-
-
 ### go\-chan {#go-chan}
 ``` clojure
 (go-chan & body)
@@ -226,9 +184,6 @@ A convencience go macro version that returns a channel instead of a
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L65-L76)
-
-
 ### go\-loop {#go-loop}
 ``` clojure
 (go-loop bindings & body)
@@ -238,9 +193,6 @@ A convencience go macro version that returns a channel instead of a
 A convencience helper macro that combines go + loop.
 
 *macro*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L56-L59)
 
 
 ### mult {#mult}
@@ -265,9 +217,6 @@ Creates an instance of multiplexer.
 
   Do not creates vthreads (or threads).
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L448-L466)
-
-
 ### mult\* {#mult-STAR-}
 ``` clojure
 (mult* ch)
@@ -282,9 +231,6 @@ Create a multiplexer with an externally provided channel. From now,
   Optionally accepts `close?` argument, that determines if the channel will
   be closed when [`close!`](#close-BANG-) is called on multiplexer o not.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L388-L446)
-
-
 ### offer\! {#offer-BANG-}
 ``` clojure
 (offer! port val)
@@ -295,9 +241,6 @@ Puts a val into channel if it's possible to do so immediately.
   Returns a resolved promise with `true` if the operation
   succeeded. Never blocks.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L311-L318)
-
-
 ### once\-buffer {#once-buffer}
 ``` clojure
 (once-buffer)
@@ -305,9 +248,6 @@ Puts a val into channel if it's possible to do so immediately.
 
 
 Create a once buffer instance.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L298-L301)
-
 
 ### onto\-chan\! {#onto-chan-BANG-}
 ``` clojure
@@ -322,9 +262,6 @@ Puts the contents of coll into the supplied channel.
   but can be determined by the close? parameter. Returns a promise
   that will be resolved with `nil` once the items are copied.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L361-L386)
-
-
 ### pipe {#pipe}
 ``` clojure
 (pipe from to)
@@ -336,9 +273,6 @@ Takes elements from the from channel and supplies them to the to
   channel. By default, the to channel will be closed when the from
   channel closes, but can be determined by the close?  parameter. Will
   stop consuming the from channel if the to channel closes.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L332-L359)
-
 
 ### pipeline {#pipeline}
 ``` clojure
@@ -386,9 +320,6 @@ Create a processing pipeline with the ability to specify the process
   EXPERIMENTAL: API subject to be changed or removed in future
   releases.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L484-L578)
-
-
 ### poll\! {#poll-BANG-}
 ``` clojure
 (poll! port)
@@ -398,9 +329,6 @@ Create a processing pipeline with the ability to specify the process
 Takes a val from port if it's possible to do so
   immediatelly. Returns a resolved promise with the value if
   succeeded,  `nil` otherwise.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L320-L330)
-
 
 ### put {#put}
 ``` clojure
@@ -419,9 +347,6 @@ Schedules a put operation on the channel. Returns a promise
   `timeout-duration` can be a long or Duration instance measured in
   milliseconds.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L119-L133)
-
-
 ### put\! {#put-BANG-}
 ``` clojure
 (put! port val)
@@ -432,9 +357,6 @@ Schedules a put operation on the channel. Returns a promise
 
 A blocking version of [`put`](#put).
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L136-L143)
-
-
 ### sliding\-buffer {#sliding-buffer}
 ``` clojure
 (sliding-buffer n)
@@ -442,9 +364,6 @@ A blocking version of [`put`](#put).
 
 
 Create a sliding buffer instance.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L283-L286)
-
 
 ### take {#take}
 ``` clojure
@@ -463,9 +382,6 @@ Schedules a take operation on the channel. Returns a promise instance
   `timeout-duration` can be a long or Duration instance measured in
   milliseconds.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L155-L169)
-
-
 ### take\! {#take-BANG-}
 ``` clojure
 (take! port)
@@ -476,9 +392,6 @@ Schedules a take operation on the channel. Returns a promise instance
 
 Blocking version of [`take`](#take).
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L172-L179)
-
-
 ### tap\! {#tap-BANG-}
 ``` clojure
 (tap! mult ch)
@@ -487,9 +400,6 @@ Blocking version of [`take`](#take).
 
 
 Copies the multiplexer source onto the provided channel.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L468-L475)
-
 
 ### thread\-chan {#thread-chan}
 ``` clojure
@@ -503,9 +413,6 @@ A convencience thread macro version that returns a channel instead of
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L78-L89)
-
-
 ### throw\-uncaught {#throw-uncaught}
 ``` clojure
 (throw-uncaught ch cause)
@@ -515,9 +422,6 @@ A convencience thread macro version that returns a channel instead of
 A channel exception handler that throws the exception to the default
   uncaught exception handler.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L114-L117)
-
-
 ### timeout {#timeout}
 ``` clojure
 (timeout ms)
@@ -526,9 +430,6 @@ A channel exception handler that throws the exception to the default
 
 Returns a promise that will be resolved in the specified timeout. The
   default scheduler will be used.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L277-L281)
-
 
 ### timeout\-chan {#timeout-chan}
 ``` clojure
@@ -541,9 +442,6 @@ Returns a channel that will be closed in the specified timeout. The
   default scheduler will be used. You can provide your own as optional
   first argument.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L264-L275)
-
-
 ### untap\! {#untap-BANG-}
 ``` clojure
 (untap! mult ch)
@@ -551,6 +449,3 @@ Returns a channel that will be closed in the specified timeout. The
 
 
 Disconnects a channel from the multiplexer.
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/csp.cljc#L477-L481)
-

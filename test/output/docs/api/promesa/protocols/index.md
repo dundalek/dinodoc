@@ -17,9 +17,6 @@ A generic promise abstraction and related protocols.
 *protocol*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L101-L102)
-
-
 #### \-await\! {#-await-BANG-}
 ``` clojure
 (-await! it)
@@ -36,9 +33,6 @@ block current thread await termination
 
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L89-L93)
 
 
 #### \-full? {#-full-QMARK-}
@@ -85,9 +79,6 @@ A cancellation abstraction.
 *protocol*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L43-L46)
-
-
 #### \-cancel\! {#-cancel-BANG-}
 ``` clojure
 (-cancel! it)
@@ -124,9 +115,6 @@ A cancellation abstraction.
 *protocol*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L85-L87)
-
-
 #### \-close\! {#-close-BANG-}
 ``` clojure
 (-close! it)
@@ -150,9 +138,6 @@ A cancellation abstraction.
 
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L48-L50)
 
 
 #### \-reject\! {#-reject-BANG-}
@@ -181,9 +166,6 @@ Deliver a value to empty promise.
 
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L52-L55)
 
 
 #### \-exec\! {#-exec-BANG-}
@@ -225,9 +207,6 @@ Submit a task and return a promise.
 *protocol*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L95-L98)
-
-
 #### \-active? {#-active-QMARK-}
 ``` clojure
 (-active? it)
@@ -263,9 +242,6 @@ An experimental lock protocol, used internally; no public api
 *protocol*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L67-L70)
-
-
 #### \-lock\! {#-lock-BANG-}
 ``` clojure
 (-lock! it)
@@ -288,9 +264,6 @@ An experimental lock protocol, used internally; no public api
 
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L10-L30)
 
 
 #### \-fmap {#-fmap}
@@ -375,9 +348,6 @@ A promise constructor abstraction.
 *protocol*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L39-L41)
-
-
 #### \-promise {#-promise}
 ``` clojure
 (-promise it)
@@ -393,9 +363,6 @@ Create a promise instance from other types
 
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L72-L73)
 
 
 #### \-take\! {#-take-BANG-}
@@ -415,9 +382,6 @@ A generic abstraction for scheduler facilities.
 *protocol*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L57-L59)
-
-
 #### \-schedule\! {#-schedule-BANG-}
 ``` clojure
 (-schedule! it ms func)
@@ -435,9 +399,6 @@ Schedule a function to be executed in future.
 An experimental semaphore protocol, used internally; no public api
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L61-L65)
 
 
 #### \-acquire\! {#-acquire-BANG-}
@@ -483,9 +444,6 @@ Try acquire n or n permits, non-blocking or optional timeout
 Additional state/introspection abstraction.
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L32-L37)
 
 
 #### \-extract {#-extract}
@@ -537,9 +495,6 @@ Returns true if a promise is resolved.
 
 
 *protocol*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/protocols.cljc#L75-L76)
 
 
 #### \-put\! {#-put-BANG-}

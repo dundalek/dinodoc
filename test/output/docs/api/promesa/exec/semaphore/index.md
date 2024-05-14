@@ -18,9 +18,6 @@ Concurrency limiter: Semaphore
 ```
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/semaphore.clj#L37-L44)
-
-
 ### create {#create}
 ``` clojure
 (create & {:keys [permits], :or {permits 1}})
@@ -29,15 +26,9 @@ Concurrency limiter: Semaphore
 
 Creates a Semaphore instance.
 
-[source](/blob/master/test/projects/promesa/src/promesa/exec/semaphore.clj#L51-L55)
-
-
 ### release\! {#release-BANG-}
 ``` clojure
 (release! sem)
 (release! sem & {:keys [permits]})
 ```
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/exec/semaphore.clj#L46-L49)
 

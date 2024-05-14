@@ -22,22 +22,13 @@ A dynamic var.
 *dynamic*
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L73-L75)
-
-
 ### \-&gt;CljsRecord {#--GT-CljsRecord}
 ``` clojure
 (->CljsRecord aah choo)
 ```
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.cljs#L13-L13)
-
-
 ### CljsRecord {#CljsRecord}
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.cljs#L13-L13)
 
 
 ### Foop {#Foop}
@@ -46,9 +37,6 @@ A dynamic var.
 An example protocol.
 
 *protocol*
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L46-L49)
 
 
 #### barp {#barp}
@@ -84,16 +72,10 @@ This is an example macro.
 *macro*
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L14-L16)
-
-
 ### baz {#baz}
 
 
 This is an example var.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L18-L20)
-
 
 ### foo {#foo}
 ``` clojure
@@ -104,9 +86,6 @@ This is an example var.
 
 This is an example function.
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L9-L12)
-
-
 ### foobar {#foobar}
 ``` clojure
 (foobar x)
@@ -116,9 +95,6 @@ This is an example function.
 An obsolete function.
 
 *deprecated*
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L31-L34)
 
 
 ### foobaz {#foobaz}
@@ -132,9 +108,6 @@ An obsolete function with a specific version.
 *deprecated in 1.1*
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L36-L39)
-
-
 ### foom {#foom}
 ``` clojure
 (foom x)
@@ -143,16 +116,10 @@ An obsolete function with a specific version.
 
 An example multimethod.
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L51-L54)
-
-
 ### map\-&gt;CljsRecord {#map--GT-CljsRecord}
 ``` clojure
 (map->CljsRecord m)
 ```
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.cljs#L13-L13)
 
 
 ### markbar {#markbar}
@@ -163,9 +130,6 @@ An example multimethod.
 
 See [`foo`](#foo), and also [[example2/bar]].
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L68-L71)
-
-
 ### markfoo {#markfoo}
 ``` clojure
 (markfoo x)
@@ -173,9 +137,6 @@ See [`foo`](#foo), and also [[example2/bar]].
 
 
 A docstring that selectively uses **markdown**.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L63-L66)
-
 
 ### quz {#quz}
 ``` clojure
@@ -186,9 +147,6 @@ A docstring that selectively uses **markdown**.
 Another example function.
 
 *added in 1.1*
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L26-L29)
 
 
 ### quzbar {#quzbar}
@@ -202,9 +160,6 @@ A function with a lifespan.
 *deprecated in 1.1 | added in 1.0*
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L41-L44)
-
-
 ### quzquz {#quzquz}
 ``` clojure
 (quzquz x)
@@ -213,9 +168,6 @@ A function with a lifespan.
 
 This is a ClojureScript-only function.
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.cljs#L9-L11)
-
-
 ### zoo? {#zoo-QMARK-}
 ``` clojure
 (zoo? x)
@@ -223,6 +175,3 @@ This is a ClojureScript-only function.
 
 
 An example predicate.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example.clj#L22-L24)
-

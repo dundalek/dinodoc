@@ -82,18 +82,21 @@
         (cond
           (and filename-remove-prefix (str/starts-with? var-filename filename-remove-prefix))
           (str/replace-first var-filename filename-remove-prefix "")
+
           filename-add-prefix (str filename-add-prefix var-filename)
+
           :else var-filename)
         filename (filename-fn filename)]
-    (->
-     source-uri
-     (str/replace "{repo}" (str repo))
-     (str/replace "{branch}" branch)
-     (str/replace "{filename}" filename)
-     (str/replace "{row}" (str (:row var)))
-     (str/replace "{col}" (str (:col var)))
-     (str/replace "{end-row}" (str (:end-row var)))
-     (str/replace "{end-col}" (str (:end-col var))))))
+    (when-not (str/blank? source-uri)
+      (->
+       source-uri
+       (str/replace "{repo}" (str repo))
+       (str/replace "{branch}" (str branch))
+       (str/replace "{filename}" filename)
+       (str/replace "{row}" (str (:row var)))
+       (str/replace "{col}" (str (:col var)))
+       (str/replace "{end-row}" (str (:end-row var)))
+       (str/replace "{end-col}" (str (:end-col var)))))))
 
 (defn absolute-namespace-link [target-ns]
   (str (str/replace (str target-ns) #"\." "/")
@@ -231,7 +234,8 @@
     (when-not (and (defined-by-protocol? var)
                    (empty? (:protocol-members var)))
       ;; This needs to be in its own paragraph since the docstring may end with an indented list
-      (println (format "\n[source](%s)\n" (var-source var opts))))
+      (when-some [source-uri (var-source var opts)]
+        (println (format "\n[source](%s)\n" source-uri))))
     (doseq [member (:protocol-members var)]
       (print-var-impl print-protocol-member-header link-resolver ns-name member _source opts))
     (when collapse-vars (println "</details>\n\n"))))

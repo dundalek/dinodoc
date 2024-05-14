@@ -18,14 +18,8 @@ custom_edit_url:
 
 docstring
 
-[source](/blob/master/test/projects/samples/src/samples/crossplatform_mixed.cljc#L7-L9)
-
-
 ### some\-clj\-fn {#some-clj-fn}
 ``` clojure
 (some-clj-fn)
 ```
-
-
-[source](/blob/master/test/projects/samples/src/samples/crossplatform_mixed.cljc#L3-L3)
 

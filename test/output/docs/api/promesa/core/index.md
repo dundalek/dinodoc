@@ -31,9 +31,6 @@ Like the clojure.core/->, but it will handle promises in values
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L686-L704)
-
-
 ### \-&gt;&gt; {#--GT--GT-}
 ``` clojure
 (->> x & forms)
@@ -55,9 +52,6 @@ Like the clojure.core/->>, but it will handle promises in values
   end of the thread chain.
 
 *macro*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L706-L726)
 
 
 ### all {#all}
@@ -83,9 +77,6 @@ Given an array of promises, return a promise that is fulfilled when
   If at least one of the promises is rejected, the resulting promise
   will be rejected.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L358-L376)
-
-
 ### any {#any}
 ``` clojure
 (any promises)
@@ -95,9 +86,6 @@ Given an array of promises, return a promise that is fulfilled when
 
 Given an array of promises, return a promise that is fulfilled when
   first one item in the array is fulfilled.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L382-L421)
-
 
 ### as\-&gt; {#as--GT-}
 ``` clojure
@@ -112,9 +100,6 @@ Like clojure.core/as->, but it will handle promises in values
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L728-L737)
-
-
 ### await {#await}
 ``` clojure
 (await resource)
@@ -126,9 +111,6 @@ A exception safer variant of [`await!`](#await-BANG-). Returns `nil` on timeout
   exception, forwards interrupted exception and all other exceptions
   are returned as value, so user is responsible for checking if the returned
   value is exception or not.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L797-L825)
-
 
 ### await\! {#await-BANG-}
 ``` clojure
@@ -146,9 +128,6 @@ Generic await operation. Block current thread until some operation
 
   The return value is implementation specific.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L770-L794)
-
-
 ### bind {#bind}
 ``` clojure
 (bind p f)
@@ -164,9 +143,6 @@ Chains a function `f` to be executed with when the promise `p` is
   The computation will be executed in the completion thread by
   default; you also can provide a custom executor.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L162-L173)
-
-
 ### cancel\! {#cancel-BANG-}
 ``` clojure
 (cancel! p)
@@ -175,9 +151,6 @@ Chains a function `f` to be executed with when the promise `p` is
 
 Cancel the promise.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L476-L480)
-
-
 ### cancelled? {#cancelled-QMARK-}
 ``` clojure
 (cancelled? v)
@@ -185,9 +158,6 @@ Cancel the promise.
 
 
 Return true if `v` is a cancelled promise.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L482-L485)
-
 
 ### catch {#catch}
 ``` clojure
@@ -206,9 +176,6 @@ Chains a function `f` to be executed when the promise `p` is
   [`merr`](#merr) if you want the ability to schedule the computation to other
   thread.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L314-L335)
-
-
 ### chain {#chain}
 ``` clojure
 (chain p f)
@@ -219,9 +186,6 @@ Chains a function `f` to be executed when the promise `p` is
 Chain variable number of functions to be executed serially using
   [`then`](#then).
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L218-L222)
-
-
 ### chain' {#chain-SINGLEQUOTE-}
 ``` clojure
 (chain' p f)
@@ -231,9 +195,6 @@ Chain variable number of functions to be executed serially using
 
 Chain variable number of functions to be executed serially using
   [`map`](#map).
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L224-L228)
-
 
 ### create {#create}
 ``` clojure
@@ -247,9 +208,6 @@ Create a promise instance from a factory function. If an executor is
 
   A factory function looks like `(fn [resolve reject] (resolve 1))`.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L64-L85)
-
-
 ### deferred {#deferred}
 ``` clojure
 (deferred)
@@ -258,9 +216,6 @@ Create a promise instance from a factory function. If an executor is
 
 Creates an empty promise instance.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L42-L45)
-
-
 ### deferred? {#deferred-QMARK-}
 ``` clojure
 (deferred? v)
@@ -268,9 +223,6 @@ Creates an empty promise instance.
 
 
 Return true if `v` is a deferred instance.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L92-L95)
-
 
 ### delay {#delay}
 ``` clojure
@@ -283,9 +235,6 @@ Return true if `v` is a deferred instance.
 Given a timeout in miliseconds and optional value, returns a promise
   that will be fulfilled with provided value (or nil) after the time is
   reached.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L538-L547)
-
 
 ### do {#do}
 ``` clojure
@@ -300,9 +249,6 @@ Execute potentially side effectful code and return a promise resolved
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L561-L569)
-
-
 ### do\! {#do-BANG-}
 ``` clojure
 (do! & exprs)
@@ -312,9 +258,6 @@ Execute potentially side effectful code and return a promise resolved
 A convenience alias for [`do`](#do) macro.
 
 *macro*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L571-L574)
 
 
 ### do\* {#do-STAR-}
@@ -329,9 +272,6 @@ An exception unsafe do-like macro. Supposes that we are already
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L549-L559)
-
-
 ### done? {#done-QMARK-}
 ``` clojure
 (done? p)
@@ -339,9 +279,6 @@ An exception unsafe do-like macro. Supposes that we are already
 
 
 Returns true if promise `p` is already done.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L127-L130)
-
 
 ### doseq {#doseq}
 ``` clojure
@@ -355,9 +292,6 @@ Simplified version of [`doseq`](#doseq) which takes one binding and a seq, and
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L761-L767)
-
-
 ### error {#error}
 ``` clojure
 (error f p)
@@ -369,9 +303,6 @@ Same as [`catch`](#catch) but with parameters inverted.
 
   DEPRECATED
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L350-L356)
-
-
 ### extract {#extract}
 ``` clojure
 (extract p)
@@ -380,9 +311,6 @@ Same as [`catch`](#catch) but with parameters inverted.
 
 
 Returns the current promise value.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L120-L125)
-
 
 ### finally {#finally}
 ``` clojure
@@ -394,9 +322,6 @@ Returns the current promise value.
 Like [`handle`](#handle) but ignores the return value. Returns a promise that
   will mirror the original one.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L256-L264)
-
-
 ### fmap {#fmap}
 ``` clojure
 (fmap f p)
@@ -405,9 +330,6 @@ Like [`handle`](#handle) but ignores the return value. Returns a promise that
 
 
 A convenience alias for [`map`](#map).
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L189-L194)
-
 
 ### fnly {#fnly}
 ``` clojure
@@ -418,9 +340,6 @@ A convenience alias for [`map`](#map).
 
 Inverted arguments version of [`finally`](#finally); intended to be used with
   [`->>`](#--GT--GT-).
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L306-L312)
-
 
 ### future {#future}
 ``` clojure
@@ -433,9 +352,6 @@ Analogous macro to `clojure.core/future` that returns promise
   works as an alias to [`thread`](#thread).
 
 *macro*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L634-L639)
 
 
 ### handle {#handle}
@@ -456,9 +372,6 @@ Chains a function `f` to be executed when the promise `p` is completed
 
   For performance sensitive code, look at [`hmap`](#hmap) and [`hcat`](#hcat).
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L230-L254)
-
-
 ### hcat {#hcat}
 ``` clojure
 (hcat f p)
@@ -475,9 +388,6 @@ Chains a function `f` to be executed when the promise `p` is completed
   default; you also can provide a custom executor.
 
   Intended to be used with [`->>`](#--GT--GT-).
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L281-L304)
-
 
 ### hmap {#hmap}
 ``` clojure
@@ -496,9 +406,6 @@ Chains a function `f` to be executed when the promise `p` is completed
 
   Intended to be used with [`->>`](#--GT--GT-).
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L266-L279)
-
-
 ### let {#let}
 ``` clojure
 (let bindings & body)
@@ -509,9 +416,6 @@ A [`let`](#let) alternative that always returns promise and waits for all the
   promises on the bindings.
 
 *macro*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L586-L594)
 
 
 ### let\* {#let-STAR-}
@@ -526,9 +430,6 @@ An exception unsafe let-like macro. Supposes that we are already
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L576-L584)
-
-
 ### loop {#loop}
 ``` clojure
 (loop bindings & body)
@@ -536,9 +437,6 @@ An exception unsafe let-like macro. Supposes that we are already
 
 
 *macro*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L646-L680)
 
 
 ### map {#map}
@@ -557,9 +455,6 @@ Chains a function `f` to be executed when the promise `p` is
 
   This function is intended to be used with [`->>`](#--GT--GT-).
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L175-L187)
-
-
 ### mapcat {#mapcat}
 ``` clojure
 (mapcat f p)
@@ -577,9 +472,6 @@ Chains a function `f` to be executed when the promise `p` is
 
   This funciton is intended to be used with [`->>`](#--GT--GT-).
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L196-L209)
-
-
 ### mcat {#mcat}
 ``` clojure
 (mcat f p)
@@ -588,9 +480,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 
 A convenience alias for [`mapcat`](#mapcat).
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L211-L216)
-
 
 ### merr {#merr}
 ``` clojure
@@ -609,9 +498,6 @@ Chains a function `f` to be executed when the promise `p` is
 
   This is intended to be used with [`->>`](#--GT--GT-).
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L337-L348)
-
-
 ### pending? {#pending-QMARK-}
 ``` clojure
 (pending? p)
@@ -619,9 +505,6 @@ Chains a function `f` to be executed when the promise `p` is
 
 
 Returns true if promise `p` is stil pending.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L115-L118)
-
 
 ### plet {#plet}
 ``` clojure
@@ -633,9 +516,6 @@ A parallel let; executes all the bindings in parallel and when all
   bindings are resolved, executes the body.
 
 *macro*
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L596-L607)
 
 
 ### promise {#promise}
@@ -651,9 +531,6 @@ The coerce based promise constructor. Creates an appropriate promise
   If an executor is provided, it will be used to resolve this
   promise.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L47-L56)
-
-
 ### promise? {#promise-QMARK-}
 ``` clojure
 (promise? v)
@@ -661,9 +538,6 @@ The coerce based promise constructor. Creates an appropriate promise
 
 
 Return true if `v` is a promise instance.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L87-L90)
-
 
 ### promisify {#promisify}
 ``` clojure
@@ -675,16 +549,10 @@ Given a function that accepts a callback as the last argument, return a
   function that returns a promise. Callback is expected to take one
   parameter (result of a computation).
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L501-L512)
-
-
 ### race {#race}
 ``` clojure
 (race promises)
 ```
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L378-L380)
 
 
 ### recur {#recur}
@@ -696,16 +564,10 @@ Given a function that accepts a callback as the last argument, return a
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L682-L684)
-
-
 ### recur? {#recur-QMARK-}
 ``` clojure
 (recur? o)
 ```
-
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L642-L644)
 
 
 ### reject\! {#reject-BANG-}
@@ -716,9 +578,6 @@ Given a function that accepts a callback as the last argument, return a
 
 Reject a completable promise with an error.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L494-L497)
-
-
 ### rejected {#rejected}
 ``` clojure
 (rejected v)
@@ -727,9 +586,6 @@ Reject a completable promise with an error.
 
 Return a rejected promise with provided reason.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L37-L40)
-
-
 ### rejected? {#rejected-QMARK-}
 ``` clojure
 (rejected? p)
@@ -737,9 +593,6 @@ Return a rejected promise with provided reason.
 
 
 Returns true if promise `p` is already rejected.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L110-L113)
-
 
 ### resolve\! {#resolve-BANG-}
 ``` clojure
@@ -750,9 +603,6 @@ Returns true if promise `p` is already rejected.
 
 Resolve a completable promise with a value.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L489-L492)
-
-
 ### resolved {#resolved}
 ``` clojure
 (resolved v)
@@ -760,9 +610,6 @@ Resolve a completable promise with a value.
 
 
 Return a resolved promise with provided value.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L32-L35)
-
 
 ### resolved? {#resolved-QMARK-}
 ``` clojure
@@ -772,9 +619,6 @@ Return a resolved promise with provided value.
 
 Returns true if promise `p` is already fulfilled.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L105-L108)
-
-
 ### run\! {#run-BANG-}
 ``` clojure
 (run! f coll)
@@ -783,9 +627,6 @@ Returns true if promise `p` is already fulfilled.
 
 
 A promise aware run! function. Executed in terms of [`then`](#then) rules.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L465-L472)
-
 
 ### then {#then}
 ``` clojure
@@ -803,9 +644,6 @@ Chains a function `f` to be executed when the promise `p` is
   The computation will be executed in the completion thread by
   default; you also can provide a custom executor.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L134-L146)
-
-
 ### then' {#then-SINGLEQUOTE-}
 ``` clojure
 (then' p f)
@@ -822,9 +660,6 @@ Chains a function `f` to be executed when the promise `p` is
   The computation will be executed in the completion thread by
   default; you also can provide a custom executor.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L148-L160)
-
-
 ### thread {#thread}
 ``` clojure
 (thread & body)
@@ -837,9 +672,6 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L621-L625)
-
-
 ### thread\-call {#thread-call}
 ``` clojure
 (thread-call f)
@@ -850,9 +682,6 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 Analogous to `clojure.core.async/thread` that returns a promise
   instance instead of the `Future`. Useful for executing synchronous
   code in a separate thread (also works in cljs).
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L609-L614)
-
 
 ### timeout {#timeout}
 ``` clojure
@@ -867,9 +696,6 @@ Returns a cancellable promise that will be fulfilled with this
   promise is not fulfilled or rejected within `ms` milliseconds, the
   returned promise is cancelled with a TimeoutError.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L524-L536)
-
-
 ### vthread {#vthread}
 ``` clojure
 (vthread & body)
@@ -883,9 +709,6 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L627-L632)
-
-
 ### vthread\-call {#vthread-call}
 ``` clojure
 (vthread-call f)
@@ -893,9 +716,6 @@ Analogous to `clojure.core.async/thread` that returns a promise instance
 
 
 A shortcut for `(p/thread-call :vthread f)`.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L616-L619)
-
 
 ### wait\-all {#wait-all}
 ``` clojure
@@ -908,9 +728,6 @@ Given a variable number of promises, returns a promise which resolves
 
   **EXPERIMENTAL**
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L451-L457)
-
-
 ### wait\-all\! {#wait-all-BANG-}
 ``` clojure
 (wait-all! promises)
@@ -918,9 +735,6 @@ Given a variable number of promises, returns a promise which resolves
 
 
 A blocking version of [`wait-all`](#wait-all).
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L460-L463)
-
 
 ### wait\-all\* {#wait-all-STAR-}
 ``` clojure
@@ -943,9 +757,6 @@ Given an array of promises, return a promise that is fulfilled when
 
   Rejected promises also counts as resolved.
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L423-L449)
-
-
 ### with\-redefs {#with-redefs}
 ``` clojure
 (with-redefs bindings & body)
@@ -959,9 +770,6 @@ Like clojure.core/with-redefs, but it will handle promises in
 *macro*
 
 
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L739-L759)
-
-
 ### wrap {#wrap}
 ``` clojure
 (wrap v)
@@ -970,6 +778,3 @@ Like clojure.core/with-redefs, but it will handle promises in
 
 A convenience alias for [`promise`](#promise) coercion function that only accepts
   a single argument.
-
-[source](/blob/master/test/projects/promesa/src/promesa/core.cljc#L58-L62)
-

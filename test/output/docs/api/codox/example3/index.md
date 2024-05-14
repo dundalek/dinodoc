@@ -24,18 +24,12 @@ A dynamic var.
 *dynamic*
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L60-L62)
-
-
 ### Foop {#Foop}
 
 
 An example protocol.
 
 *protocol*
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L43-L46)
 
 
 #### barp {#barp}
@@ -65,9 +59,6 @@ A protocol function belonging to the protocol Foom.
 
 This is an example var.
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L15-L17)
-
-
 ### foo {#foo}
 ``` clojure
 (foo x)
@@ -76,9 +67,6 @@ This is an example var.
 
 
 This is an example function.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L10-L13)
-
 
 ### foobar {#foobar}
 ``` clojure
@@ -89,9 +77,6 @@ This is an example function.
 An obsolete function.
 
 *deprecated*
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L28-L31)
 
 
 ### foobaz {#foobaz}
@@ -105,9 +90,6 @@ An obsolete function with a specific version.
 *deprecated in 1.1*
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L33-L36)
-
-
 ### foom {#foom}
 ``` clojure
 (foom x)
@@ -116,16 +98,10 @@ An obsolete function with a specific version.
 
 An example multimethod.
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L48-L51)
-
-
 ### froo {#froo}
 
 
 A derefable thing created using reify.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L64-L67)
-
 
 ### markfoo {#markfoo}
 ``` clojure
@@ -134,9 +110,6 @@ A derefable thing created using reify.
 
 
 A docstring that selectively uses **markdown**.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L55-L58)
-
 
 ### quz {#quz}
 ``` clojure
@@ -147,9 +120,6 @@ A docstring that selectively uses **markdown**.
 Another example function.
 
 *added in 1.1*
-
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L23-L26)
 
 
 ### quzbar {#quzbar}
@@ -163,9 +133,6 @@ A function with a lifespan.
 *deprecated in 1.1 | added in 1.0*
 
 
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L38-L41)
-
-
 ### zoo? {#zoo-QMARK-}
 ``` clojure
 (zoo? x)
@@ -173,6 +140,3 @@ A function with a lifespan.
 
 
 An example predicate.
-
-[source](/blob/master/test/projects/codox/example/src/clojure/codox/example3.cljs#L19-L21)
-

@@ -144,6 +144,9 @@
                         ;; potential optimization: could skip detection if `edit-url-fn` option is set
                         (let [{:keys [url branch]} (git/detect-repo-info path)]
                           [url branch]))
+        source-uri (if (and repo branch)
+                     "{repo}/blob/{branch}/{filename}#L{row}-L{end-row}"
+                     "")
         edit-url-fn (or edit-url-fn
                         (fn [filename]
                           (str repo "/tree/" branch "/" filename)))
@@ -173,6 +176,7 @@
      :path-to-root-fn path-to-root-fn
      :github/repo repo
      :git/branch branch
+     :source-uri source-uri
      :edit-url-fn edit-url-fn
      :generator generator}))
 

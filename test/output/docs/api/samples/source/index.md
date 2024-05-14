@@ -22,9 +22,6 @@ We need to escape var names otherwise earmuffs are not shown but interpreted as 
 *dynamic*
 
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L13-L15)
-
-
 ### &lt;&lt; {#-LT--LT-}
 ``` clojure
 (<<)
@@ -32,9 +29,6 @@ We need to escape var names otherwise earmuffs are not shown but interpreted as 
 
 
 Angle brackets in var name
-
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L21-L23)
-
 
 ### Foo {#Foo}
 ``` clojure
@@ -44,16 +38,10 @@ Angle brackets in var name
 
 Foo with different case, link does not clash with [`foo`](#foo).
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L9-L11)
-
-
 ### \_underscore\-surrounded\_ {#-underscore-surrounded-}
 ``` clojure
 (_underscore-surrounded_)
 ```
-
-
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L17-L17)
 
 
 ### a\-macro {#a-macro}
@@ -67,9 +55,6 @@ hello
 *macro*
 
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L48-L50)
-
-
 ### added\-and\-deprecated {#added-and-deprecated}
 ``` clojure
 (added-and-deprecated)
@@ -77,9 +62,6 @@ hello
 
 
 *deprecated | added in 8.0*
-
-
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L43-L46)
 
 
 ### added\-tag {#added-tag}
@@ -91,9 +73,6 @@ hello
 *added*
 
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L35-L37)
-
-
 ### added\-version {#added-version}
 ``` clojure
 (added-version)
@@ -101,9 +80,6 @@ hello
 
 
 *added in 8.0*
-
-
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L39-L41)
 
 
 ### deprecated\-tag {#deprecated-tag}
@@ -117,9 +93,6 @@ Doc string
 *deprecated*
 
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L25-L28)
-
-
 ### deprecated\-version {#deprecated-version}
 ``` clojure
 (deprecated-version)
@@ -131,9 +104,6 @@ Doc string
 *deprecated in 9.0*
 
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L30-L33)
-
-
 ### foo {#foo}
 ``` clojure
 (foo)
@@ -142,16 +112,10 @@ Doc string
 
 Hello, there is also [`Foo`](#Foo) that differs in casing.
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L5-L7)
-
-
 ### has\-&gt;arrow {#has--GT-arrow}
 ``` clojure
 (has->arrow)
 ```
-
-
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L19-L19)
 
 
 ### links\-backticks {#links-backticks}
@@ -169,9 +133,6 @@ Link to a var in the current namespace: [`foo`](#foo)
   Link to a var containing a special character: [`has->arrow`](#has--GT-arrow)
   
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L52-L61)
-
-
 ### links\-backticks\-in\-codeblock {#links-backticks-in-codeblock}
 ``` clojure
 (links-backticks-in-codeblock)
@@ -187,9 +148,6 @@ Link to a var in the current namespace: [`foo`](#foo)
   ;; Link to a namespace: [`samples.protocols`](../../samples/protocols/)
   ```
 
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L63-L72)
-
-
 ### links\-backticks\-multiple\-occurences {#links-backticks-multiple-occurences}
 ``` clojure
 (links-backticks-multiple-occurences)
@@ -197,9 +155,6 @@ Link to a var in the current namespace: [`foo`](#foo)
 
 
 Same link referenced multiple times will not get messed up: [`foo`](#foo) and [`foo`](#foo)
-
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L74-L76)
-
 
 ### links\-wikilinks {#links-wikilinks}
 ``` clojure
@@ -214,6 +169,3 @@ Link to a var in the current namespace: [`foo`](#foo)
   Link to a namespace: [`samples.protocols`](../../samples/protocols/)
 
   Link with a title supported by codox: [[samples.crossplatform/some-clj-fn|some-title]]
-
-[source](/blob/master/test/projects/samples/src/samples/source.clj#L78-L86)
-

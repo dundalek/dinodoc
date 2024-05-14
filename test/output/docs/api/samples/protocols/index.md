@@ -18,9 +18,6 @@ Bulkhead main API
 *protocol*
 
 
-[source](/blob/master/test/projects/samples/src/samples/protocols.clj#L7-L10)
-
-
 #### \-get\-stats {#-get-stats}
 ``` clojure
 (-get-stats _)
@@ -47,9 +44,6 @@ Call synchronously a function under bulkhead context
 
 
 *protocol*
-
-
-[source](/blob/master/test/projects/samples/src/samples/protocols.clj#L3-L5)
 
 
 #### \-offer\! {#-offer-BANG-}
