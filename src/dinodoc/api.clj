@@ -7,7 +7,7 @@
    [dinodoc.impl.core :as impl]
    [dinodoc.impl.quickdoc.impl :as qimpl]))
 
-(def default-api-prefix "api")
+(def ^:private default-api-prefix "api")
 
 (defn generate
   "Generates documentation for given inputs. Input options can be also specified as top-level keys that will be shared by all inputs.

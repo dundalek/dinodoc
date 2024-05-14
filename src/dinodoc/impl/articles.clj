@@ -1,4 +1,6 @@
-(ns dinodoc.impl.articles
+(ns
+ ^:no-doc
+ dinodoc.impl.articles
   (:require
    [clojure.string :as str]
    [dinodoc.generator :as generator]
