@@ -1,5 +1,4 @@
-(ns dinodoc.impl.rustdoc
-  ^{:no-doc true}
+(ns dinodoc.rustdoc
   (:require
    [babashka.fs :as fs]
    [babashka.process :refer [shell]]

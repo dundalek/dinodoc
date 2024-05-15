@@ -1,8 +1,8 @@
-(ns dinodoc.impl.rustdoc-test
+(ns dinodoc.rustdoc-test
   (:require
    [clojure.test :refer [deftest is testing]]
    [dinodoc.fs-helpers :refer [with-temp-dir]]
-   [dinodoc.impl.rustdoc :as rustdoc]))
+   [dinodoc.rustdoc :as rustdoc]))
 
 (deftest resolve-test
   (with-temp-dir

@@ -1,5 +1,4 @@
-(ns dinodoc.impl.javadoc
-  ^{:no-doc true}
+(ns dinodoc.javadoc
   (:require
    [babashka.fs :as fs]
    [babashka.process :refer [shell]]

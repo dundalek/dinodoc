@@ -1,10 +1,10 @@
-(ns dinodoc.impl.javadoc-test
+(ns dinodoc.javadoc-test
   (:require
    [clojure.string :as str]
    [clojure.test :refer [deftest is testing]]
    [dinodoc.api :as dinodoc]
    [dinodoc.fs-helpers :refer [fsdata with-temp-dir]]
-   [dinodoc.impl.javadoc :as javadoc]))
+   [dinodoc.javadoc :as javadoc]))
 
 (deftest resolve-test
   (with-temp-dir

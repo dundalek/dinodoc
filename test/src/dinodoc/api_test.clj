@@ -9,8 +9,8 @@
    [dinodoc.contextmapper :as contextmapper]
    [dinodoc.fs-helpers :as fsh :refer [fsdata with-temp-dir]]
    [dinodoc.impl.fs :as fsi]
-   [dinodoc.impl.javadoc :as javadoc]
-   [dinodoc.impl.rustdoc :as rustdoc]
+   [dinodoc.javadoc :as javadoc]
+   [dinodoc.rustdoc :as rustdoc]
    [dinodoc.tbls :as tbls]
    [readme]))
 

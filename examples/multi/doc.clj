@@ -1,8 +1,8 @@
 (ns doc
   (:require
    [dinodoc.api :as dinodoc]
-   [dinodoc.impl.javadoc :as javadoc]
-   [dinodoc.impl.rustdoc :as rustdoc]))
+   [dinodoc.javadoc :as javadoc]
+   [dinodoc.rustdoc :as rustdoc]))
 
 (dinodoc/generate
  {:inputs [{:path "."}

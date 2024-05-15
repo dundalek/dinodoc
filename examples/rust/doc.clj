@@ -3,7 +3,7 @@
    [babashka.fs :as fs]
    [babashka.process :refer [shell]]
    [dinodoc.api :as dinodoc]
-   [dinodoc.impl.rustdoc :as rustdoc]))
+   [dinodoc.rustdoc :as rustdoc]))
 
 ;; Generated assets included by using `staticDirectories` option in `docusaurus.config.js`
 (def rustdoc-path "target/doc")

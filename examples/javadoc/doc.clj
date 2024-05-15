@@ -3,7 +3,7 @@
    [babashka.process :refer [shell]]
    [dinodoc.api :as dinodoc]
    ;; TODO: Think about public API
-   [dinodoc.impl.javadoc :as javadoc]))
+   [dinodoc.javadoc :as javadoc]))
 
 ;; Generated assets included by using `staticDirectories` option in `docusaurus.config.js`
 (def api-path "static/examples/javadoc/api")
