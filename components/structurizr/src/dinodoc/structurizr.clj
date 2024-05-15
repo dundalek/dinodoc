@@ -3,7 +3,7 @@
    [dinodoc.generator :as generator]
    [dinodoc.structurizr.impl.core :as impl]))
 
-(deftype StructurizrGenerator [opts ^:volatile-mutable workspace ^:volatile-mutable index]
+(deftype ^:private StructurizrGenerator [opts ^:volatile-mutable workspace ^:volatile-mutable index]
   generator/Generator
   (prepare-index [_]
     (let [{:keys [workspace-file]} opts]

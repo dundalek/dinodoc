@@ -9,11 +9,11 @@
    [hickory.core :as h]
    [hickory.select :as hs]))
 
-(defn segments->path [segments]
+(defn- segments->path [segments]
   (str (str/join "/" segments)
        ".html"))
 
-(defn file->id-map [file]
+(defn- file->id-map [file]
   (let [tree (-> (slurp file)
                  h/parse h/as-hickory)]
     (->> (hs/select (hs/attr :id) tree)
@@ -58,7 +58,7 @@
                    [html-id html-id]))))
        (into {})))
 
-(deftype JavadocGenerator [opts tmp-dir]
+(deftype ^:private JavadocGenerator [opts tmp-dir]
   generator/Generator
   (prepare-index [_]
     (let [{:keys [sourcepath subpackages]} opts]

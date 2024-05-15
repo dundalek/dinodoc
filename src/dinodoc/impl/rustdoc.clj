@@ -19,7 +19,7 @@
           (when-some [match (first (fs/list-dir module-dir pattern))]
             (str module-path "/" (fs/file-name match))))))))
 
-(deftype RustdocGenerator [opts tmp-dir doc-dir]
+(deftype ^:private RustdocGenerator [opts tmp-dir doc-dir]
   generator/Generator
   (prepare-index [_]
     (let [{:keys [manifest-path]} opts]

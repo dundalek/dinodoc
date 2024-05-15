@@ -3,7 +3,7 @@
    [dinodoc.contextmapper.impl :as impl]
    [dinodoc.generator :as generator]))
 
-(deftype ContextMapperGenerator [opts ^:volatile-mutable jmodel ^:volatile-mutable index]
+(deftype ^:private ContextMapperGenerator [opts ^:volatile-mutable jmodel ^:volatile-mutable index]
   generator/Generator
   (prepare-index [_]
     (let [{:keys [model-file]} opts]

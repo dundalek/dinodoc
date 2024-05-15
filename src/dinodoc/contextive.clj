@@ -6,7 +6,7 @@
    [dinodoc.generator :as generator]
    [slugify.core :refer [slugify]]))
 
-(deftype ContextiveGenerator [opts ^:volatile-mutable bounded-contexts ^:volatile-mutable index]
+(deftype ^:private ContextiveGenerator [opts ^:volatile-mutable bounded-contexts ^:volatile-mutable index]
   generator/Generator
   (prepare-index [_]
     (let [{:keys [definitions-file]} opts
