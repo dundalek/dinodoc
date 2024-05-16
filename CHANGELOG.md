@@ -1,6 +1,8 @@
 # Changelog
 
-## [main](https://github.com/dundalek/dinodoc/compare/v0.2.0...main) (unreleased)
+## [main](https://github.com/dundalek/dinodoc/compare/v0.3.0...main) (unreleased)
+
+## [v0.3.0](https://github.com/dundalek/dinodoc/compare/v0.2.0...v0.3.0) (2024-05-16)
 
 New features:
 - DB Schema and Structurizr generators now support wiki links to elements
