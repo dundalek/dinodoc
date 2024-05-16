@@ -20,6 +20,7 @@ Options:
 * `:inputs` - List of strings/paths/files or maps of:
   * `:path`
   * `:output-path` - Directory where to output documentation of the input relative to top level `:output-path` (default: last segment of `:path`)
+  * `:generator` - Instance implementing `dinodoc.generator/Generator` that will be used for this input
   * `:source-paths` - Directories with source files for API docs, relative to `:path` (default: `[\"src\"]`)
   * `:doc-path` - Directory with markdown articles, relative to `:path` (default `\"doc\"`)
   * `:doc-tree` - Tree of articles in the format of `:cljdoc.doc/tree` (default: tries to read `:doc-path`/`cljdoc.edn`)

@@ -1,6 +1,6 @@
 # Dinodoc
 
-Dinodoc is a documentation tool for Clojure that generates API documentation from source code with linked markdown articles.
+Dinodoc is a documentation tool that generates API documentation from source code with linked markdown articles.
 It aims to enable creating a unified documentation hub within an organization.
 
 Dinodoc is designed to generate documentation from multiple sources.
@@ -89,6 +89,8 @@ Combining mono and multi repos:
    (dinodoc/generate
     {:inputs ["."]
      :output-path "docs"})
+
+   (shutdown-agents)
    ```
 4. Generate markdown API docs:  
    `clojure -M:doc`
