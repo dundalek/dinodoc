@@ -58,7 +58,11 @@
                   (doseq [example examples]
                     (println "-" example)))))))))))
 
-(defn make-generator [opts]
+(defn make-generator
+  "Options:
+
+- `:definitions-file` - path to .contextive/definitions.yml file"
+  [opts]
   (->ContextiveGenerator opts nil nil))
 
 (comment

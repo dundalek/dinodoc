@@ -29,7 +29,11 @@
     (fs/move doc-dir output-path)
     (fs/delete-tree tmp-dir)))
 
-(defn make-generator [opts]
+(defn make-generator
+  "Options:
+
+- `:manifest-path` - path to Cargo.toml"
+  [opts]
   (let [tmp-dir (str (create-local-temp-dir))
         doc-dir (str tmp-dir "/doc")]
     (->RustdocGenerator opts tmp-dir doc-dir)))

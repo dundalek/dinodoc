@@ -15,5 +15,9 @@
     (impl/render-model {:jmodel jmodel
                         :output-path output-path})))
 
-(defn make-generator [opts]
+(defn make-generator
+  "Options:
+
+- `:model-file` - path to .cml file"
+  [opts]
   (->ContextMapperGenerator opts nil nil))

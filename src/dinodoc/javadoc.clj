@@ -67,5 +67,10 @@
   (generate [_ {:keys [output-path]}]
     (fs/move tmp-dir output-path)))
 
-(defn make-generator [opts]
+(defn make-generator
+  "Options:
+
+- `:sourcepath` - path source files (javadoc `-sourcepath` option)
+- `:subpackages` - subpackages to include (javadoc `-subpackages` option)"
+  [opts]
   (->JavadocGenerator opts (str (create-local-temp-dir))))
