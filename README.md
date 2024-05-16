@@ -77,7 +77,7 @@ Combining mono and multi repos:
 2. Add alias with dependencies to `deps.edn`:
    ```clojure
    {:aliases
-    {:doc {:extra-deps {io.github.dundalek/dinodoc {:git/tag "v0.2.0" :git/sha "505a4e9"}
+    {:doc {:extra-deps {io.github.dundalek/dinodoc {:git/tag "v0.3.0" :git/sha "9d5e861"}
            :main-opts ["doc.clj"]}}}
    ```
 3. Create the script to generate docs and save as `doc.clj`:  
