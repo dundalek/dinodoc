@@ -15,6 +15,9 @@
            (->> (fs/list-dir "polylith/components")
                 (map (fn [path]
                        {:path path
+                        ;; Example of specifying :source-paths to only include interface.clj files for API docs
+                        :source-paths (->> (fs/glob path "**/interface.clj")
+                                           (map #(fs/relativize path %)))
                         :output-path (str "Components/" (fs/file-name path))}))))
   :github/repo "https://github.com/polyfy/polylith"
   :git/branch "master"})
